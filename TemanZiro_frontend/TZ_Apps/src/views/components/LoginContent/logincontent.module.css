@@ -1,0 +1,130 @@
+.ziro {
+  position: relative;
+  margin-top: 20px;
+  width: 70%;
+  max-width: 640px;
+  min-width: 150px;
+  display: flex;
+  justify-content: center;
+}
+
+.imageWrapper {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+img.imageZiro1 {
+  position: absolute;
+  left: 8%;
+  top: -25%;
+  width: 30%;
+}
+
+img.imageZiro2 {
+  width: 50%;
+  display: block;
+  height: auto;
+}
+
+h2.subTitle {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--text-primary);
+  text-align: center;
+  margin-top: 20px;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: -0.32px;
+  line-height: 40px;
+}
+
+p.description {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 10px;
+  letter-spacing: -0.32px;
+  line-height: 25px;
+}
+
+Button.button {
+  margin-top: 32px;
+  font-size: 16px;
+  margin: 30px 0 0;
+  letter-spacing: 1.5px;
+}
+
+@media (max-width: 450px) {
+  h2.subTitle {
+    font-size: 24px;
+    margin-top: 20px;
+    line-height: 30px;
+  }
+  p.description {
+    font-size: 14px;
+    margin-top: 10px;
+    line-height: 20px;
+  }
+  Button.button {
+    margin-top: 22px;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+  }
+}
+
+@media (max-width: 390px) {
+  h2.subTitle {
+    font-size: 24px;
+    margin-top: 20px;
+    line-height: 30px;
+  }
+  p.description {
+    font-size: 16px;
+    margin-top: 10px;
+    line-height: 24px;
+  }
+  Button.button {
+    margin-top: 40px;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+  }
+}
+
+@media (height >= 720px) {
+  .ziro {
+    margin-top: 50px;
+    width: 90%;
+  }
+  h2.subTitle {
+    font-size: 24px;
+    margin-top: 20px;
+    line-height: 30px;
+  }
+  p.description {
+    font-size: 16px;
+    margin-top: 10px;
+    line-height: 24px;
+  }
+  Button.button {
+    margin-top: 40px;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+  }
+}
+
+@media (height <= 660px) {
+  h2.subTitle {
+    font-size: 20px;
+  }
+  p.description {
+    font-size: 14px;
+    margin-top: 10px;
+    line-height: 24px;
+  }
+  Button.button {
+    margin-top: 20px;
+    font-size: 13px;
+  }
+}

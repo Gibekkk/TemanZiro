@@ -1,0 +1,149 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.headerIcon { width: 24px; height: 24px; }
+.headerTitle { font-size: 20px; font-weight: 700; color: #0F172A; margin: 0; }
+
+.card {
+  background-color: #F8F9FA;
+  border-radius: 16px;
+  padding: 14px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  min-height: 380px; /* Jaga tinggi agar tidak loncat saat ganti mode */
+}
+
+/* Navigasi & Selector Mode */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.navBtn {
+  background-color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #0F172A;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: all 0.2s;
+}
+.navBtn:hover { background-color: #F8EFEA; }
+
+.selectors {
+  display: flex;
+  gap: 8px;
+}
+
+/* Tombol Dropdown Baru */
+.modeSelector {
+  background-color: #FFFFFF;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0F172A;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+.modeSelector:hover {
+  background-color: #F8EFEA;
+}
+.activeMode {
+  border-color: #D77636;
+  color: #D77636;
+}
+.arrow {
+  font-size: 10px;
+  color: #1E40AF;
+  transition: transform 0.2s;
+}
+.activeMode .arrow {
+  transform: rotate(180deg); /* Animasi panah terbalik saat aktif */
+}
+
+/* Grid Tanggal/Hari */
+.gridDayName {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.dayText {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0F172A;
+}
+.gridDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.dayCell {
+  aspect-ratio: 1;
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0F172A;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  padding: 0;
+}
+.dayCell:hover:not(.selected):not(.inRange) { border-color: #F0DFD7; }
+.otherMonth { color: #CBD5E1; }
+.today { border-color: #D77636; }
+.selected { background-color: #D77636; color: #FFFFFF; border-color: #D77636; }
+.inRange { background-color: #F8EFEA; color: #D77636; border-radius: 0; }
+
+/* Grid List untuk Bulan dan Tahun */
+.gridList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 Kolom */
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.listCell {
+  background-color: #FFFFFF;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 16px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0F172A;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+
+.listCell:hover:not(.selected) {
+  border-color: #F0DFD7;
+  background-color: #F8EFEA;
+}

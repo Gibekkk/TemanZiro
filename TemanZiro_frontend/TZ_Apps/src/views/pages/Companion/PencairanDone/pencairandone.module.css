@@ -1,0 +1,102 @@
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* Jarak antar item transaksi */
+}
+
+/* --- ITEM TRANSAKSI --- */
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.leftContent {
+  display: flex;
+  align-items: stretch; /* Memastikan garis pembatas mengikuti tinggi konten */
+  gap: 16px;
+}
+
+/* --- BAGIAN TANGGAL --- */
+.dateBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 36px;
+}
+
+.dayText {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0f172a; /* Warna dark navy */
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.monthYearText {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* --- GARIS PEMBATAS VERTIKAL --- */
+.verticalDivider {
+  width: 1.5px;
+  background-color: #94a3b8; /* Warna abu-abu medium */
+  border-radius: 2px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+/* --- BAGIAN INFORMASI BANK --- */
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.bankName {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.accountNumber {
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+  margin: 0;
+}
+
+.statusWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.statusIcon {
+  width: 16px;
+  height: 16px;
+  color: #d95d16; /* Oranye TemanZiro */
+}
+
+.statusText {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d95d16;
+}
+
+/* --- BAGIAN NOMINAL (KANAN) --- */
+.amountText {
+  font-size: 15px;
+  font-weight: 700;
+  color: #d95d16;
+  margin-top: 4px; /* Sedikit penyesuaian agar sejajar dengan judul Bank */
+}

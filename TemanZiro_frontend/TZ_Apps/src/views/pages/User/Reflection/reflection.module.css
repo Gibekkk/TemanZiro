@@ -1,0 +1,190 @@
+/* --- AVATAR & STATUS ONLINE --- */
+.avatarContainer {
+  position: relative;
+  margin-bottom: 24px;
+  width: fit-content;
+  margin: 0 auto 24px auto;
+}
+
+.avatarWrapper {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f8f6f4; /* Warna border sama dengan background agar menyatu */
+  box-sizing: border-box;
+}
+
+.onlineDot {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  background-color: #10b981;
+  border: 3px solid #f8f6f4;
+  border-radius: 50%;
+}
+
+/* --- PERTANYAAN & SUBTITLE --- */
+.question {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-align: center;
+  margin: 0 0 16px 0;
+  line-height: 1.4;
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+/* --- PIL PERASAAN (FEELINGS) --- */
+.pillsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.pill {
+  padding: 10px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+  background-color: color-mix(in srgb, var(--primary-color), transparent 90%);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 10px;
+}
+
+/* Style saat pil diklik/dipilih */
+.pillSelected {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.pill:active {
+  transform: scale(0.95);
+}
+
+/* --- RATING BINTANG --- */
+.ratingSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.ratingTitle {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.starsContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.star {
+  cursor: pointer;
+  color: #475569;
+  transition: transform 0.1s;
+}
+
+.starFilled {
+  color: var(--primary-color);
+}
+
+.star:active {
+  transform: scale(0.85);
+}
+
+/* --- BOOKING SUMMARY --- */
+.bookingSummary {
+  width: 100%;
+  padding: 16px;
+  border-radius: 18px;
+  background-color: #f5f7fb;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.bookingTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.bookingText {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* --- TEXTAREA FEEDBACK --- */
+.feedbackSection {
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.feedbackLabel {
+  font-size: 15px;
+  color: #475569;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.feedbackTextarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background-color: #ffffff;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  resize: none;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.feedbackTextarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.feedbackTextarea:focus {
+  border-color: var(--primary-color);
+}

@@ -1,0 +1,370 @@
+/* --- HEADER --- */
+.container {
+  background: linear-gradient(to top right, color-mix(in srgb, #F3E5D9, transparent 100%) 0%, color-mix(in srgb, #F3E5D9, transparent 0%) 100%);
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px 24px;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.logoContainer {
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: #d95d16;
+  margin: 0;
+}
+
+.companionLogo {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.notifWrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.notifBadge {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  background-color: #e11d48; /* Merah notifikasi */
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid #fcece3;
+}
+
+.profileAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* --- HERO SECTION --- */
+.heroSection {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 0 24px;
+  position: relative;
+  margin-top: 30px;
+  margin-bottom: 16px;
+}
+
+.mascot {
+  width: 140px;
+  height: auto;
+  object-fit: contain;
+  margin-left: -10px;
+  margin-top: -10px;
+  transform: scale(1.5);
+}
+
+.heroInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 30px;
+  z-index: 2;
+}
+
+.greeting {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+.statusToggleCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #ffffff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(217, 93, 22, 0.05);
+  width: fit-content;
+}
+
+.statusLabel {
+  font-size: 12px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.statusActiveText {
+  font-size: 12px;
+  font-weight: 700;
+  color: #10b981; /* Hijau Active */
+}
+
+/* Toggle Switch CSS Murni */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e1;
+  border-radius: 22px;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .4s;
+}
+
+.switch input:checked + .slider {
+  background-color: #d95d16;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+/* --- MAIN WHITE CARD --- */
+.mainCard {
+  background-color: #ffffff;
+  flex: 1;
+  border-radius: 32px 32px 0 0;
+  padding: 32px 24px;
+  box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.02);
+}
+
+/* --- STATS GRID --- */
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.statBox {
+  background-color: #f8efea;
+  border: 1px solid #f0dfd7;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.IconIMG {
+  width: 24px;
+}
+
+.statIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d95d16;
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.statValue {
+  font-size: 12px;
+  font-weight: 800;
+  color: #d95d16;
+  margin: 0;
+}
+
+/* --- SECTION TITLE --- */
+.sectionTitle {
+  font-size: 20px;
+  margin: 0 0 16px 0;
+}
+
+.textOrange { color: #d95d16; font-weight: 800; }
+.textDark { color: #0f172a; font-weight: 800; }
+
+/* --- CHAT SECTION --- */
+.chatScroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  scrollbar-width: none; /* Firefox */
+}
+.chatScroll::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+.chatItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 64px;
+}
+
+.chatAvatarWrapper {
+  position: relative;
+}
+
+.chatAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #d95d16;
+  padding: 2px;
+}
+
+.onlineDot {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 14px;
+  height: 14px;
+  background-color: #10b981;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+
+.chatName {
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* --- ACTIVITY SECTION --- */
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activityCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background-color: #ffffff;
+}
+
+.activityInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.activityAvatarWrapper {
+  position: relative;
+}
+
+.activityAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #f0dfd7;
+}
+
+.activityDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.activityName {
+  font-size: 15px;
+  font-weight: 800;
+  color: #d95d16;
+  margin: 0 0 2px 0;
+}
+
+.activityMeta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.activityRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btnConfirm {
+  background-color: #d95d16;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.1s;
+}
+
+.btnConfirm:active {
+  transform: scale(0.95);
+}

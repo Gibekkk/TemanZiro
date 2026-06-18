@@ -1,0 +1,67 @@
+/* --- TAMBAHAN UNTUK EDIT PHILOSOPHY --- */
+
+.headerWithEdit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.editBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: #d95d16; /* Warna oranye */
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.editBtn:hover {
+  text-decoration: underline;
+}
+
+.editModeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Membawa tombol simpan ke kanan */
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.textArea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #334155;
+  resize: vertical; /* Memungkinkan user menarik text box ke bawah */
+  outline: none;
+  box-sizing: border-box;
+}
+
+.textArea:focus {
+  border-color: #d95d16;
+}
+
+.saveBtn {
+  background-color: #d95d16;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.saveBtn:active {
+  transform: scale(0.95);
+}

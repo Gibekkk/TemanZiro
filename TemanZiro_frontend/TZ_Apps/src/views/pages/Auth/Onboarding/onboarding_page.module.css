@@ -1,0 +1,4 @@
+.textHighlight {
+    color: var(--secondary-color);
+    font-weight: bold;
+}

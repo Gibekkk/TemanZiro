@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+    environment {
+        IMAGE_NAME = 'moodbites-tz-apps'
+        IMAGE_TAG  = 'latest'
+        DEPLOY_DIR = '/home/moodbites/TemanZiro'
+        HOST_IP    = '103.185.52.161'        // ← ganti jika IP berbeda
+        HOST_USER  = 'moodbites'
+        APP_SUBDIR = 'TemanZiro_frontend/TZ_Apps'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build & Deploy') {
+            steps {
+                withCredentials([
+                    file(
+                        credentialsId: 'moodbites-tz-apps-env',  // ← .env Firebase disimpan di Jenkins credentials
+                        variable: 'ENV_FILE'
+                    ),
+                    sshUserPrivateKey(
+                        credentialsId: 'moodbites-host-ssh',
+                        keyFileVariable: 'SSH_KEY',
+                        usernameVariable: 'SSH_USER'
+                    )
+                ]) {
+                    sh '''
+                        # ── 1. Reset repo di host ke origin/main ──────────────────────
+                        ssh -i $SSH_KEY -o StrictHostKeyChecking=no \
+                            $SSH_USER@${HOST_IP} "
+                                cd ${DEPLOY_DIR} &&
+                                git fetch origin &&
+                                git reset --hard origin/main &&
+                                git clean -fd -e docker-compose.deploy.yml -e docker-compose.admin.yml
+                            "
+
+                        # ── 2. Kirim docker-compose & .env ke host ────────────────────
+                        scp -i $SSH_KEY -o StrictHostKeyChecking=no \
+                            docker-compose.deploy.yml \
+                            $SSH_USER@${HOST_IP}:${DEPLOY_DIR}/docker-compose.deploy.yml
+
+                        scp -i $SSH_KEY -o StrictHostKeyChecking=no \
+                            $ENV_FILE \
+                            $SSH_USER@${HOST_IP}:${DEPLOY_DIR}/${APP_SUBDIR}/.env
+
+                        # ── 3. Build image & deploy di host ───────────────────────────
+                        ssh -i $SSH_KEY -o StrictHostKeyChecking=no \
+                            $SSH_USER@${HOST_IP} "
+                                docker compose -f ${DEPLOY_DIR}/docker-compose.deploy.yml down || true &&
+                                docker build -t ${IMAGE_NAME}:${IMAGE_TAG} \
+                                    ${DEPLOY_DIR}/${APP_SUBDIR} &&
+                                docker compose -f ${DEPLOY_DIR}/docker-compose.deploy.yml up -d &&
+                                rm -f ${DEPLOY_DIR}/${APP_SUBDIR}/.env
+                            "
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline berhasil! TZ Apps berjalan di port 5173.'
+        }
+        failure {
+            echo 'Pipeline gagal! Periksa log di atas.'
+        }
+    }
+}

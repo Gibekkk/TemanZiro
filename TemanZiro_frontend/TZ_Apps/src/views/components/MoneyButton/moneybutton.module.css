@@ -1,0 +1,30 @@
+.moneyButton {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--secondary-color);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.moneyButton:hover {
+  background-color: color-mix(in srgb, var(--secondary-color), 20% transparent);
+}
+
+/* Ukuran Ikon dalam tombol */
+.moneyIcon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+/* Styling Teks Statis */
+.moneyText {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}

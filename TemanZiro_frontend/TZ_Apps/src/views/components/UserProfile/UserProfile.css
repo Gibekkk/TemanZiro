@@ -1,0 +1,24 @@
+.user-avatar-wrapper {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--light-text);
+}
+
+.user-avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 500px) {
+  .user-avatar-wrapper {
+    width: 2rem;
+    height: 2rem;
+  }
+}

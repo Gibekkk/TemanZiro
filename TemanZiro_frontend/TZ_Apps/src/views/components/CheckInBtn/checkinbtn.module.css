@@ -1,0 +1,124 @@
+.btnIcon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.disabledButton {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btnCheckIn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  /* backdrop-filter: blur(4px); */
+  /* padding: 20px; */
+}
+
+.modalCard {
+  background-color: #ffffff;
+  /* width: 100%; */
+  /* max-width: 354px; */
+  border-radius: 24px;
+  padding: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease-out;
+}
+
+.modalClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #888;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.modalClose:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cameraBox, .qrBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cameraPreview {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 16px;
+  background-color: #000;
+  border: 2px solid;
+  border-color: var(--primary-color);
+}
+
+.qrImage {
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.modalMessage {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

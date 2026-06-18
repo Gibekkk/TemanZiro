@@ -1,0 +1,137 @@
+/* =========================================
+   BAGIAN HEADER RATING (ANGKA BESAR & BAR)
+   ========================================= */
+
+.content {
+  width: 100%;
+}
+
+.reviewScrollContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  overflow-x: auto; 
+  padding-bottom: 12px;
+  scrollbar-width: none; 
+  scroll-snap-type: x mandatory;
+}
+
+.reviewScrollContainer::-webkit-scrollbar {
+  display: none; 
+}
+
+.ratingHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.overallRating {
+  text-align: center;
+  width: 40%;
+  font-size: 48px;
+  font-weight: 800;
+  color: #334155;
+  margin: 0;
+  line-height: 1;
+}
+
+.ratingBars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.barTrack {
+  flex: 1;
+  height: 6px;
+  background-color: #f0dfd7; /* Warna background bar (peach pucat) */
+  border-radius: 4px;
+  overflow: hidden; /* Penting: agar barFill yang ada di dalamnya tidak keluar batas */
+}
+
+.barFill {
+  height: 100%;
+  background-color: #d95d16; /* Warna oranye primary TemanZiro */
+  border-radius: 4px;
+  transition: width 0.3s ease; /* Animasi halus saat persentase berubah */
+}
+
+/* =========================================
+   BAGIAN CARD KOMENTAR (REVIEW)
+   ========================================= */
+
+.reviewCard {
+  background-color: #ffffff;
+  border: 1px solid #f0dfd7;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  width: 356px;
+
+  /* --- TAMBAHKAN DUA BARIS INI --- */
+  min-width: 280px; 
+  flex-shrink: 0;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.reviewerInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reviewerAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.reviewerName {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.reviewStar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.starIcon {
+  width: 16px;
+  height: 16px;
+  color: #eab308; /* Warna kuning emas untuk bintang */
+}
+
+.reviewText {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #475569; /* Warna teks agak abu-abu agar nyaman dibaca panjang */
+  margin: 0;
+}

@@ -1,0 +1,97 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the TempleZiro platform.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "balance": { "type": "number" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "name", "email", "role", "balance", "createdAt", "updatedAt"]
+    },
+    "Companion": {
+      "title": "Companion",
+      "description": "A companion (mitra) on the TemanZiro platform.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "balance": { "type": "number" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "name", "email", "status", "balance", "createdAt", "updatedAt"]
+    },
+    "TopUp": {
+      "title": "TopUp",
+      "description": "A top-up transaction request from a user.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "userId", "amount", "status", "createdAt", "updatedAt"]
+    },
+    "Withdraw": {
+      "title": "Withdraw",
+      "description": "A withdraw request from a companion.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "companionId": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "companionId", "amount", "status", "createdAt", "updatedAt"]
+    },
+    "Activity": {
+      "title": "Activity",
+      "description": "A system activity for notifications.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["topup", "withdraw", "user_registration", "companion_registration", "other"] },
+        "description": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "type", "description", "isRead", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Collection of all users."
+    },
+    "companions": {
+      "schema": { "$ref": "#/entities/Companion" },
+      "description": "Collection of all companions."
+    },
+    "topups": {
+      "schema": { "$ref": "#/entities/TopUp" },
+      "description": "Collection of all user top-up requests."
+    },
+    "withdraws": {
+      "schema": { "$ref": "#/entities/Withdraw" },
+      "description": "Collection of all companion withdraw requests."
+    },
+    "activities": {
+      "schema": { "$ref": "#/entities/Activity" },
+      "description": "Collection of recent platform activities for notifications."
+    }
+  }
+}

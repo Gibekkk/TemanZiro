@@ -1,0 +1,217 @@
+.cardContainer {
+  background-color: #ffffff;
+  border: 1px solid #f4e8e1;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  margin: 0 auto;
+}
+
+.headerSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.statusText {
+  font-size: 16px;
+  font-weight: 700;
+  color: #d95d16;
+  margin: 0;
+}
+
+/* --- PAYMENT DETAILS --- */
+.paymentSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.paymentRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.paymentLabel {
+  color: #4a5568;
+  font-weight: 600;
+}
+
+.paymentValue {
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.totalRow {
+  margin-top: 4px;
+}
+
+.totalValue {
+  color: #d95d16;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+/* --- Activity Summary --- */
+.summaryCard {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.summaryItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.iconWrapper {
+  width: 20px;
+  background: color-mix(in srgb, var(--primary-color), transparent 90%);
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconOrange1 {
+  width: 20px;
+  color: var(--primary-color);
+}
+
+.iconOrange2 {
+  color: var(--primary-color);
+}
+
+.iconOrange3 {
+  width: 18.7px;
+  color: var(--primary-color);
+}
+
+.itemText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemText h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.itemText p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid color-mix(var(--border), transparent 20%);
+  margin: 16px 0 0;
+  width: calc(100% + 48px);
+  margin-left: -24px;
+}
+
+.divider1 {
+  border: none;
+  border-top: 1px solid color-mix(var(--border), transparent 20%);
+  margin: 0 0 16px;
+  width: calc(100% + 48px);
+  margin-left: -24px;
+}
+
+.mapImage {
+  width: 100%;
+  height: 120px;
+  border-radius: 12px;
+  margin-top: 8px;
+  border: none;
+}
+
+.mapLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-color);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* --- SESSION NOTES --- */
+.notesSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.notesTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 12px 0;
+}
+
+.notesTextarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 14px;
+  color: var(--text-secondary);
+  resize: none;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background-color: var(--background-color); 
+  cursor: default;
+}
+
+.notesTextarea:disabled {
+  background-color: var(--background-color);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+}
+
+.notesTextarea:focus {
+  border-color: var(--border);
+}
+
+.notesTextarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.customPadding {
+  padding: 3% 6% 3%;
+}
+
+h5.statusText {
+  margin-top: 20px;
+  color: var(--text-primary);
+}
+
+.actionMenu1 {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+}

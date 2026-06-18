@@ -1,0 +1,6 @@
+{
+  "name": "TemanZiro Admin Panel",
+  "description": "Admin panel for TemanZiro featuring dashboard, user management, companion management, top-ups, and withdraws. Includes light/dark mode with Orange and Navy Blue palette.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

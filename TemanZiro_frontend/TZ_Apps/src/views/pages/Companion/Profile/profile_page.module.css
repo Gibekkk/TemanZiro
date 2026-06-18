@@ -1,0 +1,213 @@
+.profileSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 2rem 0 3.4rem;
+  padding: 0 20px;
+}
+
+.avatarWrapper {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+.miniZiro {
+  position: absolute;
+  bottom: 28px;
+  right: -30px;
+  width: 60px;
+  height: 60px;
+  z-index: 9999;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 10px 25px rgba(217, 93, 22, 0.3);
+  background-color: #fdeede;
+  border: 6px solid var(--primary-color);
+}
+
+.content {
+  width: 100%;
+  min-height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-content: flex-start;
+}
+
+.content .tag1 {
+  font-size: 15px;
+  padding: 12px 25px;
+  border-radius: 100px;
+}
+
+.profileSection1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+  margin: 0.5rem 0;
+  padding: 0 20px;
+}
+
+h3.title {
+  text-align: left;
+  align-items: center;
+  justify-content: left;
+  margin: 0;
+}
+
+h3.title1 {
+  text-align: left;
+  align-items: center;
+  justify-content: left;
+  margin-bottom: 20px;
+}
+
+.activityGrid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.infoCard {
+  position: relative;
+  top: 40px;
+  background-color: rgba(251, 250, 248, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(234, 234, 234, 0.6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  width: 100%;
+  border-radius: 16px;
+  padding: 24px 20px 24px 20px;
+  margin-top: -70px;
+  box-sizing: border-box;
+  z-index: 5;
+}
+
+.userName {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.statGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.statLabel {
+  font-size: 15px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.statValue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statValue img {
+  width: 24px;
+}
+
+.locationGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.locationText {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.actionMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 20px;
+  margin-bottom: 9rem;
+}
+
+.actionCard {
+  display: flex;
+  align-items: center;
+  background-color: rgba(251, 250, 248, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(234, 234, 234, 0.6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.actionCard:active {
+  background-color: #f0ede8;
+}
+
+.actionIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--text-primary);
+  margin-right: 16px;
+}
+
+.actionText {
+  flex: 1;
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+.chevronIcon {
+  width: 24px;
+  color: var(--text-primary);
+}
+
+.verified {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: fit-content;
+  align-items: center;
+  background-color: color-mix(in srgb, var(--secondary-color), 15% transparent);
+  padding: 6px 14px;
+  border-radius: 30px;
+  color: white;
+  font-size: 14px;
+}
+
+.verified img {
+  width: 20px;
+}

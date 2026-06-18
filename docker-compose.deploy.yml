@@ -1,0 +1,13 @@
+services:
+  tz-apps:
+    image: moodbites-tz-apps:latest     # image dibangun via `docker build` di Jenkinsfile
+    container_name: moodbites-tz-apps
+    ports:
+      - "5173:80"                        # host:5173 → nginx:80 di dalam container
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s

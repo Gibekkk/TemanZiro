@@ -1,0 +1,189 @@
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --- ITEM TRANSAKSI --- */
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 16px; 
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.leftContent {
+  display: flex;
+  align-items: stretch; /* Memastikan garis pembatas mengikuti tinggi konten */
+  gap: 16px;
+}
+
+/* --- BAGIAN TANGGAL --- */
+.dateBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+}
+
+.dayText {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.monthYearText {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* --- GARIS PEMBATAS VERTIKAL --- */
+.verticalDivider {
+  width: 2px;
+  background-color: #94a3b8; /* Warna abu-abu medium */
+  border-radius: 2px;
+  margin: 4px 0;
+}
+
+/* --- BAGIAN INFORMASI BANK --- */
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.bankName {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.accountNumber {
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+  margin: 0;
+}
+
+.statusWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.statusIcon {
+  width: 16px;
+  height: 16px;
+  color: #d95d16; /* Oranye TemanZiro */
+}
+
+.statusText {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d95d16;
+}
+
+/* --- BAGIAN NOMINAL (KANAN) --- */
+.amountText {
+  font-size: 15px;
+  font-weight: 700;
+  color: #d95d16;
+  margin-top: 4px; /* Sedikit penyesuaian agar sejajar dengan judul Bank */
+}
+
+.textSuccess { color: #10b981; } 
+.textDanger { color: #ef4444; } 
+.textWarning { color: #d95d16; }
+
+.historyCard {
+  background-color: var(--background-color); 
+  padding: 16px;  
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
+  border: 1px solid #f1f5f9; 
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  width: 100%;
+}
+
+.cardHeader h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.dateText {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.divider {
+  border: none;
+  border-top: 1px dashed #e2e8f0; 
+  margin: 12px 0; 
+  width: 100%;
+}
+
+.cardBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.cardBody span:first-child {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.amountText {
+  font-size: 16px;
+  font-weight: 700;
+  color: #d95d16; 
+}
+
+.declineBox {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: #fef2f2;
+  border-left: 3px solid #ef4444; 
+  padding: 10px 3px;
+  border-radius: 6px;
+  margin-top: 12px; 
+  width: 100%;
+}
+
+.declineLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444; 
+}
+
+.declineText {
+  font-size: 13px;
+  font-weight: 500;
+  color: #7f1d1d;
+  line-height: 1.4;
+}

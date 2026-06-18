@@ -1,0 +1,74 @@
+.tabsContainer {
+  display: flex;
+  gap: 24px;
+  padding: 0px;
+  margin: 30px 0 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.tabsContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  font-family: "Quicksand", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding: 0 0 8px 0;
+  white-space: nowrap;
+  margin: 0;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tabActive {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 15px;
+}
+
+.sectionTitle {
+  font-family: "Quicksand", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.viewAll {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.scheduleListContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+.customPadding {
+  padding: 6% 6% 8%;
+}

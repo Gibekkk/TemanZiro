@@ -1,0 +1,154 @@
+img.imageZiro {
+  margin: auto;
+  width: 100%;
+  max-width: 640px;
+  min-width: 150px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.imageWrapper {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+h2.subTitle {
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: left;
+  margin-top: 20px;
+  font-family: "Quicksand-Bold", "Quicksand", sans-serif;
+  letter-spacing: -0.32px;
+  line-height: 30px;
+}
+
+p.description {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-secondary);
+  text-align: left;
+  margin-top: 12px;
+  letter-spacing: -0.32px;
+  line-height: 25px;
+}
+
+Button.button {
+  width: 100%;
+  margin-top: 32px;
+  font-size: 15px;
+}
+
+@media (max-width: 640px) {
+  h2.subTitle {
+    font-size: 1.1em;
+    text-align: left;
+    margin-top: 20px;
+    letter-spacing: -0.32px;
+    line-height: 30px;
+  }
+  p.description {
+    font-size: 14px;
+    line-height: 32px;
+  }
+
+  Button.button {
+    margin-top: 32px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  p.description {
+    font-size: 13px;
+    line-height: 24px;
+  }
+  Button.button {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 500px) {
+  p.description {
+    font-size: 13px;
+    line-height: 24px;
+  }
+  Button.button {
+    margin-top: 30px;
+    font-size: 16px;
+  }
+}
+
+@media (height >= 750px) {
+  h2.subTitle {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-height: 750px) {
+  img.imageZiro {
+    max-width: 320px;
+  }
+}
+
+@media (max-height: 700px) {
+  h2.subTitle {
+    margin-top: 0;
+  }
+  img.imageZiro {
+    max-width: 280px;
+  }
+  Button.button {
+    font-size: 12px;
+  }
+}
+
+@media (max-height: 680px) {
+  img.imageZiro {
+    max-width: 220px;
+  }
+  Button.button {
+    margin-top: 20px;
+    font-size: 12px;
+  }
+}
+
+@media (max-height: 600px) {
+  img.imageZiro {
+    max-height: 160px;
+  }
+  h2.subTitle {
+    font-size: 0.9em;
+    text-align: left;
+    margin-top: 20px;
+    letter-spacing: -0.32px;
+    line-height: 30px;
+  }
+  p.description {
+    font-size: 11px;
+    line-height: 28px;
+  }
+  Button.button {
+    margin-top: 20px;
+    font-size: 12px;
+  }
+}
+
+/* @media (max 600px) {
+  h2.subTitle {
+    font-size: 1.1em;
+    margin-top: 10px;
+  }
+  p.description {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  Button.button {
+    margin-top: 20px;
+    font-size: 12px;
+  }
+} */

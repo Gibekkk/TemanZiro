@@ -1,0 +1,137 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} { 
+      allow read, write: if false; 
+    }
+
+    // --- PRIMITIVES ---
+    function isValidId(id) { 
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isSignedIn() { return request.auth != null && request.auth.token.email_verified == true; }
+    function isAdmin() { 
+      return isSignedIn() && (
+        request.auth.token.email == 'www.gilbertwinardy@gmail.com' ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')
+      );
+    }
+    function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
+
+    // --- VALIDATION BLUEPRINTS ---
+    function isValidUser(data) {
+      return data.keys().hasAll(['id', 'name', 'email', 'role', 'balance', 'createdAt', 'updatedAt']) &&
+             data.id is string && data.id.size() <= 128 &&
+             data.name is string && data.name.size() <= 100 &&
+             data.email is string && data.email.size() <= 100 &&
+             data.role in ['admin', 'user'] &&
+             data.balance is number &&
+             data.createdAt is number &&
+             data.updatedAt is number;
+    }
+
+    function isValidCompanion(data) {
+      return data.keys().hasAll(['id', 'name', 'email', 'status', 'balance', 'createdAt', 'updatedAt']) &&
+             data.id is string && data.id.size() <= 128 &&
+             data.name is string && data.name.size() <= 100 &&
+             data.email is string && data.email.size() <= 100 &&
+             data.status in ['active', 'inactive'] &&
+             data.balance is number &&
+             data.createdAt is number &&
+             data.updatedAt is number;
+    }
+
+    function isValidTopUp(data) {
+      return data.keys().hasAll(['id', 'userId', 'amount', 'status', 'createdAt', 'updatedAt']) &&
+             data.id is string && data.id.size() <= 128 &&
+             data.userId is string && data.userId.size() <= 128 &&
+             data.amount is number &&
+             data.status in ['pending', 'approved', 'rejected'] &&
+             data.createdAt is number &&
+             data.updatedAt is number;
+    }
+
+    function isValidWithdraw(data) {
+      return data.keys().hasAll(['id', 'companionId', 'amount', 'status', 'createdAt', 'updatedAt']) &&
+             data.id is string && data.id.size() <= 128 &&
+             data.companionId is string && data.companionId.size() <= 128 &&
+             data.amount is number &&
+             data.status in ['pending', 'approved', 'rejected'] &&
+             data.createdAt is number &&
+             data.updatedAt is number;
+    }
+
+    function isValidActivity(data) {
+      return data.keys().hasAll(['id', 'type', 'description', 'isRead', 'createdAt']) &&
+             data.id is string && data.id.size() <= 128 &&
+             data.type in ['topup', 'withdraw', 'user_registration', 'companion_registration', 'other'] &&
+             data.description is string && data.description.size() <= 200 &&
+             data.isRead is bool &&
+             data.createdAt is number;
+    }
+
+    // --- RULE SETS ---
+
+    // USERS
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isAdmin() || isOwner(userId));
+      allow list: if isAdmin();
+      allow create: if isValidId(userId) && isSignedIn() &&
+                    // Only allow self-registration as "user", or admins can create anyone
+                    (isAdmin() || (userId == request.auth.uid && incoming().role == 'user')) &&
+                    isValidUser(incoming());
+      allow update: if isValidId(userId) && isSignedIn() && isValidUser(incoming()) && (
+                      isAdmin() ||
+                      (isOwner(userId) && incoming().diff(existing()).affectedKeys().hasOnly(['name', 'updatedAt']) && incoming().updatedAt == request.time.toMillis())
+                    );
+      allow delete: if isValidId(userId) && isAdmin();
+    }
+
+    // COMPANIONS
+    match /companions/{companionId} {
+      allow get: if isValidId(companionId) && (isAdmin() || isOwner(companionId));
+      allow list: if isAdmin() || isOwner(companionId); // companions can list themselves if querying by ID, but realistically only admins list all
+      allow create: if isValidId(companionId) && isAdmin() && isValidCompanion(incoming());
+      allow update: if isValidId(companionId) && isSignedIn() && isValidCompanion(incoming()) && (
+                      isAdmin() ||
+                      (isOwner(companionId) && incoming().diff(existing()).affectedKeys().hasOnly(['name', 'updatedAt']) && incoming().updatedAt == request.time.toMillis())
+                    );
+      allow delete: if isValidId(companionId) && isAdmin();
+    }
+
+    // TOPUPS
+    match /topups/{topupId} {
+      allow get: if isValidId(topupId) && (isAdmin() || isOwner(existing().userId));
+      allow list: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create: if isValidId(topupId) && isSignedIn() && isValidTopUp(incoming()) && incoming().userId == request.auth.uid;
+      allow update: if isValidId(topupId) && isSignedIn() && isValidTopUp(incoming()) && (
+                      isAdmin() && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt'])
+                    );
+      allow delete: if isValidId(topupId) && isAdmin();
+    }
+
+    // WITHDRAWS
+    match /withdraws/{withdrawId} {
+      allow get: if isValidId(withdrawId) && (isAdmin() || isOwner(existing().companionId));
+      allow list: if isAdmin() || (isSignedIn() && resource.data.companionId == request.auth.uid);
+      allow create: if isValidId(withdrawId) && isSignedIn() && isValidWithdraw(incoming()) && incoming().companionId == request.auth.uid;
+      allow update: if isValidId(withdrawId) && isSignedIn() && isValidWithdraw(incoming()) && (
+                      isAdmin() && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt'])
+                    );
+      allow delete: if isValidId(withdrawId) && isAdmin();
+    }
+
+    // ACTIVITIES
+    match /activities/{activityId} {
+      allow get, list: if isAdmin();
+      allow create: if isAdmin() && isValidActivity(incoming());
+      allow update: if isValidId(activityId) && isAdmin() && isValidActivity(incoming()) && incoming().diff(existing()).affectedKeys().hasOnly(['isRead']);
+      allow delete: if isAdmin();
+    }
+  }
+}

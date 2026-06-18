@@ -1,0 +1,77 @@
+div {
+  padding: 0;
+}
+
+.screen {
+  width: 100%;
+  margin: 0 auto;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  padding: 0;
+}
+
+.header {
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 20px 20px 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+h4.title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.profileImage {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border-radius: 30px;
+  border: 2px solid #f0ede8;
+}
+
+.searchBarWrapper {
+  width: 100%;
+}
+
+.mainContent {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 150px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Jarak antara tombol money dan foto profil */
+}
+
+@media (max-width: 500px) {
+  .profileImage {
+    width: 2rem;
+    height: 2rem;
+  }
+  h4.title {
+    font-size: 18px;
+  }
+}

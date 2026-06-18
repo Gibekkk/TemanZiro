@@ -1,0 +1,44 @@
+.logo {
+  text-align: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.logo .container {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: color-mix(
+    in srgb,
+    var(--icon-bg, var(--primary-color)),
+    transparent 80%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.logo p.label {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--text-secondary);
+}
+
+
+@media (max-width: 450px) {
+  .logo .container img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .logo .container {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logo p.label {
+    font-size: 12px;
+  }
+}
