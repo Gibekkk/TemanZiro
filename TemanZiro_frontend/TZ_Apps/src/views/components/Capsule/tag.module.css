@@ -1,9 +1,0 @@
-.tag {
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  padding: 6px 16px;
-  border-radius: 20px;
-  border: 2px solid var(--border);
-  font-size: 13px;
-  font-weight: 600;
-}
