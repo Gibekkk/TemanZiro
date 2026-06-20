@@ -1,4 +1,4 @@
-const COMMON_COLORS = {
+export const COMMON_COLORS = {
     primary: `#001846`,
     secondary: `#e96100`,
     tertiary: `#cc5500`,

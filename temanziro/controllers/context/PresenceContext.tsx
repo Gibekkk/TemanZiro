@@ -66,7 +66,7 @@ export function PresenceProvider({ children }: { children: React.ReactNode }) {
     }, [currentUser]);
 
     const watchUser = (targetUserId: string) => {
-        if (watchedUnsubs.current[targetUserId]) return; // Cegah duplikasi listener
+        if (watchedUnsubs.current[targetUserId]) return;
 
         const unsub = PresenceRepository.listenToUserStatus(targetUserId, (status) => {
             setWatchedStatuses((prev) => ({ ...prev, [targetUserId]: status }));
