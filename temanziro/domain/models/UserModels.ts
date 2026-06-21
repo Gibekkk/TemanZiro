@@ -1,4 +1,4 @@
-export type UserRole = "booker" | "companion" | null;
+import { UserRole, Gender } from "@/constants/AppConstant";
 
 export interface UserOnlineStatus {
     is_online: boolean;
@@ -6,13 +6,25 @@ export interface UserOnlineStatus {
 }
 
 export interface UserDetails {
-    role: "admin" | "companion" | "booker";
+    role: UserRole;
+    preferences: string[];
     is_verified: boolean;
     is_complete: boolean;
+    is_active: boolean;
+    url_ktp_user: string | null;
+    url_selfiektp_user: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
 }
 
 export interface UserProfile {
     uid: string;
-    name: string;
-    balance_user: string;
+    name_user: string;
+    gender_user: Gender;
+    age_user: number;
+    city: string;
+    balance_user: string | null;
+    url_photoprofile_user: string | null;
+    created_at: Date | null;
+    updated_at: Date | null;
 }

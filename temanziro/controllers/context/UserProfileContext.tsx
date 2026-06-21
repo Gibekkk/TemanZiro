@@ -1,7 +1,8 @@
 import React, { createContext, useEffect, useState, useContext, useRef } from "react";
 import { AuthContext } from "./AuthContext";
 import { UserRepository } from "@/data/repositories/UserRepository";
-import { UserRole, UserProfile } from "@/domain/models/UserModels";
+import { UserProfile } from "@/domain/models/UserModels";
+import { UserRole } from "@/constants/AppConstant";
 import { auth } from "@/data/config/firebase_config";
 
 interface UserProfileContextType {
@@ -19,7 +20,7 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
     const { currentUser } = useContext(AuthContext);
 
     const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-    const [role, setRole] = useState<UserRole>(null);
+    const [role, setRole] = useState<UserRole>("booker");
     const [userBalance, setUserBalance] = useState<string>("0");
     const [isVerified, setIsVerified] = useState<boolean>(false);
     const [isComplete, setIsComplete] = useState<boolean>(false);
@@ -29,16 +30,12 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
 
     useEffect(() => {
         if (!currentUser) {
-            setRole(null);
-            setUserProfile(null);
-            setUserBalance("0");
-            setProfileLoading(false);
             return;
         }
 
         setProfileLoading(true);
 
-        const unsubDetails = UserRepository.listenToUserDetails(currentUser.uid, async (detailsData) => {
+        const unsubDetails = UserRepository.subscribeUserDetails(currentUser.uid, async (detailsData) => {
             if (!detailsData) {
                 setProfileLoading(false);
                 return;
@@ -55,7 +52,7 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
             setIsComplete(detailsData.is_complete ?? false);
 
             unsubProfileRef.current?.();
-            unsubProfileRef.current = UserRepository.listenToUserProfile(currentUser.uid, currentRole, (profileData) => {
+            unsubProfileRef.current = UserRepository.subscribeUserProfile(currentUser.uid, (profileData) => {
                 setUserProfile(profileData);
                 setUserBalance(profileData?.balance_user ?? "0");
                 setProfileLoading(false);
@@ -69,7 +66,7 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
     }, [currentUser]);
 
     return (
-        <UserProfileContext.Provider value={{ userProfile, role, userBalance, isVerified, isComplete, profileLoading }}>
+        <UserProfileContext.Provider value={{ userProfile, userBalance, role, isVerified, isComplete, profileLoading }}>
             {children}
         </UserProfileContext.Provider>
     );

@@ -1,20 +1,82 @@
-import { db } from "@/data/config/firebase_config";
-import { doc, onSnapshot } from "firebase/firestore";
-import { UserRole } from "@/domain/models/UserModels";
+import firestore from "@react-native-firebase/firestore";
+import { UserDetails, UserProfile } from "@/domain/models/UserModels";
 
 export const UserRepository = {
-    listenToUserDetails: (uid: string, callback: (data: any) => void) => {
-        const ref = doc(db, "user_details", uid);
-        return onSnapshot(ref, (snap) => {
-            callback(snap.exists() ? snap.data() : null);
-        });
+    async getUserProfile(uid: string): Promise<UserProfile | null> {
+        try {
+            const docSnap = await firestore().collection("profile_user").doc(uid).get();
+            if (!docSnap.exists) {
+                return null;
+            }
+            return docSnap.data() as UserProfile;
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+            throw error;
+        }
+    },
+    
+    subscribeUserProfile(uid: string, callback: (profile: UserProfile | null) => void): () => void {
+        return firestore().collection("profile_user").doc(uid).onSnapshot((docSnap) => {
+            if (!docSnap.exists) {
+                callback(null);
+            } else {
+                callback(docSnap.data() as UserProfile);
+            }
+        },  
+        (error) => {
+            console.error("Error subscribing to user profile:", error);
+            }
+        );
     },
 
-    listenToUserProfile: (uid: string, role: UserRole, callback: (data: any) => void) => {
-        const collection = role === "companion" ? "profile_companion" : "profile_user";
-        const ref = doc(db, collection, uid);
-        return onSnapshot(ref, (snap) => {
-            callback(snap.exists() ? snap.data() : null);
-        });
-    }
+    async updateUserProfile(uid: string, data: Partial<UserProfile>): Promise<void> {
+        try {
+            await firestore().collection("profile_user").doc(uid).set({
+                ...data,
+                updated_at: firestore.FieldValue.serverTimestamp(),
+            }, { merge: true });
+        } catch (error) {
+            console.error("Error updating user profile:", error);
+            throw error;
+        }
+    },
+
+    async getUserDetails(uid: string): Promise<UserDetails | null> {
+        try {
+            const docSnap = await firestore().collection("user_details").doc(uid).get();
+            if (!docSnap.exists) {
+                return null;
+            }
+            return docSnap.data() as UserDetails;
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+            throw error;
+        }
+    },
+
+    subscribeUserDetails(uid: string, callback: (details: UserDetails | null) => void): () => void {
+        return firestore().collection("user_details").doc(uid).onSnapshot((docSnap) => {
+            if (!docSnap.exists) {
+                callback(null);
+            } else {
+                callback(docSnap.data() as UserDetails);
+            }
+        },  
+        (error) => {
+            console.error("Error subscribing to user details:", error);
+            }
+        );
+    },
+
+    async updateUserDetails(uid:string, data: Partial<UserDetails>): Promise<void> {
+        try {
+            await firestore().collection("user_details").doc(uid).set({
+                ...data,
+                updated_at: firestore.FieldValue.serverTimestamp(),
+            }, { merge: true });
+        } catch (error) {
+            console.error("Error updating user details:", error);
+            throw error;
+        }
+    },
 };

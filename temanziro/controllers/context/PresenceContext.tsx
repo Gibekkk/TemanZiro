@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useRef, ReactNode, useContext } from "react";
+import React, { createContext, useEffect, useState, useRef, useContext } from "react";
 import { AppState, AppStateStatus } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import { AuthContext } from "./AuthContext";
