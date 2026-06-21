@@ -1,0 +1,56 @@
+name: Build and Auto Release APK
+
+# Workflow ini akan berjalan setiap ada push ke branch 'main'
+on:
+  push:
+    branches:
+      - main
+
+# Membatasi izin GITHUB_TOKEN agar bisa membuat Release
+permissions:
+  contents: write
+
+jobs:
+  build-android:
+    name: Build and Release Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Sesuaikan dengan versi Node di lokal Anda
+
+      - name: Setup Java (JDK 17)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17' # React Native versi baru biasanya butuh Java 17
+
+      - name: Install NPM Dependencies
+        run: npm install
+        # Jika Anda menggunakan yarn, ganti dengan: yarn install
+
+      - name: Build Android Release APK
+        run: |
+          cd android
+          chmod +x ./gradlew
+          ./gradlew assembleRelease
+
+      - name: Get short SHA for release tag
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release and Upload APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: release-${{ steps.vars.outputs.sha_short }}
+          name: Auto Release - Commit ${{ steps.vars.outputs.sha_short }}
+          # Path di bawah menggunakan wildcard (*.apk) agar mendeteksi 
+          # baik app-release.apk maupun app-release-unsigned.apk
+          files: android/app/build/outputs/apk/release/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
