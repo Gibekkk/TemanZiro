@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Sesuaikan dengan versi Node di lokal Anda
+          node-version: '22'
 
       - name: Setup Java (JDK 17)
         uses: actions/setup-java@v4
