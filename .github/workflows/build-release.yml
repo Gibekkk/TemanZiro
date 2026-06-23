@@ -52,6 +52,10 @@ jobs:
           echo "org.gradle.workers.max=1"                                            >> gradle.properties
           echo "org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" >> gradle.properties
 
+      - name: Print app/build.gradle
+        working-directory: temanziro/android/app
+        run: cat -n build.gradle
+
       - name: Build Android Debug APK
         working-directory: temanziro/android
         run: |
