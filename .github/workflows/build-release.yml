@@ -35,7 +35,7 @@ jobs:
         run: npm install
 
       - name: Write google-services.json
-        run: echo "${{ secrets.FIREBASE_JSON_BASE64 }}" | base64 --decode > /google-services.json
+        run: echo "${{ secrets.FIREBASE_JSON_BASE64 }}" | base64 --decode | sudo tee /google-services.json > /dev/null
 
       - name: Generate Android Folder
         run: CI=1 npx expo prebuild --platform android
