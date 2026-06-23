@@ -58,19 +58,11 @@ jobs:
           echo "org.gradle.workers.max=1"                                            >> gradle.properties
           echo "org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" >> gradle.properties
 
-      - name: Print app/build.gradle
-        working-directory: temanziro/android/app
-        run: cat -n build.gradle
-
       - name: Build Android Debug APK
         working-directory: temanziro/android
         run: |
           chmod +x ./gradlew
-          ./gradlew assembleDebug --no-daemon --max-workers=1 --stacktrace \
-            -PKEYSTORE_FILE=/dev/null \
-            -PKEYSTORE_PASSWORD=dummy \
-            -PKEY_ALIAS=dummy \
-            -PKEY_PASSWORD=dummy
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Get short SHA
         id: vars
