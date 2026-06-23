@@ -40,6 +40,14 @@ jobs:
       - name: Generate Android Folder
         run: CI=1 npx expo prebuild --platform android --clean
 
+      - name: Patch build.gradle - Remove signing config
+        working-directory: temanziro/android/app
+        run: |
+          sed -i '/signingConfigs {/,/^    }/d' build.gradle
+          sed -i '/signingConfig signingConfigs.release/d' build.gradle
+          echo "=== build.gradle setelah patch ==="
+          cat build.gradle
+
       - name: Configure Gradle
         working-directory: temanziro/android
         run: |
