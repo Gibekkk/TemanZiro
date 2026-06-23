@@ -34,8 +34,12 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
 
+      - name: Write google-services.json      # ← decode secret ke path yg diharapkan
+        run: echo "${{ secrets.FIREBASE_JSON_BASE64 }}" | base64 --decode > google-services.json
+
       - name: Generate Android Folder
-        run: npx expo prebuild --platform android --non-interactive
+        run: CI=1 npx expo prebuild --platform android
+
       - name: Build Android Release APK
         working-directory: temanziro/android
         run: |
