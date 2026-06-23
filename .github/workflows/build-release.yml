@@ -56,7 +56,7 @@ jobs:
         working-directory: temanziro/android
         run: |
           chmod +x ./gradlew
-          ./gradlew assembleDebug --no-daemon --max-workers=1 \
+          ./gradlew assembleDebug --no-daemon --max-workers=1 --stacktrace \
             -PKEYSTORE_FILE=/dev/null \
             -PKEYSTORE_PASSWORD=dummy \
             -PKEY_ALIAS=dummy \
