@@ -9,9 +9,23 @@ export const COMMON_COLORS = {
     lightText: `#ffffff`,
     offButton: `#f4e7dd`,
     onButton: `#f5eee9`,
-}
+} as const;
+
+export const LIGHT_THEME = {
+    colors: {
+        ...COMMON_COLORS,
+    }
+} as const;
+
+export const DARK_THEME = {
+    colors: {
+        ...COMMON_COLORS,
+    }
+} as const;
 
 export const FONTS = {
     montserrat: `Montserrat`,
     quicksand: `Quicksand`,
-}
+} as const;
+
+export type Theme = typeof LIGHT_THEME;

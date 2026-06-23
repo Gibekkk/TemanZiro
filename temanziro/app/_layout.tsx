@@ -1,12 +1,17 @@
-import { useFonts } from "@expo-google-fonts/quicksand";
-import { Stack } from "expo-router";
+import { SplashScreen } from "expo-router";
 
 import { Montserrat_400Regular, Montserrat_700Bold } from "@expo-google-fonts/montserrat";
-import { Quicksand_400Regular, Quicksand_700Bold } from "@expo-google-fonts/quicksand";
+import { Quicksand_400Regular, Quicksand_700Bold, useFonts } from "@expo-google-fonts/quicksand";
 import React, { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import LottieView from "lottie-react-native";
+import { View, StyleSheet } from "react-native";
+
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
+  const [lottieFinished, setLottieFinished] = React.useState(false);
   const [fontsLoaded, fontsError] = useFonts({
     'Quicksand_400Regular': Quicksand_400Regular,
     'Quicksand_700Bold': Quicksand_700Bold,
@@ -17,7 +22,7 @@ export default function RootLayout() {
   useEffect(() => {
     async function prepare() {
       if (fontsLoaded || fontsError) {
-        // Kalau ada animasi splashscreen
+        await SplashScreen.hideAsync();
       }
     }
     prepare();
@@ -26,6 +31,21 @@ export default function RootLayout() {
   if (!fontsLoaded && !fontsError) {
     return null;
   }
+
+  if (!lottieFinished) {
+    return (
+      <View style={{ flex: 1, backgroundColor: '#121212' }}>
+        <LottieView
+          source={require('@/assets/splashscreen/splashScreen.json')}
+          autoPlay
+          loop={false}
+          onAnimationFinish={() => setLottieFinished(true)}
+          style={StyleSheet.absoluteFill}
+        />
+      </View>
+    );
+  }
+
   return (
     <SafeAreaProvider>
     </SafeAreaProvider>
