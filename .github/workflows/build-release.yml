@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: temanziro  # ← set default dir semua step
+        working-directory: temanziro
 
     steps:
       - name: Checkout Repository
@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.22.2'  # ← versi spesifik
+          node-version: '22.22.2'
 
       - name: Setup Java (JDK 17)
         uses: actions/setup-java@v4
@@ -34,22 +34,24 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install
 
+      - name: Generate Android Folder
+        run: npx expo prebuild --platform android --non-interactive
       - name: Build Android Release APK
+        working-directory: temanziro/android
         run: |
-          cd android
           chmod +x ./gradlew
           ./gradlew assembleRelease
 
-      - name: Get short SHA for release tag
+      - name: Get short SHA
         id: vars
-        working-directory: ${{ github.workspace }}  # ← git cmd dari root
+        working-directory: ${{ github.workspace }}
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-      - name: Create GitHub Release and Upload APK
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: release-${{ steps.vars.outputs.sha_short }}
           name: Auto Release - Commit ${{ steps.vars.outputs.sha_short }}
-          files: temanziro/android/app/build/outputs/apk/release/*.apk  # ← path APK dengan prefix folder
+          files: temanziro/android/app/build/outputs/apk/release/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
