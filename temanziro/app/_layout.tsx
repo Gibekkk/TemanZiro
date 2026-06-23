@@ -34,9 +34,9 @@ export default function RootLayout() {
 
   if (!lottieFinished) {
     return (
-      <View style={{ flex: 1, backgroundColor: '#121212' }}>
+      <View style={{ flex: 1, backgroundColor: '#121212' }}> 
         <LottieView
-          source={require('@/assets/splashscreen/splashScreen.json')}
+          source={require('@/assets/animation/TemanZiro_LoadingScreen.json')}
           autoPlay
           loop={false}
           onAnimationFinish={() => setLottieFinished(true)}
@@ -48,6 +48,7 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
+      {/* <MainLayout /> */}
     </SafeAreaProvider>
   );
 }

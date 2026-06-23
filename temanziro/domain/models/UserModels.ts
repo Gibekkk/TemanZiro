@@ -1,4 +1,4 @@
-import { UserRole, Gender } from "@/constants/AppConstant";
+import { UserRole, Gender } from "@/constants/UserDetailConstant";
 
 export interface UserOnlineStatus {
     is_online: boolean;
@@ -13,6 +13,8 @@ export interface UserDetails {
     is_active: boolean;
     url_ktp_user: string | null;
     url_selfiektp_user: string | null;
+    companion_cv: string | null;
+    companion_phonenumber: string | null;
     created_at: Date | null;
     updated_at: Date | null;
 }
