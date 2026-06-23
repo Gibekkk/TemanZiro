@@ -40,6 +40,12 @@ jobs:
       - name: Generate Android Folder
         run: CI=1 npx expo prebuild --platform android --clean
 
+      - name: Patch hermesCommand in build.gradle
+        working-directory: temanziro/android/app
+        run: |
+          # Hapus baris hermesCommand yang tidak bisa resolve hermes-compiler
+          sed -i '/hermesCommand\s*=/d' build.gradle
+
       - name: Configure Gradle
         working-directory: temanziro/android
         run: |
