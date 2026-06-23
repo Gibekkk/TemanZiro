@@ -32,19 +32,31 @@ jobs:
           java-version: '17'
 
       - name: Install NPM Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Write google-services.json
         run: echo "${{ secrets.FIREBASE_JSON_BASE64 }}" | base64 --decode > google-services.json
 
       - name: Generate Android Folder
-        run: CI=1 npx expo prebuild --platform android
+        run: CI=1 npx expo prebuild --platform android --clean
 
-      - name: Build Android Release APK
+      - name: Configure Gradle
+        working-directory: temanziro/android
+        run: |
+          grep -v "org.gradle.jvmargs\|org.gradle.daemon\|org.gradle.parallel\|org.gradle.workers" \
+            gradle.properties > gradle.properties.tmp
+          mv gradle.properties.tmp gradle.properties
+          echo "REACT_NATIVE_ARCHITECTURES=arm64-v8a"                               >> gradle.properties
+          echo "org.gradle.daemon=false"                                             >> gradle.properties
+          echo "org.gradle.parallel=false"                                           >> gradle.properties
+          echo "org.gradle.workers.max=1"                                            >> gradle.properties
+          echo "org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" >> gradle.properties
+
+      - name: Build Android Debug APK
         working-directory: temanziro/android
         run: |
           chmod +x ./gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --no-daemon
 
       - name: Get short SHA
         id: vars
