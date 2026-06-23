@@ -44,7 +44,7 @@ jobs:
         working-directory: temanziro/android
         run: |
           chmod +x ./gradlew
-          ./gradlew assembleRelease
+          ./gradlew assembleDebug
 
       - name: Get short SHA
         id: vars
@@ -56,6 +56,6 @@ jobs:
         with:
           tag_name: release-${{ steps.vars.outputs.sha_short }}
           name: Auto Release - Commit ${{ steps.vars.outputs.sha_short }}
-          files: temanziro/android/app/build/outputs/apk/release/*.apk
+          files: temanziro/android/app/build/outputs/apk/debug/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
