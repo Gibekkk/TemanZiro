@@ -30,5 +30,5 @@ export interface Bookings {
 }
 
 export interface BookingCompanion {
-    bookings: DocumentReference<Bookings>;
+    bookings: FirebaseFirestoreTypes.DocumentReference<Bookings>;
 }
