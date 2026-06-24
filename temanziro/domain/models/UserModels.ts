@@ -1,4 +1,4 @@
-import { UserRole, Gender } from "@/constants/UserDetailConstant";
+import { UserRole, Gender } from "@/constants/UserDetails";
 
 export interface UserOnlineStatus {
     is_online: boolean;

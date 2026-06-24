@@ -6,10 +6,29 @@ import hiburanImg from "@/assets/images/hiburan.jpg";
 import kulinerImg from "@/assets/images/kuliner.jpg";
 
 export const ACTIVITY_TYPE = [
-  { id: "1", title: "Nongkrong", vibes: "Cafe & Chill", image: nongkrongImg },
-  { id: "2", title: "Olahraga", vibes: "Sports & Active", image: olahragaImg },
-  { id: "3", title: "Belajar", vibes: "Study & Work", image: belajarImg },
-  { id: "4", title: "Jalan-jalan", vibes: "Explore & Travel", image: jalanImg },
-  { id: "5", title: "Hiburan", vibes: "Film & Events", image: hiburanImg },
-  { id: "6", title: "Kuliner", vibes: "Food & Dining", image: kulinerImg },
+  { id: "1", title: "Nongkrong", value: "nongkrong", vibes: "Cafe & Chill", image: nongkrongImg },
+  { id: "2", title: "Olahraga", value: "olahraga", vibes: "Sports & Active", image: olahragaImg },
+  { id: "3", title: "Belajar", value: "belajar", vibes: "Study & Work", image: belajarImg },
+  { id: "4", title: "Jalan-jalan", value: "jalan-jalan", vibes: "Explore & Travel", image: jalanImg },
+  { id: "5", title: "Hiburan", value: "hiburan", vibes: "Film & Events", image: hiburanImg },
+  { id: "6", title: "Kuliner", value: "kuliner", vibes: "Food & Dining", image: kulinerImg },
 ];
+
+export const TIME_MODE = {
+  STANDARD: "standard",
+  FULL_DAY: "full_day",
+}
+
+export const BOOKING_STATUS = {
+  MENUNGGU_PEMBAYARAN: "menunggu_pembayaran",
+  MENCARI: "mencari",
+  KONFIRMASI: "konfirmasi",
+  BERLANGSUNG: "berlangsung",
+  SELESAI: "selesai",
+  PERMINTAAN: "permintaan",
+  BATAL: "batal",
+}
+
+export const ACTIVITY_TYPE_VALUES = ACTIVITY_TYPE.map((activity) => activity.value);
+
+export const BOOKING_STATUS_VALUES = Object.values(BOOKING_STATUS);
