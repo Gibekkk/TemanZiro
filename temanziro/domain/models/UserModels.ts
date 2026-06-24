@@ -1,4 +1,5 @@
-import { UserRole, GENDER } from "@/constants/UserDetails";
+import { UserRole, Gender } from "@/constants/UserDetails";
+import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 
 export interface UserOnlineStatus {
     is_online: boolean;
@@ -6,7 +7,7 @@ export interface UserOnlineStatus {
 }
 
 export interface UserDetails {
-    role: typeof UserRole[keyof typeof UserRole];
+    role: UserRole;
     preferences: string[];
     is_verified: boolean;
     is_complete: boolean;
@@ -22,7 +23,7 @@ export interface UserDetails {
 export interface UserProfile {
     uid: string;
     name_user: string;
-    gender_user: typeof GENDER[keyof typeof GENDER];
+    gender_user: Gender;
     age_user: number;
     city: string;
     balance_user: string | null;

@@ -11,20 +11,21 @@ export type TierType = {
     name: string;
     value: string;
     minPoints: number;
-    badgeImg: string;
-    mascotImg: string;
+    badgeImg: any;
+    mascotImg: any;
 }
 
-export const TIERS: Record<string, TierType> = {
+export const TIERS = {
     bronze: { name: "Bronze", value: "bronze", minPoints: 25, badgeImg: bronzeBadge, mascotImg: bronzeMascot },
     silver: { name: "Silver", value: "silver", minPoints: 100, badgeImg: silverBadge, mascotImg: silverMascot },
     gold: { name: "Gold", value: "gold", minPoints: 500, badgeImg: goldBadge, mascotImg: goldMascot },
     platinum: { name: "Platinum", value: "platinum", minPoints: 1000, badgeImg: platinumBadge, mascotImg: platinumMascot }
-} as const;
+} as const satisfies Record<string, TierType>;
 
-type StarRating = 1 | 2 | 3 | 4 | 5;
+export type Tier = typeof TIERS[keyof typeof TIERS]["value"];
+export type StarRating = 1 | 2 | 3 | 4 | 5;
 
-export const FEELING_OPTIONS: Record<StarRating, string[]> = {
+export const FEELING_OPTIONS: Record<StarRating, readonly string[]> = {
     1: ["Dissapointed", "Ignored", "Uncomfortable", "Unpleasant"],
     2: ["Unhelpful", "Rushed", "Misunderstood", "Unfriendly"],
     3: ["Average", "Met Expectations", "Neutral"],

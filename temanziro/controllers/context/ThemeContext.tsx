@@ -1,12 +1,13 @@
 import { LIGHT_THEME, DARK_THEME, Theme } from "@/constants/Theme";
-import React, { createContext } from "react";
+import React, { createContext, ReactNode } from "react";
+import { useColorScheme } from "react-native";
 
 interface ThemeContextData {
     theme: Theme;
     isDark: boolean;
 }
 
-const ThemeContext = createContext<ThemeContextData | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextData | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     const colorScheme = useColorScheme();

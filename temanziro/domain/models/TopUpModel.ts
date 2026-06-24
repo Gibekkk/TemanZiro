@@ -1,9 +1,9 @@
 import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
-import { TOPUP_STATUS } from "@/constants/MoneyDetails";
+import { TopUpStatus } from "@/constants/MoneyDetails";
 
 export interface TopUps {
     amount: number;
     decline_reason: string | null;
-    topup_status: typeof TOPUP_STATUS[keyof typeof TOPUP_STATUS];
+    topup_status: TopUpStatus;
     created_at: FirebaseFirestoreTypes.Timestamp;
 }

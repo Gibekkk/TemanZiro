@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState, useContext, useRef } from "r
 import { AuthContext } from "./AuthContext";
 import { UserRepository } from "@/data/repositories/UserRepository";
 import { UserProfile } from "@/domain/models/UserModels";
-import { UserRole } from "@/constants/UserDetailConstant";
+import { UserRole } from "@/constants/UserDetails";
 import { auth } from "@/data/config/firebase_config";
 
 interface UserProfileContextType {

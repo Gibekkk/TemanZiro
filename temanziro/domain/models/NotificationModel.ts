@@ -1,11 +1,13 @@
-import { ACTIVITY_TYPE } from "@/constants/BookingDetails";
+import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
+import { ActivityType, BookingStatus } from "@/constants/BookingDetails";
+import { NotificationType } from "@/constants/Notification";
 
 export interface Notification {
-    activity_name: typeof ACTIVITY_TYPE[number]["value"];
+    activity_name: ActivityType;
     booking_id: string;
     notification_datetime: FirebaseFirestoreTypes.Timestamp;
     requester_id: string;
-    booking_status: typeof BOOKING_STATUS[keyof typeof BOOKING_STATUS];
-    notification_type: typeof NOTIFICATION_TYPE[keyof typeof NOTIFICATION_TYPE];
+    booking_status: BookingStatus;
+    notification_type: NotificationType;
     created_at: FirebaseFirestoreTypes.Timestamp;
 }

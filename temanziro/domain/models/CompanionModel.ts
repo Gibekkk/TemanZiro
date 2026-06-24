@@ -1,7 +1,10 @@
+import { Gender } from "@/constants/UserDetails";
+import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
+
 export interface CompanionProfile {
     uid: string;
     name_companion: string;
-    gender_companion: typeof GENDER[keyof typeof GENDER];
+    gender_companion: Gender;
     age_companion: number;
     city_companion: string;
     address_companion: string | null;
