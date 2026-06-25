@@ -9,5 +9,7 @@ export interface Notification {
     requester_id: string;
     booking_status: BookingStatus;
     notification_type: NotificationType;
+    is_read: boolean;
     created_at: FirebaseFirestoreTypes.Timestamp;
+    updated_at: FirebaseFirestoreTypes.Timestamp;
 }
