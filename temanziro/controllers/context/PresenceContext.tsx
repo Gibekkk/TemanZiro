@@ -3,11 +3,11 @@ import { AppState, AppStateStatus } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import { AuthContext } from "./AuthContext";
 import { PresenceRepository } from "@/data/repositories/PresenceRepository";
-import { UserOnlineStatus } from "@/domain/models/UserModels";
+import { OnlineStatus } from "@/domain/models/OnlineStatusModel";
 
 interface PresenceContextType {
     isOnline: boolean;
-    watchedStatuses: Record<string, UserOnlineStatus>;
+    watchedStatuses: Record<string, OnlineStatus>;
     watchUser: (userId: string) => void;
     unwatchUser: (userId: string) => void;
 }
@@ -23,7 +23,7 @@ export function PresenceProvider({ children }: { children: React.ReactNode }) {
     const { currentUser } = useContext(AuthContext);
 
     const [isOnline, setIsOnline] = useState(false);
-    const [watchedStatuses, setWatchedStatuses] = useState<Record<string, UserOnlineStatus>>({});
+    const [watchedStatuses, setWatchedStatuses] = useState<Record<string, OnlineStatus>>({});
     const watchedUnsubs = useRef<Record<string, () => void>>({});
 
     useEffect(() => {

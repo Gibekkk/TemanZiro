@@ -1,9 +1,5 @@
-import { UserRole, Gender } from "@/constants/UserDetailConstant";
-
-export interface UserOnlineStatus {
-    is_online: boolean;
-    last_seen: Date | null;
-}
+import { UserRole, Gender } from "@/constants/UserDetails";
+import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 
 export interface UserDetails {
     role: UserRole;
@@ -15,8 +11,8 @@ export interface UserDetails {
     url_selfiektp_user: string | null;
     companion_cv: string | null;
     companion_phonenumber: string | null;
-    created_at: Date | null;
-    updated_at: Date | null;
+    created_at: FirebaseFirestoreTypes.Timestamp | null;
+    updated_at: FirebaseFirestoreTypes.Timestamp | null;
 }
 
 export interface UserProfile {
@@ -27,6 +23,6 @@ export interface UserProfile {
     city: string;
     balance_user: string | null;
     url_photoprofile_user: string | null;
-    created_at: Date | null;
-    updated_at: Date | null;
+    created_at: FirebaseFirestoreTypes.Timestamp | null;
+    updated_at: FirebaseFirestoreTypes.Timestamp | null;
 }

@@ -12,6 +12,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "metro.config.js"  ]
+    "expo-env.d.ts",
+    "metro.config.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "app-example"
+  ]
 }
