@@ -1,7 +1,14 @@
 import { db, rtdb } from "@/data/config/firebase_config";
 import firestore from "@react-native-firebase/firestore";
 import database from "@react-native-firebase/database";
-import { UserOnlineStatus } from "@/domain/models/UserModels";
+import { OnlineStatus } from "@/domain/models/OnlineStatusModel";
+
+export function mapToOnlineStatus(data: any): OnlineStatus {
+    return {
+        is_online: typeof data?.is_online === 'boolean' ? data.is_online : false,
+        last_seen: data?.last_seen || null,
+    };
+}
 
 export const PresenceRepository = {
     setUserPresence: async (uid: string, isOnline: boolean) => {
@@ -10,31 +17,31 @@ export const PresenceRepository = {
             const firestoreRef = db.collection("online_status").doc(uid);
 
             if (isOnline) {
-                await rtdbRef.onDisconnect().set({ 
-                    is_online: false, 
-                    last_seen: database.ServerValue.TIMESTAMP 
+                await rtdbRef.onDisconnect().set({
+                    is_online: false,
+                    last_seen: database.ServerValue.TIMESTAMP
                 });
-                
-                await rtdbRef.set({ 
-                    is_online: true, 
-                    last_seen: database.ServerValue.TIMESTAMP 
+
+                await rtdbRef.set({
+                    is_online: true,
+                    last_seen: database.ServerValue.TIMESTAMP
                 });
-                
-                await firestoreRef.set({ 
-                    is_online: true, 
-                    last_seen: firestore.FieldValue.serverTimestamp() 
+
+                await firestoreRef.set({
+                    is_online: true,
+                    last_seen: firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
             } else {
                 await rtdbRef.onDisconnect().cancel();
-                
-                await rtdbRef.set({ 
-                    is_online: false, 
-                    last_seen: database.ServerValue.TIMESTAMP 
+
+                await rtdbRef.set({
+                    is_online: false,
+                    last_seen: database.ServerValue.TIMESTAMP
                 });
-                
-                await firestoreRef.set({ 
-                    is_online: false, 
-                    last_seen: firestore.FieldValue.serverTimestamp() 
+
+                await firestoreRef.set({
+                    is_online: false,
+                    last_seen: firestore.FieldValue.serverTimestamp()
                 }, { merge: true });
             }
         } catch (error) {
@@ -42,14 +49,30 @@ export const PresenceRepository = {
         }
     },
 
-    subscribeUserStatus: (targetUid: string, onUpdate: (status: UserOnlineStatus) => void) => {
+    subscribeUserStatus: (targetUid: string, onUpdate: (status: OnlineStatus) => void) => {
         const firestoreRef = db.collection("online_status").doc(targetUid);
         return firestoreRef.onSnapshot((snap) => {
             if (snap && snap.exists()) {
-                onUpdate(snap.data() as UserOnlineStatus);
+                onUpdate(mapToOnlineStatus(snap.data()));
+            } else {
+                onUpdate(mapToOnlineStatus(null));
             }
         }, (error) => {
-            console.error("Error listening to user status:", error);
+            console.error("Error listening to user status in subscribeUserStatus:", error);
+        });
+    },
+
+    listenToUserStatus: (targetUid: string, onUpdate: (status: OnlineStatus) => void) => {
+        const firestoreRef = db.collection("online_status").doc(targetUid);
+        return firestoreRef.onSnapshot((snap) => {
+            if (snap && snap.exists()) {
+                onUpdate(mapToOnlineStatus(snap.data()));
+            } else {
+                onUpdate(mapToOnlineStatus(null));
+            }
+        }, (error) => {
+            console.error("Error listening to user status in listenToUserStatus:", error);
         });
     }
 };
+

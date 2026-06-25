@@ -1,11 +1,6 @@
 import { UserRole, Gender } from "@/constants/UserDetails";
 import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 
-export interface UserOnlineStatus {
-    is_online: boolean;
-    last_seen: FirebaseFirestoreTypes.Timestamp | null;
-}
-
 export interface UserDetails {
     role: UserRole;
     preferences: string[];

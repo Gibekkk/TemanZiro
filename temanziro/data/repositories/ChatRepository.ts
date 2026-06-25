@@ -1,5 +1,4 @@
-// subscribe untuk chat dan list chat
-import firestore from '@react-native-firebase/firestore';
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { ChatMessage, ChatRoomMeta } from '@/domain/models/ChatModel';
 
 export const ChatRepository = {
@@ -31,7 +30,7 @@ export const ChatRepository = {
         .collection('chat')
         .doc(userUid)
         .onSnapshot((docSnapshot) => {
-            if (docSnapshot.exists) {
+            if (docSnapshot.exists()) {
             onUpdate({
                 id: docSnapshot.id,
                 ...docSnapshot.data(),
@@ -116,10 +115,10 @@ export const ChatRepository = {
         }
     },
 
-    resolveBookingData: async (bookingRef: firestore.FirebaseFirestoreTypes.DocumentReference): Promise<any | null> => {
+    resolveBookingData: async (bookingRef: FirebaseFirestoreTypes.DocumentReference): Promise<any | null> => {
         try {
             const snapshot = await bookingRef.get();
-            if (snapshot.exists) {
+            if (snapshot.exists()) {
                 return snapshot.data();
             }
         return null;
