@@ -1,4 +1,5 @@
 import { Bookings } from "@/domain/models/BookingModel";
+import firestore from "@react-native-firebase/firestore";
 
 export const BookingRepository = {
     async getBookingDetails(bookingId: string): Promise<Bookings | null> {
