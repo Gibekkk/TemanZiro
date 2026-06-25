@@ -64,6 +64,9 @@
               "RNFBStorage",
               "RNFBSomeOtherRNFBModuleYouAreUsing"
             ]
+          },
+          "android": {
+            "kotlinVersion": "1.9.24"
           }
         }
       ],
