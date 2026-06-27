@@ -3,6 +3,7 @@ import { ActivityType, BookingStatus } from "@/constants/BookingDetails";
 import { NotificationType } from "@/constants/Notification";
 
 export interface Notification {
+    id?: string;
     activity_name: ActivityType;
     booking_id: string;
     notification_datetime: FirebaseFirestoreTypes.Timestamp;

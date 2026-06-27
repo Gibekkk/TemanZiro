@@ -1,7 +1,7 @@
 import { Notification } from "@/domain/models/NotificationModel";
 import firestore from "@react-native-firebase/firestore";
 
-    
+
 
 export const NotificationRepository = {
     subscribeNotifications(userUid: string, callback: (notifications: Notification[]) => void, onError?: (error: any) => void): () => void {
@@ -20,6 +20,7 @@ export const NotificationRepository = {
                         const notifications: Notification[] = snapshot.docs.map(doc => {
                             const data = doc.data() as Notification;
                             return {
+                                id: doc.id,
                                 ...data,
                                 notification_datetime: data.notification_datetime,
                                 created_at: data.created_at,
@@ -62,6 +63,7 @@ export const NotificationRepository = {
             return querySnapshot.docs.map(doc => {
                 const data = doc.data() as Notification;
                 return {
+                    id: doc.id,
                     ...data,
                     notification_datetime: data.notification_datetime,
                     created_at: data.created_at,

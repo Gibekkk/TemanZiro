@@ -7,7 +7,7 @@ export const TransactionRepository = {
     async createTopUpRequest(userUid: string, amount:number): Promise<string> {
         try {
             const docRef = await firestore()
-                .collection('users')
+                .collection('top_ups')
                 .doc(userUid)
                 .collection('requests')
                 .add({
