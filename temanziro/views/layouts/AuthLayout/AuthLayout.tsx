@@ -14,7 +14,7 @@ export default function OnboardingLayout({ children }: OnboardingLayoutProps) {
 
   return (
     <LinearGradient
-      colors={[primaryLight, COMMON_COLORS.background]}
+      colors={[primaryLight, COMMON_COLORS.primaryBackground]}
       locations={[0.25, 0.7]}
       style={styles.screen}
     >
