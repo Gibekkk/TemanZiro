@@ -26,6 +26,7 @@ export default StyleSheet.create({
     backgroundColor: "transparent",
     borderWidth: 2,
     borderColor: THIRD_COLOR,
+    
   },
   outlineText: {
     color: THIRD_COLOR,

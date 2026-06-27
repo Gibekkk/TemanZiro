@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { COMMON_COLORS, FONTS } from "@/constants/Theme";
 
 const { width } = Dimensions.get("window");
-const PRIMARY_COLOR = "#FF8C00"; // Default bg
 
 export default StyleSheet.create({
   logoWrapper: {
@@ -12,7 +12,7 @@ export default StyleSheet.create({
     width: width <= 450 ? 40 : 50,
     height: width <= 450 ? 40 : 50,
     borderRadius: 25,
-    backgroundColor: `${PRIMARY_COLOR}33`, // Default warna dengan opacity 20%
+    backgroundColor: `${COMMON_COLORS.secondaryBackground}`,
     alignItems: "center",
     justifyContent: "center",
   },

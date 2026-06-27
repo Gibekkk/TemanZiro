@@ -23,7 +23,7 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: COMMON_COLORS.background, 
+    backgroundColor: `${COMMON_COLORS.primaryBackground}`, 
     paddingVertical: "5%",
     paddingHorizontal: 20,
     borderTopLeftRadius: 20,

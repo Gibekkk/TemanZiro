@@ -1,18 +1,37 @@
-import { SplashScreen, Stack, useRouter } from "expo-router";
-import { Montserrat_400Regular, Montserrat_700Bold } from "@expo-google-fonts/montserrat";
-import { Quicksand_400Regular, Quicksand_700Bold, useFonts } from "@expo-google-fonts/quicksand";
+import { SplashScreen, Stack } from "expo-router";
+import {
+  Montserrat_400Regular,
+  Montserrat_700Bold,
+} from "@expo-google-fonts/montserrat";
+import {
+  Quicksand_400Regular,
+  Quicksand_700Bold,
+  useFonts,
+} from "@expo-google-fonts/quicksand";
 import React, { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import LottieView from "lottie-react-native";
 import { View, StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTheme } from "@/controllers/hooks/useTheme";
+import { ThemeProvider } from "@/controllers/context/ThemeContext";
 
 SplashScreen.preventAutoHideAsync();
 
+// 1. Komponen Pembungkus Utama
 export default function RootLayout() {
+  return (
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <RootLayoutContent />
+      </ThemeProvider>
+    </SafeAreaProvider>
+  );
+}
+
+// 2. Komponen Isi
+function RootLayoutContent() {
   const [lottieFinished, setLottieFinished] = useState(false);
-  const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
-  const router = useRouter();
+  const { theme } = useTheme(); 
 
   const [fontsLoaded, fontsError] = useFonts({
     Quicksand_400Regular: Quicksand_400Regular,
@@ -30,40 +49,16 @@ export default function RootLayout() {
     prepare();
   }, [fontsLoaded, fontsError]);
 
-  useEffect(() => {
-    async function checkAppLaunch() {
-      try {
-        const hasLaunched = await AsyncStorage.getItem("hasLaunched");
-        if (hasLaunched === null) {
-          setIsFirstLaunch(true);
-        } else {
-          setIsFirstLaunch(false);
-        }
-      } catch (error) {
-        console.error("Gagal membaca AsyncStorage:", error);
-        setIsFirstLaunch(true);
-      }
-    }
-    checkAppLaunch();
-  }, []);
-
-  useEffect(() => {
-    if (lottieFinished && isFirstLaunch !== null) {
-      if (isFirstLaunch) {
-        router.replace("/auth/AuthScreen_Call");
-      } else {
-        // router.replace("/auth/AuthScreen_Call");
-      }
-    }
-  }, [lottieFinished, isFirstLaunch]);
-
   if (!fontsLoaded && !fontsError) {
     return null;
   }
 
+  // Logika Lottie tetap dipertahankan di sini
   if (!lottieFinished) {
     return (
-      <View style={{ flex: 1, backgroundColor: "#121212" }}>
+      <View
+        style={{ flex: 1, backgroundColor: theme.colors.primaryBackground }}
+      >
         <LottieView
           source={require("@/assets/animation/TemanZiro_LoadingScreen.json")}
           autoPlay
@@ -75,14 +70,6 @@ export default function RootLayout() {
     );
   }
 
-  // Layar Utama (Root dari Expo Router)
-  return (
-    <SafeAreaProvider>
-      {/* Stack adalah pengganti <MainLayout />. 
-        Ia bertugas merender halaman (seperti onboarding-1.tsx atau login.tsx) 
-        tanpa memunculkan header bawaan (headerShown: false).
-      */}
-      <Stack screenOptions={{ headerShown: false }} />
-    </SafeAreaProvider>
-  );
+  // Layar Utama (Setelah Lottie selesai, Stack akan me-render app/index.tsx)
+  return <Stack screenOptions={{ headerShown: false }} />;
 }

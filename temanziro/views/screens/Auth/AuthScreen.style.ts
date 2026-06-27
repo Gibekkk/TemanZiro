@@ -1,11 +1,9 @@
 import { StyleSheet, Dimensions } from "react-native";
-// Pastikan path import ini sesuai dengan lokasi file Theme.ts kamu
 import { COMMON_COLORS, FONTS } from "@/constants/Theme"; 
 
 const { height, width } = Dimensions.get("window");
 
 export default StyleSheet.create({
-  // --- Style untuk Content ---
   contentContainer: {
     flex: 1,
     alignItems: "center",
@@ -28,7 +26,7 @@ export default StyleSheet.create({
   imageZiro1: {
     position: "absolute",
     left: "8%",
-    top: "-15%",
+    top: "-7%",
     width: "40%",
     height: "40%",
     zIndex: 2,
@@ -41,13 +39,12 @@ export default StyleSheet.create({
     fontSize: width <= 450 ? 24 : 26,
     color: COMMON_COLORS.textPrimary,
     textAlign: "center",
-    marginTop: 20,
     fontFamily: `${FONTS.montserrat}-Bold`,
-    letterSpacing: -0.32,
+    fontWeight: 700,
     lineHeight: width <= 450 ? 30 : 40,
   },
   textHighlight: {
-    color: COMMON_COLORS.primary,
+    color: COMMON_COLORS.secondary,
     fontFamily: `${FONTS.montserrat}-Bold`,
   },
   description: {
@@ -69,7 +66,7 @@ export default StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     width: "100%",
-    marginTop: height <= 660 ? 40 : width <= 450 ? 50 : 40,
+    marginBottom: height <= 660 ? 20 : width <= 450 ? 30 : 20,
     gap: 10,
   },
   logoWrapper: {
