@@ -8,4 +8,5 @@ export interface Withdrawal {
     withdrawal_status: WithdrawStatus;
     withdrawal_decline_reason: string | null;
     withdrawal_requested_at: FirebaseFirestoreTypes.Timestamp;
+    withdrawal_approved_at: FirebaseFirestoreTypes.Timestamp | null;
 }
