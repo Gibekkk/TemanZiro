@@ -1,13 +1,6 @@
-export const generateFileName = (originalFileName: string, fileType:string, userName: string): string => {
-    const timestamp = Date.now();
-
-    const safeFileType = fileType.toLowerCase().replace(/[^a-z0-9]+/g, '_');
-    const safeUserName = userName.toLowerCase().replace(/[^a-z0-9]+/g, '_');
-
-    const lastDotIndex = originalFileName.lastIndexOf('.');
-    const extension = lastDotIndex !== -1 ? originalFileName.substring(lastDotIndex) : '';
-    
-    return `${safeUserName}_${safeFileType}_${timestamp}${extension}`;
+export const generateFileName = (fileName: string): string => {
+    const lastDotIndex = fileName.lastIndexOf('.');
+    return lastDotIndex !== -1 ? fileName.substring(lastDotIndex).toLowerCase() : '';
 };
 
 export const normalizeLocalUri = (uri: string): string => {

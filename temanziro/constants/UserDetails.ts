@@ -12,3 +12,5 @@ export const USER_ROLE = {
 
 export type Gender = typeof GENDER[keyof typeof GENDER];
 export type UserRole = typeof USER_ROLE[keyof typeof USER_ROLE];
+
+export type KycDocumentType = 'ktp' | 'selfie_ktp';
