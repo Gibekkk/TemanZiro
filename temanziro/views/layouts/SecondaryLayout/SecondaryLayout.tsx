@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import BackIcon from "@/assets/icon/back.svg"; // Pastikan sudah berupa SVG
 import styles from "./SecondaryLayout.style";
@@ -35,14 +35,23 @@ export default function SecondaryLayout({
   return (
     <View style={styles.screen}>
       <View style={[styles.header, noShadow ? styles.noShadow : styles.shadow]}>
-        <View style={[styles.secondHeader, alignLeft && styles.secondHeaderLeft]}>
+        <View
+          style={[styles.secondHeader, alignLeft && styles.secondHeaderLeft]}
+        >
           <TouchableOpacity onPress={handleBack} style={styles.backButton}>
             <BackIcon width={16} height={16} />
           </TouchableOpacity>
-          
-          <View style={[styles.contentHeader, alignLeft && styles.contentHeaderLeft]}>
-            <Text style={[styles.title, alignLeft && styles.titleLeft]}>{title}</Text>
-            
+
+          <View
+            style={[
+              styles.contentHeader,
+              alignLeft && styles.contentHeaderLeft,
+            ]}
+          >
+            <Text style={[styles.title, alignLeft && styles.titleLeft]}>
+              {title}
+            </Text>
+
             {rightProfile && (
               <Image
                 source={{ uri: rightProfile }}
@@ -57,9 +66,13 @@ export default function SecondaryLayout({
         )}
       </View>
 
-      <View style={styles.contentScreen}>
+      <ScrollView
+        style={styles.contentScreen}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         {children}
-      </View>
+      </ScrollView>
     </View>
   );
 }

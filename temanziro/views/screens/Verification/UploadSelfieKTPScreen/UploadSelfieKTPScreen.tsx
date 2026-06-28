@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
 // Layout & Components
 import SecondaryLayout from "@/views/layouts/SecondaryLayout/SecondaryLayout";
@@ -17,9 +17,17 @@ import styles from "./UploadSelfieKTPScreen.style";
 
 export default function DataScreenKTPPage() {
   const router = useRouter();
+  const { role } = useLocalSearchParams();
 
-  const handleSkip = () => {
-    // router.push("@/app/verification/UploadKTPScreen_Call");
+const handleSubmit = () => {
+    // --- LOGIKA PERCABANGAN ROUTE ---
+    if (role === 'companion') {
+      // Jika dia companion, arahkan ke form data companion
+      router.push('/verification/VerificationDataCompanionScreen_Call');
+    } else {
+      // Jika dia user biasa, arahkan ke form data user
+      router.push('/verification/VerificationDataUserScreen_Call');
+    }
   };
 
   return (
@@ -34,9 +42,11 @@ export default function DataScreenKTPPage() {
       </Text>
 
       <UploadIMG
-        textButton="Ambil Foto Selfie KTP"
+        textButton="Ambil/Upload Selfie KTP"
         IconComponent={LogoFotoSelfie}
         CenterImageComponent={IMGSelfie}
+        centerImageWidth={150}
+        centerImageHeight={150}
         imageContainerStyle={styles.containerselfiektpimg}
       />
 
@@ -44,7 +54,7 @@ export default function DataScreenKTPPage() {
       <GeneralButton
         variant="primary"
         style={styles.buttonSend}
-        onClick={handleSkip}
+        onClick={handleSubmit}
         textStyle={styles.buttonText}
       >
         Kirim
@@ -54,7 +64,7 @@ export default function DataScreenKTPPage() {
         variant="ghost"
         shadow="none"
         style={styles.buttonSkip}
-        onClick={handleSkip}
+        onClick={handleSubmit}
         textStyle={styles.buttonText}
       >
         Lewati dulu

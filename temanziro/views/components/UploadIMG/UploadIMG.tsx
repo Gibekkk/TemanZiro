@@ -1,9 +1,10 @@
-import React from "react";
-import { View, Text, StyleProp, ViewStyle } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleProp, ViewStyle, Alert, Image } from "react-native";
 import styles from "./UploadIMG.style";
 import GeneralButton from "@/views/components/GeneralButton/GeneralButton";
 import IconLabel from "@/views/components/UI/IconLabel/IconLabel";
 import { useTheme } from "@/controllers/hooks/useTheme";
+import * as ImagePicker from "expo-image-picker";
 
 import UploadKTP from "@/assets/image/UploadKTP.svg";
 
@@ -13,6 +14,9 @@ interface UploadIMGProps {
   currentUrl?: string | null;
   imageContainerStyle?: StyleProp<ViewStyle>;
   CenterImageComponent?: React.ElementType;
+  centerImageWidth?: number;
+  centerImageHeight?: number;
+  onImageSelected?: (uri: string) => void;
 }
 
 export default function UploadIMG({
@@ -20,12 +24,58 @@ export default function UploadIMG({
   IconComponent,
   imageContainerStyle,
   CenterImageComponent = UploadKTP,
+  centerImageWidth = 270,
+  centerImageHeight = 180,
+  onImageSelected,
+  currentUrl,
 }: UploadIMGProps) {
   const { theme } = useTheme();
 
+  const [previewUri, setPreviewUri] = useState<string | null>(
+    currentUrl || null,
+  );
+
+  const pickImageFromGallery = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 0.8, 
+    });
+
+    if (!result.canceled) {
+      setPreviewUri(result.assets[0].uri);
+      if (onImageSelected) onImageSelected(result.assets[0].uri);
+    }
+  };
+
+  const takePhotoWithCamera = async () => {
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      Alert.alert(
+        "Izin Ditolak",
+        "Anda harus memberikan izin kamera untuk mengambil foto.",
+      );
+      return;
+    }
+
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 0.8,
+    });
+
+    if (!result.canceled) {
+      setPreviewUri(result.assets[0].uri);
+      if (onImageSelected) onImageSelected(result.assets[0].uri);
+    }
+  };
+
   const handleButtonClick = () => {
-    // Nanti diganti menggunakan expo-image-picker
-    console.log("Tombol upload ditekan. Logika Firebase ditunda.");
+    Alert.alert("Pilih Gambar", "Dari mana Anda ingin mengambil gambar?", [
+      { text: "Batal", style: "cancel" },
+      { text: "Kamera", onPress: takePhotoWithCamera },
+      { text: "Galeri", onPress: pickImageFromGallery },
+    ]);
   };
 
   return (
@@ -38,7 +88,6 @@ export default function UploadIMG({
         },
       ]}
     >
-      {/* Jika ada preview gambar (currentUrl), tampilkan gambar, jika tidak tampilkan Icon */}
       <IconLabel
         IconComponent={IconComponent}
         label="none"
@@ -58,7 +107,22 @@ export default function UploadIMG({
       </View>
 
       <View style={[styles.ktpimgcontainer, imageContainerStyle]}>
-        <CenterImageComponent width={270} height={180} />
+        {previewUri ? (
+          <Image
+            source={{ uri: previewUri }}
+            style={{
+              width: centerImageWidth,
+              height: centerImageHeight,
+              // borderRadius: 15,
+            }}
+            resizeMode="cover"
+          />
+        ) : (
+          <CenterImageComponent
+            width={centerImageWidth}
+            height={centerImageHeight}
+          />
+        )}
       </View>
 
       <GeneralButton

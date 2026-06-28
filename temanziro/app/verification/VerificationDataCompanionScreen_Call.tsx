@@ -1,11 +1,11 @@
 import React from "react";
-import UploadSelfieKTPScreen from "@/views/screens/Verification/UploadSelfieKTPScreen/UploadSelfieKTPScreen";
+import VerificationDataCompanionScreen from "@/views/screens/Companion/VerificationDataCompanionScreen/VerificationDataCompanionScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function SelfieKTPRoute() {
   return (
     <SafeAreaProvider>
-      <UploadSelfieKTPScreen />
+      <VerificationDataCompanionScreen />
     </SafeAreaProvider>
   );
 }

@@ -32,6 +32,14 @@ export default StyleSheet.create({
     paddingHorizontal: "10%",
     borderRadius: 20,
     alignItems: "center",
+    elevation: 5,
+    shadowColor: "#a5a5a5",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   content: {
     alignItems: "center",

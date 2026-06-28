@@ -16,7 +16,7 @@ import { router } from "expo-router";
 
 export default function LoginRegistPage() {
   const handleNext = () => {
-    router.push("/verification/UploadKTPScreen_Call"); 
+    router.push("/verification/ChooseRoleScreen_Call"); 
   };
 
   return (
