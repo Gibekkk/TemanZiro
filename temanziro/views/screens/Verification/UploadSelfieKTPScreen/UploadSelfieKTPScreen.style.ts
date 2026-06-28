@@ -34,9 +34,15 @@ export default StyleSheet.create({
     color: COMMON_COLORS.textSecondary,
     fontFamily: FONTS.montserrat,
     textAlign: "center",
-    marginBottom: 40, // Memberikan jarak dari bawah layar agar bisa di-scroll
+    marginBottom: 40,
   },
   containerselfiektpimg: {
-    
-  }
+    width: 156,
+    height: 155,
+    borderRadius: 110,
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    padding: 0,
+  },
 });

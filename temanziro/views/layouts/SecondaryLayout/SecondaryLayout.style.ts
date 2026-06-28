@@ -10,7 +10,7 @@ export default StyleSheet.create({
     width: "100%",
     backgroundColor: `${COMMON_COLORS.primaryBackground}`,
     // Padding top untuk menghindari area notch/kamera di HP
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 60, 
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 60,
     paddingBottom: 15,
     zIndex: 10,
   },
@@ -72,7 +72,11 @@ export default StyleSheet.create({
   },
   contentScreen: {
     flex: 1,
+    width: "100%",
+  },
+  scrollContent: {
     paddingHorizontal: "6%",
     paddingTop: "5%",
+    paddingBottom: 10,
   },
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
 // Layout & Components
 import SecondaryLayout from "@/views/layouts/SecondaryLayout/SecondaryLayout";
@@ -16,10 +16,13 @@ import styles from "./UploadKTPScreen.style";
 
 export default function DataScreenKTPPage() {
   const router = useRouter();
+  const { role } = useLocalSearchParams();
 
   const handleSkip = () => {
-    // Navigasi ke halaman selfie (sesuaikan dengan nama file di folder app/ kamu)
-    router.push("/verification/UploadSelfieKTPScreen_Call");
+    router.push({
+      pathname: "/verification/UploadSelfieKTPScreen_Call",
+      params: { role },
+    });
   };
 
   return (
@@ -34,7 +37,7 @@ export default function DataScreenKTPPage() {
       </Text>
 
       <UploadIMG
-        textButton="Ambil Foto KTP"
+        textButton="Ambil/Upload Foto KTP"
         IconComponent={LogoLogin1}
         // Props terkait Firebase dihapus sementara sesuai permintaan
       />
