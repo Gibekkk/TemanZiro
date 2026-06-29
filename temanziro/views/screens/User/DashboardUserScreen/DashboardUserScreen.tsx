@@ -1,8 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 import { useTheme } from "@/controllers/hooks/useTheme";
-import UserProfile from "@/views/components/UI/UserProfile/UserProfile";
-import MoneyButton from "@/views/components/UI/MoneyButton/MoneyButton";
 import ActivityGrid from "@/views/components/ActivityBooking/ActivityBooking";
 import MascotImg from "@/assets/image/main-ziro.svg"; // Gunakan format .png/.jpg untuk Image RN
 import MapIcon from "@/assets/icon/map-pin.svg";
@@ -20,9 +18,19 @@ export default function DashboardUser() {
 
   return (
     <MainLayout showHeader={true} useScrollView={true}>
-      <View style={styles.headerBody}>
-        <View style={styles.mascotImage}>
-          <MascotImg width={18} height={18} />
+      <View
+        style={[styles.headerBody, { backgroundColor: theme.colors.primary }]}
+      >
+        <View style={{ position: "relative", width: 120, height: 120 }}>
+          <MascotImg
+            style={{
+              position: "absolute",
+              bottom: -20,
+              alignSelf: "center",
+            }}
+            width={170}
+            height={170}
+          />
         </View>
         <View
           style={[
@@ -43,6 +51,8 @@ export default function DashboardUser() {
                 styles.textSubheader,
                 { color: theme.colors.textSecondary },
               ]}
+              numberOfLines={1} // 👈 Batasi teks agar hanya menjadi 1 baris saja
+              ellipsizeMode="tail"
             >
               Makassar, Sulawesi Selatan
               {/* {loading ? "..." : address || "Lokasi belum tersedia"} */}

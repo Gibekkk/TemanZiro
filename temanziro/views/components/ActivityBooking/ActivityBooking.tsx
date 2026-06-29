@@ -9,7 +9,10 @@ import styles from "./ActivityBooking.style";
 const activities = [
   { id: "1", title: "Nongkrong", vibes: "Cafe & Chill", image: require("@/assets/image/nongkrong.jpg") },
   { id: "2", title: "Olahraga", vibes: "Sports & Active", image: require("@/assets/image/olahraga.jpg") },
-  // ... dst
+  { id: "3", title: "Belajar", vibes: "Study & Work", image: require("@/assets/image/belajar.jpg") },
+  { id: "4", title: "Jalan-jalan", vibes: "Explore & Travel", image: require("@/assets/image/jalan.jpg") },
+  { id: "5", title: "Hiburan", vibes: "Film & Events", image: require("@/assets/image/hiburan.jpg") },
+  { id: "5", title: "Kuliner", vibes: "Food & Dining", image: require("@/assets/image/kuliner.jpg") },
 ];
 
 export default function ActivityGrid() {

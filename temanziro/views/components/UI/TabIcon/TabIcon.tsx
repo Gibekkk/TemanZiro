@@ -1,5 +1,3 @@
-// @/views/components/UI/TabIcon/TabIcon.tsx
-
 import React from "react";
 import { View, Text, Image } from "react-native";
 import { useTheme } from "@/controllers/hooks/useTheme";
@@ -18,7 +16,7 @@ export default function TabIcon({
   ActiveIcon,
   InactiveIcon,
   label,
-  isProfile = false, // Nilai default jika tidak diisi
+  isProfile = false,
 }: TabIconProps) {
   const { theme } = useTheme();
   const Icon = focused ? ActiveIcon : InactiveIcon;
