@@ -26,11 +26,10 @@ export default function SecondaryLayout({
   const insets = useSafeAreaInsets();
 
   const handleBack = () => {
-    // Mengecek apakah bisa kembali ke halaman sebelumnya
     if (router.canGoBack()) {
       router.back();
     } else {
-      router.replace("/"); // Fallback jika tidak ada history
+      router.replace("/");
     }
   };
 

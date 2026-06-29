@@ -19,14 +19,20 @@ export default function DataScreenKTPPage() {
   const router = useRouter();
   const { role } = useLocalSearchParams();
 
-const handleSubmit = () => {
+  const handleSubmit = () => {
     // --- LOGIKA PERCABANGAN ROUTE ---
-    if (role === 'companion') {
+    if (role === "companion") {
       // Jika dia companion, arahkan ke form data companion
-      router.push('/verification/VerificationDataCompanionScreen_Call');
+      router.push({
+        pathname: "/verification/VerificationDataCompanionScreen_Call",
+        params: { role },
+      });
     } else {
       // Jika dia user biasa, arahkan ke form data user
-      router.push('/verification/VerificationDataUserScreen_Call');
+      router.push({
+        pathname: "/verification/VerificationDataUserScreen_Call",
+        params: { role },
+      });
     }
   };
 
