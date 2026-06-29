@@ -1,13 +1,13 @@
 export const COMMON_COLORS = {
-  primary: `#001846`,
-  secondary: `#e96100`,
-  primaryBackground: `#f8f7f5`,
-  secondaryBackground: `#F0D2BC`,
-  textPrimary: `#0f172a`,
-  textSecondary: `#475569`,
-  border: `#efd7c4`,
-  lightText: `#ffffff`,
-  online: `#10b981`,
+    primary: `#001846`,
+    secondary: `#e96100`,
+    primaryBackground: `#f8f7f5`,
+    secondaryBackground: `#F0D2BC`,
+    textPrimary: `#0f172a`,
+    textSecondary: `#475569`,
+    border: `#efd7c4`,
+    lightText: `#ffffff`,
+    online: `#10b981`,
 } as const;
 
 export const LIGHT_THEME = {
