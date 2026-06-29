@@ -47,12 +47,11 @@ export default function UserDataScreenPage() {
 
   return (
     <SecondaryLayout title="Sesuaikan Profil Anda">
-      <ScrollView
+      <View
         style={[
           styles.container,
           { backgroundColor: theme.colors.primaryBackground },
         ]}
-        contentContainerStyle={styles.scrollContent}
       >
         <ProgressBar
           title="Ceritain Tentang Kamu"
@@ -107,7 +106,7 @@ export default function UserDataScreenPage() {
             Lewati
           </Button>
         </View>
-      </ScrollView>
+      </View>
     </SecondaryLayout>
   );
 }

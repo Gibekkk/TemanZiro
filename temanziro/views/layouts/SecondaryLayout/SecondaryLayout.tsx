@@ -62,7 +62,13 @@ export default function SecondaryLayout({
         )}
       </View>
 
-      <ScrollView style={[styles.contentScreen, { paddingBottom: insets.bottom || 20 }]}>
+      <ScrollView
+        style={styles.contentScreen}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingBottom: (insets.bottom || 20) + 20 },
+        ]}
+      >
         {children}
       </ScrollView>
     </View>

@@ -18,3 +18,8 @@ export interface CompanionProfile {
     created_at: FirebaseFirestoreTypes.Timestamp | null;
     updated_at: FirebaseFirestoreTypes.Timestamp | null;
 }
+
+export interface CompanionBookingCount {
+    booking_count: number;
+    last_synced?: FirebaseFirestoreTypes.Timestamp | null;
+}
