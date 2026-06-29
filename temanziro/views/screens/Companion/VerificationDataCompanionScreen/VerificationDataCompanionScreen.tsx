@@ -15,6 +15,7 @@ import TimeSelection from "@/views/components/TimePicker/TimePicker";
 import styles from "./VerificationDataCompanionScreen.style";
 import SecondaryLayout from "@/views/layouts/SecondaryLayout/SecondaryLayout";
 import GeneralButton from "@/views/components/GeneralButton/GeneralButton";
+import { router, useLocalSearchParams } from "expo-router";
 
 export default function CompanionDataScreenPage() {
   const { theme } = useTheme();
@@ -27,6 +28,7 @@ export default function CompanionDataScreenPage() {
   // Fetching logic dihilangkan sesuai permintaan (fokus UI)
   const cities = ["Jakarta", "Surabaya", "Makassar", "Bandung"];
   const preferenceNames = ["Membaca", "Menulis", "Fotografi"];
+  const { role } = useLocalSearchParams();
 
   const handleCityChange = (val: string) => {
     setSelectedCity(val);
@@ -34,6 +36,10 @@ export default function CompanionDataScreenPage() {
   };
 
   const handleSubmit = () => {
+    router.push({
+      pathname: "/(tabs_companion)/(dashboard)/dashboard",
+      params: { role },
+    });
     console.log("Submit ditekan");
   };
 
