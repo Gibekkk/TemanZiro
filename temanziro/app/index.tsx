@@ -32,7 +32,7 @@ export default function Index() {
       if (isFirstLaunch) {
         router.replace("/auth/AuthScreen_Call");
       } else {
-        // router.replace("/auth/AuthScreen_Call");
+        router.replace("/(tabs)/(dashboard)/dashboard");
       }
     }
   }, [isFirstLaunch, router]);

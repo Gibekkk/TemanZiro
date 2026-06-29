@@ -31,7 +31,7 @@ export default function RootLayout() {
 // 2. Komponen Isi
 function RootLayoutContent() {
   const [lottieFinished, setLottieFinished] = useState(false);
-  const { theme } = useTheme(); 
+  const { theme } = useTheme();
 
   const [fontsLoaded, fontsError] = useFonts({
     Quicksand_400Regular: Quicksand_400Regular,
