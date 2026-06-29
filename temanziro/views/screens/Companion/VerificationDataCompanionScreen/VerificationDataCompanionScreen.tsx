@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 // Asumsi letak custom hook theme Anda
-import { useTheme } from "@/controllers/hooks/useTheme"; 
+import { useTheme } from "@/controllers/hooks/useTheme";
 import LocationCard from "@/views/components/LocationCard/LocationCard";
 import PersonaSelector from "@/views/components/PersonaSelector/PersonaSelector";
 import InterestSelector from "@/views/components/InterestSelector/InterestSelector";
@@ -25,7 +25,7 @@ export default function CompanionDataScreenPage() {
   const [cityError, setCityError] = useState("");
 
   // Fetching logic dihilangkan sesuai permintaan (fokus UI)
-  const cities = ["Jakarta", "Surabaya", "Makassar", "Bandung"]; 
+  const cities = ["Jakarta", "Surabaya", "Makassar", "Bandung"];
   const preferenceNames = ["Membaca", "Menulis", "Fotografi"];
 
   const handleCityChange = (val: string) => {
@@ -43,24 +43,23 @@ export default function CompanionDataScreenPage() {
 
   return (
     <SecondaryLayout title="Sesuaikan Profil Anda">
-      <ScrollView 
+      <View
         style={[styles.container, { backgroundColor: theme.colors.primaryBackground }]}
-        contentContainerStyle={styles.scrollContent}
       >
         <ProgressBar
           title="Ceritain Tentang Kamu"
           currentStep={4}
           totalSteps={4}
         />
-        
+
         <Text style={[styles.subtitle1, { color: theme.colors.secondary }]}>
           Hampir sampai! Bantu kami menyesuaikan pengalaman Anda.
         </Text>
-        
+
         <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
           Ceritain Kesukaanmu
         </Text>
-        
+
         <Text style={[styles.subtitle, { color: theme.colors.textSecondary }]}>
           Kasih tahu vibe-mu biar TemanZiro bisa rekomendasiin aktivitas dan grup yang pas buat kamu!
         </Text>
@@ -105,7 +104,7 @@ export default function CompanionDataScreenPage() {
             Lewati
           </Button>
         </View>
-      </ScrollView>
+      </View>
     </SecondaryLayout>
   );
 }
