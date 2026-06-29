@@ -7,8 +7,8 @@ export default StyleSheet.create({
     gap: 6,                   // Memberikan jarak konstan antara avatar dan teks label
   },
   userAvatarWrapper: {
-    width: 48, 
-    height: 48,
+    width: 40, 
+    height: 40,
     borderRadius: 24,
     overflow: "hidden",
     borderWidth: 2,

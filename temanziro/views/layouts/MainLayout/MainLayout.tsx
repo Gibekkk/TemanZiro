@@ -10,12 +10,14 @@ interface MainLayoutProps {
   children: ReactNode;
   useScrollView?: boolean;
   showHeader?: boolean; // Props baru untuk toggle header
+  isDashboard?: boolean;
 }
 
 export default function MainLayout({
   children,
   useScrollView = true,
   showHeader = false,
+  isDashboard = true,
 }: MainLayoutProps) {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
@@ -31,7 +33,13 @@ export default function MainLayout({
   // Komponen Header Tetap
   const HeaderComponent = (
     <View
-      style={[styles.headerWrapper, {  }]}
+      style={
+        (styles.headerWrapper,
+        {
+          backgroundColor: isDashboard ? theme.colors.primary : "transparent",
+          paddingTop: insets.top > 0 ? insets.top + 20 : 20,
+        })
+      }
     >
       <View style={styles.headerTop}>
         <Text style={styles.brandTitle}>
@@ -48,11 +56,11 @@ export default function MainLayout({
   if (useScrollView) {
     return (
       <View style={styles.container}>
-        {showHeader && HeaderComponent}
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={contentStyle}
         >
+          {showHeader && HeaderComponent}
           {children}
         </ScrollView>
       </View>

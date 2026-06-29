@@ -3,7 +3,7 @@ import { Tabs } from "expo-router";
 import { View, Text } from "react-native";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import TabIcon from "@/views/components/UI/TabIcon/TabIcon";
-import UserProfile from "@/views/components/UI/UserProfile/UserProfile";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import DashboardActive from "@/assets/icon/home-active.svg";
 import DashboardInactive from "@/assets/icon/home.svg";
@@ -16,6 +16,7 @@ import ChatInactive from "@/assets/icon/chat.svg";
 
 export default function TabLayout() {
   const { theme } = useTheme();
+  const insets = useSafeAreaInsets();
 
   return (
     <Tabs
@@ -29,7 +30,7 @@ export default function TabLayout() {
           borderTopWidth: 0,
           height: 90,
           marginHorizontal: 15,
-          marginBottom: 30,
+          marginBottom: insets.bottom,
         },
         tabBarActiveTintColor: theme.colors.lightText,
         tabBarInactiveTintColor: "#8E8E93",
