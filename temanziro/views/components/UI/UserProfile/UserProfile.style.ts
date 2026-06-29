@@ -1,8 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+  container: {
+    alignItems: "center",     // Membuat avatar dan teks pas di tengah secara vertikal
+    justifyContent: "center",
+    gap: 6,                   // Memberikan jarak konstan antara avatar dan teks label
+  },
   userAvatarWrapper: {
-    width: 48, // 3rem (~48px)
+    width: 48, 
     height: 48,
     borderRadius: 24,
     overflow: "hidden",
@@ -13,5 +18,12 @@ export default StyleSheet.create({
   userAvatarImage: {
     width: "100%",
     height: "100%",
+    resizeMode: "cover",
+  },
+  labelStyle: {
+    fontSize: 12,
+    fontWeight: "500",
+    textAlign: "center",
+    width: 100
   },
 });

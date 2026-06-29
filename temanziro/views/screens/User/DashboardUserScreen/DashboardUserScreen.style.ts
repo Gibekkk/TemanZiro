@@ -2,20 +2,6 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   dashboard: { flex: 1 },
-  headerWrapper: {
-    padding: 20,
-    paddingTop: 40,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-    minHeight: 200,
-  },
-  headerTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  brandTitle: { fontSize: 24, fontWeight: "bold", color: "#ffffff" },
-  userProfileWrapper: { flexDirection: "row", gap: 12, alignItems: "center" },
   headerBody: {
     flexDirection: "row",
     alignItems: "flex-end",
