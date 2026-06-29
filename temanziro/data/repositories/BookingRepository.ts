@@ -49,7 +49,7 @@ export const BookingRepository = {
             const bookingRef = db.collection('bookings').doc(bookingId);
             batch.update(bookingRef, { status: 'completed' });
 
-            const cacheRef = db.collection('booking_cache').doc(companionUid);
+            const cacheRef = db.collection('booking_count').doc(companionUid);
             batch.set(cacheRef, {
                 booking_count: firestore.FieldValue.increment(1)
             }, { merge: true });
