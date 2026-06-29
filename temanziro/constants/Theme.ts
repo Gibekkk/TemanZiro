@@ -7,6 +7,7 @@ export const COMMON_COLORS = {
     textSecondary: `#475569`,
     border: `#efd7c4`,
     lightText: `#ffffff`,
+    online: `#10b981`,
 } as const;
 
 export const LIGHT_THEME = {
