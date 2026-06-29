@@ -1,78 +1,99 @@
-import { Tabs } from 'expo-router';
-import { View } from 'react-native';
-import { useTheme } from '@/controllers/hooks/useTheme';
-// Nanti kamu bisa import icon beneran di sini, misalnya:
-// import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import { Tabs } from "expo-router";
+import { View, Text } from "react-native";
+import { useTheme } from "@/controllers/hooks/useTheme";
+import TabIcon from "@/views/components/UI/TabIcon/TabIcon";
+import UserProfile from "@/views/components/UI/UserProfile/UserProfile";
+
+import DashboardActive from "@/assets/icon/home-active.svg";
+import DashboardInactive from "@/assets/icon/home.svg";
+
+import TemanJalanActive from "@/assets/icon/friendswhite.svg";
+import TemanJalanInactive from "@/assets/icon/friendsnon.svg";
+
+import ChatActive from "@/assets/icon/chat-active.svg";
+import ChatInactive from "@/assets/icon/chat.svg";
 
 export default function TabLayout() {
-    const { theme } = useTheme();
+  const { theme } = useTheme();
+
   return (
     <Tabs
       screenOptions={{
-        // ==========================================
-        // 1. TEMPAT ATUR STYLE GLOBAL TAB BAR
-        // ==========================================
         tabBarStyle: {
-          backgroundColor: `${theme.colors.secondary}40`, 
-          borderTopWidth: 1,       
-          borderTopColor: '#e5e5e5', 
-          height: 100,                
-          paddingBottom: 10,      
-          paddingTop: 5,           
-          // elevation: 5,         
-          // shadowColor: '#000',   
+          backgroundColor: theme.colors.primary,
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
+          borderBottomLeftRadius: 26,
+          borderBottomRightRadius: 26,
+          borderTopWidth: 0,
+          height: 90,
+          marginHorizontal: 15,
+          marginBottom: 30,
         },
-        tabBarActiveTintColor: `${theme.colors.lightText}`,  
-        tabBarInactiveTintColor: '#8E8E93',
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '500',
-        },
-        headerShown: false, // Sembunyikan header bawaan jika ingin buat custom header di tiap screen
+        tabBarActiveTintColor: theme.colors.lightText,
+        tabBarInactiveTintColor: "#8E8E93",
+        headerShown: false,
       }}
     >
-      {/* ========================================== */}
-      {/* 2. DAFTAR TABS & TEMPAT ATUR ICON MASING-MASING */}
-      {/* ========================================== */}
-      
       <Tabs.Screen
-        name="(dashboard)"
+        name="(dashboard)/dashboard"
         options={{
-          title: 'Dashboard',
-          tabBarIcon: ({ color, focused }) => (
-            // Placeholder Icon (Ganti dengan komponen Icon kamu)
-            // Contoh: <Ionicons name={focused ? 'home' : 'home-outline'} size={24} color={color} />
-            <View style={{ width: 24, height: 24, backgroundColor: `${theme.colors.lightText}`, borderRadius: 12 }} />
+          title: "Dashboard",
+          tabBarLabel: () => null,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              focused={focused}
+              ActiveIcon={DashboardActive}
+              InactiveIcon={DashboardInactive}
+              label="Home"
+            />
           ),
         }}
       />
 
       <Tabs.Screen
-        name="(temanjalan)"
+        name="(temanjalan)/temanjalan"
         options={{
-          title: 'Teman Jalan',
-          tabBarIcon: ({ color, focused }) => (
-            <View style={{ width: 24, height: 24, backgroundColor: color, borderRadius: 12 }} />
+          title: "Teman Jalan",
+          tabBarLabel: () => null,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              focused={focused}
+              ActiveIcon={TemanJalanActive}
+              InactiveIcon={TemanJalanInactive}
+              label="Teman"
+            />
           ),
         }}
       />
 
       <Tabs.Screen
-        name="(chat)"
+        name="(listchat)/listchat"
         options={{
-          title: 'Chat',
-          tabBarIcon: ({ color, focused }) => (
-            <View style={{ width: 24, height: 24, backgroundColor: color, borderRadius: 12 }} />
+          title: "Chat",
+          tabBarLabel: () => null,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              focused={focused}
+              ActiveIcon={ChatActive}
+              InactiveIcon={ChatInactive}
+              label="Chat"
+            />
           ),
         }}
       />
 
       <Tabs.Screen
-        name="(profile)"
+        name="(profile)/profile"
         options={{
-          title: 'Profile',
-          tabBarIcon: ({ color, focused }) => (
-            <View style={{ width: 24, height: 24, backgroundColor: color, borderRadius: 12 }} />
+          tabBarLabel: () => null,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              focused={focused}
+              label="Profil"
+              isProfile={true}
+            />
           ),
         }}
       />
