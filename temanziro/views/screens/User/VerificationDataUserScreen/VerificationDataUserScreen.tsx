@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 // Asumsi letak custom hook theme Anda
-import { useTheme } from "@/controllers/hooks/useTheme"; 
+import { useTheme } from "@/controllers/hooks/useTheme";
 import LocationCard from "@/views/components/LocationCard/LocationCard";
 import PersonaSelector from "@/views/components/PersonaSelector/PersonaSelector";
 
@@ -12,18 +12,22 @@ import ProgressBar from "@/views/components/ProgressBar/ProgressBar";
 import styles from "./VerificationDataUserScreen.style";
 import SecondaryLayout from "@/views/layouts/SecondaryLayout/SecondaryLayout";
 import GeneralButton from "@/views/components/GeneralButton/GeneralButton";
+import { router, useLocalSearchParams } from "expo-router";
 
 export default function UserDataScreenPage() {
   const { theme } = useTheme();
 
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
-  const [pendingNewPreferences, setPendingNewPreferences] = useState<string[]>([]);
+  const [pendingNewPreferences, setPendingNewPreferences] = useState<string[]>(
+    [],
+  );
   const [cityError, setCityError] = useState("");
 
   // Fetching logic dihilangkan sesuai permintaan (fokus UI)
-  const cities = ["Jakarta", "Surabaya", "Makassar", "Bandung"]; 
+  const cities = ["Jakarta", "Surabaya", "Makassar", "Bandung"];
   const preferenceNames = ["Membaca", "Menulis", "Fotografi"];
+  const { role } = useLocalSearchParams();
 
   const handleCityChange = (val: string) => {
     setSelectedCity(val);
@@ -31,7 +35,10 @@ export default function UserDataScreenPage() {
   };
 
   const handleSubmit = () => {
-    console.log("Submit ditekan");
+    router.push({
+      pathname: "/(tabs)/(dashboard)/dashboard",
+      params: { role },
+    });
   };
 
   const handleSkip = () => {
@@ -40,8 +47,11 @@ export default function UserDataScreenPage() {
 
   return (
     <SecondaryLayout title="Sesuaikan Profil Anda">
-      <ScrollView 
-        style={[styles.container, { backgroundColor: theme.colors.primaryBackground }]}
+      <ScrollView
+        style={[
+          styles.container,
+          { backgroundColor: theme.colors.primaryBackground },
+        ]}
         contentContainerStyle={styles.scrollContent}
       >
         <ProgressBar
@@ -49,17 +59,18 @@ export default function UserDataScreenPage() {
           currentStep={4}
           totalSteps={4}
         />
-        
+
         <Text style={[styles.subtitle1, { color: theme.colors.secondary }]}>
           Hampir sampai! Bantu kami menyesuaikan pengalaman Anda.
         </Text>
-        
+
         <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
           Ceritain Kesukaanmu
         </Text>
-        
+
         <Text style={[styles.subtitle, { color: theme.colors.textSecondary }]}>
-          Kasih tahu vibe-mu biar TemanZiro bisa rekomendasiin aktivitas dan grup yang pas buat kamu!
+          Kasih tahu vibe-mu biar TemanZiro bisa rekomendasiin aktivitas dan
+          grup yang pas buat kamu!
         </Text>
 
         <LocationCard
@@ -69,9 +80,7 @@ export default function UserDataScreenPage() {
           value={selectedCity}
           onValueChange={handleCityChange}
         />
-        {!!cityError && (
-          <Text style={styles.errorText}>{cityError}</Text>
-        )}
+        {!!cityError && <Text style={styles.errorText}>{cityError}</Text>}
 
         <PersonaSelector
           preference_data={preferenceNames}
