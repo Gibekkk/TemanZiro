@@ -1,12 +1,18 @@
 import React from "react";
 import { View, Text, ScrollView, Image, ActivityIndicator } from "react-native";
-import { UserProfile } from "@/domain/models/UserModels";
 import styles from "./FriendList.style";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import PlaceholderImg from "@/assets/image/img-placeholder.svg";
 
+export interface FriendItem {
+    friendUid: string;
+    name: string;
+    photoUrl: string | typeof PlaceholderImg;
+    isOnline: boolean;
+}
+
 interface FriendListProps {
-    friendsData: UserProfile[];
+    friendsData: FriendItem[];
     isLoading: boolean;
 }
 
@@ -33,14 +39,15 @@ export default function FriendList({ friendsData, isLoading }: FriendListProps) 
             {friendsData.map((friend, index) => (
                 <View key={index} style={styles.friendItem}>
                     <View style={styles.avatarWrapper}>
-                        {friend.url_photoprofile_user ? (
-                            <Image source={{ uri: friend.url_photoprofile_user }} style={styles.friendAvatar} />
+                        {friend.photoUrl !== PlaceholderImg ? (
+                            <Image source={{ uri: friend.photoUrl as string }} style={styles.friendAvatar} />
                         ) : (
                             <PlaceholderImg width={40} height={40} />
                         )}
+                        {friend.isOnline && <View style={styles.onlineIndicator} />}
                     </View>
                     <Text style={styles.friendName} numberOfLines={1}>
-                        {friend.name_user}
+                        {friend.name}
                     </Text>
                 </View>
             ))}

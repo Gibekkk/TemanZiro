@@ -2,32 +2,32 @@ import { StyleSheet } from "react-native";
 import { FONTS } from "@/constants/Theme";
 
 export default StyleSheet.create({
-  incomeCard: {
+  statCard: {
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
     paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     borderRadius: 18,
-    alignSelf: "flex-start",
   },
   iconContainer: {
-    marginRight: 12,
+    marginRight: 8,
     justifyContent: "center",
     alignItems: "center",
   },
   textContainer: {
     flexDirection: "column",
     justifyContent: "center",
+    flex: 1,
   },
   titleText: {
-    fontSize: 14,
+    fontSize: 11,
     fontFamily: `${FONTS.montserrat}-Bold`,
     fontWeight: "700",
     marginBottom: 2,
   },
-  amountText: {
-    fontSize: 16,
+  valueText: {
+    fontSize: 13,
     fontFamily: `${FONTS.montserrat}-Bold`,
     fontWeight: "700",
   },

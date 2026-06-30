@@ -30,7 +30,6 @@ export default StyleSheet.create({
     fontSize: 12,
     fontWeight: "700",
     color: "#d95d16",
-    textDecorationLine: "underline",
   },
   progressContainer: {
     flexDirection: "row",

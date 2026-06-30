@@ -1,28 +1,37 @@
 import React from "react";
-import { TouchableOpacity, Image, View } from "react-native";
+import { TouchableOpacity, Image } from "react-native";
 import { useTheme } from "@/controllers/hooks/useTheme";
-import { useAuth } from "@/controllers/hooks/useAuth";
+import { useUserProfile } from "@/controllers/hooks/useUserProfile";
 import { useNavigation } from "@react-navigation/native";
-import IMGMiniZiro from "@/assets/image/mini-ziro.png"; // Gunakan format .png/.jpg untuk Image RN
+import IMGMiniZiro from "@/assets/image/mini-ziro.svg";
 
 import styles from "./UserProfile.style";
 
 export default function UserProfile() {
   const { theme } = useTheme();
-//   const { userProfile, loading, role } = useAuth();
+  const { userProfile, profileLoading, role } = useUserProfile();
   const navigation = useNavigation();
 
-//   const photoUrl = (role === "companion" ? userProfile?.url_photoprofile_companion : userProfile?.url_photoprofile_user) || "";
+  const photoUrl = userProfile
+    ? ("url_photoprofile_companion" in userProfile
+      ? userProfile.url_photoprofile_companion
+      : userProfile.url_photoprofile_user)
+    : "";
 
   return (
-    <TouchableOpacity 
-      style={[styles.userAvatarWrapper, { borderColor: theme.colors.lightText }]} 
+    <TouchableOpacity
+      style={[styles.userAvatarWrapper, { borderColor: theme.colors.lightText }]}
       onPress={() => navigation.navigate("profile" as never)}
     >
-      <Image
-        // source={loading || !photoUrl ? IMGMiniZiro : { uri: photoUrl }}
-        style={styles.userAvatarImage}
-      />
+      {profileLoading || !photoUrl ? (
+        <IMGMiniZiro width="100%" height="100%" />
+      ) : (
+        <Image
+          source={{ uri: photoUrl }}
+          resizeMode="cover"
+          style={styles.userAvatarImage}
+        />
+      )}
     </TouchableOpacity>
   );
 }

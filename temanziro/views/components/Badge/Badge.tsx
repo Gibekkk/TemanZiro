@@ -2,12 +2,10 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import styles from "./Badge.style";
 import { BADGES, BadgeTier } from "@/constants/TierDetails";
-
+import { calculateTierProgress } from "@/data/repositories/utils/TierUtils";
 
 interface BadgeProps {
-  tier: BadgeTier | string;
-  currentProgress?: number;
-  maxProgress?: number;
+  bookingCount: number;
   onRewardsPress?: () => void;
 }
 const TIER_THEMES: Record<BadgeTier, { cardBg: string; border: string; progressFill: string }> = {
@@ -16,7 +14,8 @@ const TIER_THEMES: Record<BadgeTier, { cardBg: string; border: string; progressF
   gold: { cardBg: "#fffbeb", border: "#fef3c7", progressFill: "#d97706" },
   platinum: { cardBg: "#f0fdfa", border: "#ccfbf1", progressFill: "#0d9488" },
 };
-export default function Badge({ tier, currentProgress = 0, maxProgress = 9, onRewardsPress }: BadgeProps) {
+export default function Badge({ bookingCount, onRewardsPress }: BadgeProps) {
+  const { tier, currentProgress, maxProgress } = calculateTierProgress(bookingCount);
   const lowerTier = tier.toLowerCase();
   const activeBadge = BADGES.find((b) => b.id.toLowerCase() === lowerTier) || BADGES[0];
   const activeTier = (activeBadge.id === "silver" || activeBadge.id === "gold" || activeBadge.id === "platinum")

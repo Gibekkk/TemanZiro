@@ -1,12 +1,14 @@
 import React, { createContext, useEffect, useState, useContext, useRef } from "react";
 import { AuthContext } from "./AuthContext";
 import { UserRepository } from "@/data/repositories/UserRepository";
+import { CompanionRepository } from "@/data/repositories/CompanionRepository";
 import { UserProfile } from "@/domain/models/UserModels";
+import { CompanionProfile } from "@/domain/models/CompanionModel";
 import { UserRole } from "@/constants/UserDetails";
 import { auth } from "@/data/config/firebase_config";
 
 interface UserProfileContextType {
-    userProfile: UserProfile | null;
+    userProfile: UserProfile | CompanionProfile | null;
     role: UserRole;
     userBalance: string;
     isVerified: boolean;
@@ -19,7 +21,7 @@ export const UserProfileContext = createContext<UserProfileContextType | undefin
 export function UserProfileProvider({ children }: { children: React.ReactNode }) {
     const { currentUser } = useContext(AuthContext);
 
-    const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+    const [userProfile, setUserProfile] = useState<UserProfile | CompanionProfile | null>(null);
     const [role, setRole] = useState<UserRole>("booker");
     const [userBalance, setUserBalance] = useState<string>("0");
     const [isVerified, setIsVerified] = useState<boolean>(false);
@@ -52,11 +54,19 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
             setIsComplete(detailsData.is_complete ?? false);
 
             unsubProfileRef.current?.();
-            unsubProfileRef.current = UserRepository.subscribeUserProfile(currentUser.uid, (profileData) => {
-                setUserProfile(profileData);
-                setUserBalance(profileData?.balance_user ?? "0");
-                setProfileLoading(false);
-            });
+            if (currentRole === "companion") {
+                unsubProfileRef.current = CompanionRepository.subscribeCompanionProfile(currentUser.uid, (profileData) => {
+                    setUserProfile(profileData);
+                    setUserBalance(profileData?.balance_companion !== undefined && profileData?.balance_companion !== null ? String(profileData.balance_companion) : "0");
+                    setProfileLoading(false);
+                });
+            } else {
+                unsubProfileRef.current = UserRepository.subscribeUserProfile(currentUser.uid, (profileData) => {
+                    setUserProfile(profileData);
+                    setUserBalance(profileData?.balance_user !== undefined && profileData?.balance_user !== null ? String(profileData.balance_user) : "0");
+                    setProfileLoading(false);
+                });
+            }
         });
 
         return () => {
@@ -70,4 +80,4 @@ export function UserProfileProvider({ children }: { children: React.ReactNode })
             {children}
         </UserProfileContext.Provider>
     );
-}
+}
