@@ -11,6 +11,8 @@ interface MinatProps {
   onNewPreferencesChange?: (newPrefs: string[]) => void;
   showAddButton?: boolean;
   preference_data?: string[];
+  disabled?: boolean;
+  showHeader?: boolean;
 }
 
 export default function PersonaSelector({
@@ -19,6 +21,8 @@ export default function PersonaSelector({
   onNewPreferencesChange,
   showAddButton = true,
   preference_data = [],
+  disabled = false,
+  showHeader = true,
 }: MinatProps) {
   const { theme } = useTheme();
 
@@ -71,14 +75,18 @@ export default function PersonaSelector({
     setIsAddingMode(false);
   };
 
+  const shouldShowAddButton = disabled ? false : showAddButton;
+
   return (
     <View style={styles.minatComponent}>
-      <View style={styles.header}>
-        <MinatIcon width={18} height={18} style={styles.icon} />
-        <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
-          Kamu orangnya kayak gimana?
-        </Text>
-      </View>
+      {showHeader && (
+        <View style={styles.header}>
+          <MinatIcon width={18} height={18} style={styles.icon} />
+          <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
+            Kamu orangnya kayak gimana?
+          </Text>
+        </View>
+      )}
 
       <View style={styles.content}>
         {allPreferences.map((minat) => {
@@ -87,6 +95,8 @@ export default function PersonaSelector({
             <TouchableOpacity
               key={minat}
               onPress={() => handleToggleMinat(minat)}
+              disabled={disabled}
+              activeOpacity={disabled ? 1 : 0.7}
               style={[
                 styles.capsule,
                 isActive
@@ -106,7 +116,7 @@ export default function PersonaSelector({
           );
         })}
 
-        {showAddButton && (
+        {shouldShowAddButton && (
           isAddingMode ? (
             <View style={styles.inputContainer}>
               <TextInput
