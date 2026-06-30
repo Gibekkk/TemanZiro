@@ -11,9 +11,9 @@ import StatusToggle from "@/views/components/UI/StatusToggle/StatusToggle";
 import IconPendapatan from "@/assets/icon/pendapatan.svg";
 import IconSesi from "@/assets/icon/totalmatch.svg";
 import IconRating from "@/assets/icon/medal.svg";
-import { useCompanionDashboard } from "@/controllers/hooks/useCompanionDashboard";
+import { useCompanionDashboard } from "@/controllers/hooks/Companion/useCompanionDashboard";
 
-export default function Dashboard() {
+export default function DashboardCompanion() {
     const {
         theme,
         companionProfile,
@@ -24,8 +24,8 @@ export default function Dashboard() {
         isActive,
         handleToggleActive,
         Mascot,
-        dummyFriends,
-        dummySchedule,
+        friends,
+        schedule,
         handleRewardsPress,
         handleSchedulePress,
     } = useCompanionDashboard();
@@ -70,12 +70,18 @@ export default function Dashboard() {
             <View style={styles.bodySection}>
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Chat Berlangsung</Text>
-                    <FriendList friendsData={dummyFriends} isLoading={false} />
+                    <FriendList friendsData={friends} isLoading={false} />
                 </View>
 
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Agenda Hari ini</Text>
-                    <ScheduleCard schedule={dummySchedule} onPress={handleSchedulePress} />
+                    {schedule ? (
+                        <ScheduleCard schedule={schedule} onPress={handleSchedulePress} />
+                    ) : (
+                        <View style={{ paddingVertical: 12, alignItems: "center", justifyContent: "center" }}>
+                            <Text style={{ fontSize: 12, color: theme.colors.textSecondary }}>Belum ada agenda hari ini</Text>
+                        </View>
+                    )}
                 </View>
 
                 <View style={styles.section}>

@@ -14,6 +14,9 @@ import LottieView from "lottie-react-native";
 import { View, StyleSheet } from "react-native";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import { ThemeProvider } from "@/controllers/context/ThemeContext";
+import { AuthProvider } from "@/controllers/context/AuthContext";
+import { UserProfileProvider } from "@/controllers/context/UserProfileContext";
+import { PresenceProvider } from "@/controllers/context/PresenceContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -22,7 +25,13 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <ThemeProvider>
-        <RootLayoutContent />
+        <AuthProvider>
+          <UserProfileProvider>
+            <PresenceProvider>
+              <RootLayoutContent />
+            </PresenceProvider>
+          </UserProfileProvider>
+        </AuthProvider>
       </ThemeProvider>
     </SafeAreaProvider>
   );

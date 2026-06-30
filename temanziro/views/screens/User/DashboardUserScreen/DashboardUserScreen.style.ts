@@ -5,7 +5,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end",
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingTop: 8,
+    paddingBottom: 16,
     gap: 15,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20
@@ -21,7 +22,7 @@ export default StyleSheet.create({
     marginLeft: 5,
     maxWidth: 185,
   },
-  boxHeader: { marginTop: 10, padding: 5, borderRadius: 8 },
+  boxHeader: { marginTop: 10, paddingVertical: 4, borderRadius: 8 },
   textHeaderLabel: { fontSize: 14, fontWeight: "700" },
   bodyWrapper: { margin: 20 },
   textBody: { fontSize: 20, fontWeight: "bold", marginBottom: 3 },
