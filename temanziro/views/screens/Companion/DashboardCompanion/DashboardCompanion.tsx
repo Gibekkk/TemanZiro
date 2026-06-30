@@ -66,56 +66,56 @@ export default function DashboardCompanion() {
                     </View>
                 </View>
             </View>
+            <View style={styles.bodySectionWrapper}>
+                <View style={styles.bodySection}>
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>Chat Berlangsung</Text>
+                        <FriendList friendsData={friends} isLoading={false} />
+                    </View>
 
-            <View style={styles.bodySection}>
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Chat Berlangsung</Text>
-                    <FriendList friendsData={friends} isLoading={false} />
-                </View>
+                    <View style={styles.section}>
+                        <Text style={styles.sectionTitle}>Agenda Hari ini</Text>
+                        {schedule ? (
+                            <ScheduleCard schedule={schedule} onPress={handleSchedulePress} />
+                        ) : (
+                            <View style={{ paddingVertical: 12, alignItems: "center", justifyContent: "center" }}>
+                                <Text style={{ fontSize: 12, color: theme.colors.textSecondary }}>Belum ada agenda hari ini</Text>
+                            </View>
+                        )}
+                    </View>
 
-                <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Agenda Hari ini</Text>
-                    {schedule ? (
-                        <ScheduleCard schedule={schedule} onPress={handleSchedulePress} />
-                    ) : (
-                        <View style={{ paddingVertical: 12, alignItems: "center", justifyContent: "center" }}>
-                            <Text style={{ fontSize: 12, color: theme.colors.textSecondary }}>Belum ada agenda hari ini</Text>
-                        </View>
-                    )}
-                </View>
-
-                <View style={styles.section}>
-                    {loadingBadge ? (
-                        <ActivityIndicator size="small" color="#d95d16" />
-                    ) : (
-                        <Badge
-                            bookingCount={bookingCount ?? 0}
-                            onRewardsPress={handleRewardsPress}
+                    <View style={styles.section}>
+                        {loadingBadge ? (
+                            <ActivityIndicator size="small" color="#d95d16" />
+                        ) : (
+                            <Badge
+                                bookingCount={bookingCount ?? 0}
+                                onRewardsPress={handleRewardsPress}
+                            />
+                        )}
+                    </View>
+                    <View style={styles.tierDetailsContainer}>
+                        <StatCard
+                            title="Pendapatan"
+                            value={incomeAmount}
+                            IconComponent={IconPendapatan}
+                            isCurrency={true}
+                            style={styles.tierCard}
                         />
-                    )}
+                        <StatCard
+                            title="Total Sesi"
+                            value={5}
+                            IconComponent={IconSesi}
+                            style={styles.tierCard}
+                        />
+                        <StatCard
+                            title="Rating"
+                            value={4.5}
+                            IconComponent={IconRating}
+                            style={styles.tierCard}
+                        />
+                    </View>
                 </View>
-                <View style={styles.tierDetailsContainer}>
-                    <StatCard
-                        title="Pendapatan"
-                        value={incomeAmount}
-                        IconComponent={IconPendapatan}
-                        isCurrency={true}
-                        style={styles.tierCard}
-                    />
-                    <StatCard
-                        title="Total Sesi"
-                        value={5}
-                        IconComponent={IconSesi}
-                        style={styles.tierCard}
-                    />
-                    <StatCard
-                        title="Rating"
-                        value={4.5}
-                        IconComponent={IconRating}
-                        style={styles.tierCard}
-                    />
-                </View>
-
             </View>
         </MainLayoutCompanion>
     );

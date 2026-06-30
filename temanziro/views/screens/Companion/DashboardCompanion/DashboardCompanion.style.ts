@@ -67,6 +67,12 @@ export default StyleSheet.create({
   cardWrapper: {
     marginBottom: 15,
   },
+  bodySectionWrapper: {
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    backgroundColor: COMMON_COLORS.primaryBackground,
+    height: "100%",
+  },
   bodySection: {
     padding: 20,
   },
