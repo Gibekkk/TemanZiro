@@ -15,14 +15,16 @@ export interface UserDetails {
     updated_at: FirebaseFirestoreTypes.Timestamp | null;
 }
 
-export interface UserProfile {
+export interface UserProfileModel {
     uid: string;
     name_user: string;
     gender_user: Gender;
     age_user: number;
     city: string;
-    balance_user: string | null;
+    balance_user: number | null;
     url_photoprofile_user: string | null;
     created_at: FirebaseFirestoreTypes.Timestamp | null;
     updated_at: FirebaseFirestoreTypes.Timestamp | null;
 }
+
+export type UserProfile = UserProfileModel;

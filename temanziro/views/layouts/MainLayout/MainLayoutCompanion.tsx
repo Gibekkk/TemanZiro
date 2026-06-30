@@ -5,6 +5,7 @@ import { useTheme } from "@/controllers/hooks/useTheme"; // Pastikan path ini be
 import styles from "./MainLayout.style"; // Pastikan style header sudah pindah ke sini
 import MoneyButton from "@/views/components/UI/MoneyButton/MoneyButton";
 import UserProfile from "@/views/components/UI/UserProfile/UserProfile";
+import NotificationBell from "@/views/components/NotificationBell/NotificationBell";
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -36,17 +37,19 @@ export default function MainLayout({
       style={[
         styles.headerWrapper,
         {
-          backgroundColor: isDashboard ? theme.colors.primary : "transparent",
-          paddingTop: insets.top > 0 ? insets.top + 20 : 20,
+          backgroundColor: isDashboard ? theme.colors.tertiaryBackground : "transparent",
+          paddingTop: insets.top > 0 ? insets.top + 12 : 12,
+          paddingBottom: 8,
         }
       ]}
     >
       <View style={styles.headerTop}>
-        <Text style={styles.brandTitle}>
-          Teman<Text style={{ color: theme.colors.secondary }}>Ziro</Text>
+        <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.colors.secondary }}>
+          Teman Ziro
         </Text>
         <View style={styles.userProfileWrapper}>
           <MoneyButton />
+          <NotificationBell />
           <UserProfile />
         </View>
       </View>
@@ -55,10 +58,11 @@ export default function MainLayout({
 
   if (useScrollView) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: theme.colors.tertiaryBackground }]}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={contentStyle}
+          style={{ backgroundColor: theme.colors.tertiaryBackground }}
         >
           {showHeader && HeaderComponent}
           {children}
@@ -68,7 +72,7 @@ export default function MainLayout({
   }
 
   return (
-    <View style={[styles.container, contentStyle]}>
+    <View style={[styles.container, contentStyle, { backgroundColor: theme.colors.tertiaryBackground }]}>
       {showHeader && HeaderComponent}
       {children}
     </View>

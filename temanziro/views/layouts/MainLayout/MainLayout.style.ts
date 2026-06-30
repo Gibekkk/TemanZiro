@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: { flex: 1 },
-  screen: { flexGrow: 1 }, // Menggunakan flexGrow agar ScrollView mengisi ruang
+  screen: { flexGrow: 1 },
   headerWrapper: {
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
@@ -11,8 +11,16 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
   },
-  brandTitle: { fontSize: 24, fontWeight: "bold", color: "#ffffff" },
-  userProfileWrapper: { flexDirection: "row", gap: 12, alignItems: "center" },
+  brandTitle: { 
+    fontSize: 24, 
+    fontWeight: "bold", 
+    color: "#ffffff" 
+  },
+  userProfileWrapper: { 
+    flexDirection: "row", 
+    gap: 12, 
+    alignItems: "center" 
+  },
 });

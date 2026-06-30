@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COMMON_COLORS } from "@/constants/Theme";
 
 export default StyleSheet.create({
   scheduleCard: {
@@ -12,21 +13,9 @@ export default StyleSheet.create({
     marginBottom: 12,
     position: "relative",
   },
-  badge: {
-    position: "absolute",
-    top: 12,
-    right: 12,
-    paddingVertical: 3,
-    paddingHorizontal: 8,
-    borderRadius: 6,
-  },
-  badgeText: {
-    color: "#ffffff",
-    fontSize: 9,
-    fontWeight: "800",
-  },
   avatarSmall: {
     marginRight: 12,
+    position: "relative",
   },
   avatarSmallImage: {
     width: 48,
@@ -35,9 +24,19 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: "#f0dfd7",
   },
+  onlineIndicator: {
+    position: "absolute",
+    top: 2,
+    left: 2,
+    width: 12,
+    height: 12,
+    backgroundColor: COMMON_COLORS.online,
+    borderRadius: 6,
+    borderWidth: 1.5,
+    borderColor: "#ffffff",
+  },
   scheduleInfo: {
     flex: 1,
-    paddingRight: 80, // Memberikan ruang agar teks tidak menumpuk dengan badge status
   },
   scheduleName: {
     fontSize: 14,
@@ -50,12 +49,17 @@ export default StyleSheet.create({
     color: "#475569",
     marginBottom: 2,
   },
-  dateTimeRow: {
+  infoContainer: {
     flexDirection: "row",
     alignItems: "center",
+    gap: 6,
   },
   infoText: {
     fontSize: 11,
     color: "#475569",
+  },
+  dateTimeRow: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });

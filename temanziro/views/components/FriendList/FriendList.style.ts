@@ -18,7 +18,7 @@ export default StyleSheet.create({
   },
   friendItem: {
     alignItems: "center",
-    marginRight: 16,
+    marginRight: 10,
     width: 64,
   },
   avatarWrapper: {
