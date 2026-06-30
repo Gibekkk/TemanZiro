@@ -7,6 +7,7 @@ import Button from "@/views/components/GeneralButton/GeneralButton";
 import { useUserProfile } from "@/controllers/hooks/useUserProfile";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import { VERIFIED_STATUS, VerifiedStatus } from "@/constants/UserDetails";
+import { COMMON_COLORS } from "@/constants/Theme";
 
 interface KycCardProps {
   status: VerifiedStatus;
@@ -24,8 +25,8 @@ export default function KycCard({ status, onComplete }: KycCardProps) {
   const isPending = status === VERIFIED_STATUS.PENDING;
   const Icon = isPending ? IconPendKTP : IconKTP;
 
-  const cardBg = isDark ? "#1e1b18" : "#fdf8f5";
-  const cardBorder = isDark ? "#3c2c22" : "#fcece3";
+  const cardBg = isDark ? "#1e1b18" : COMMON_COLORS.tertiaryBackground;
+  const cardBorder = isDark ? "#3c2c22" : COMMON_COLORS.border;
 
   return (
     <View style={[styles.container, { backgroundColor: cardBg, borderColor: cardBorder }]}>
