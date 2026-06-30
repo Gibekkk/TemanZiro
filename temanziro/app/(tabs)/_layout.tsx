@@ -30,7 +30,7 @@ export default function TabLayout() {
           borderTopWidth: 0,
           height: 90,
           marginHorizontal: 15,
-          marginBottom: insets.bottom,
+          marginBottom: insets.bottom + 10,
         },
         tabBarActiveTintColor: theme.colors.lightText,
         tabBarInactiveTintColor: "#8E8E93",
