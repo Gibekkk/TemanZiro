@@ -2,8 +2,10 @@ import React from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import ActivityGrid from "@/views/components/ActivityBooking/ActivityBooking";
-import MascotImg from "@/assets/image/main-ziro.svg"; // Gunakan format .png/.jpg untuk Image RN
+import MascotImg from "@/assets/image/main1-ziro.svg"; // Gunakan format .png/.jpg untuk Image RN
 import MapIcon from "@/assets/icon/map-pin.svg";
+import VerificationIcon from "@/assets/icon/verified.svg";
+import Verification1Icon from "@/assets/icon/verifiedsafety.svg";
 import { useAuth } from "@/controllers/hooks/useAuth";
 
 import styles from "./DashboardUserScreen.style";
@@ -79,7 +81,56 @@ export default function DashboardUser() {
           Pilih <Text style={{ color: theme.colors.secondary }}>aktivitas</Text>{" "}
           hari ini, yuk!
         </Text>
+        <Text style={[styles.textBody1, { color: theme.colors.textSecondary }]}>
+          Temukan teman untuk setiap momenmu
+        </Text>
+        
         <ActivityGrid />
+
+        <View
+          style={[
+            styles.cardContainer,
+            { backgroundColor: theme.colors.primaryBackground, borderColor: theme.colors.border },
+          ]}
+        >
+          {/* Kolom Kiri: Konten Teks */}
+          <View style={styles.leftColumn}>
+            {/* Row Header: Badge Centang + Judul Kecil */}
+            <View style={styles.badgeRow}>
+              <VerificationIcon
+                width={16}
+                height={16}
+                fill={theme.colors.secondary}
+              />
+              <Text
+                style={[styles.badgeText, { color: theme.colors.secondary }]}
+              >
+                TemanZiro Promise
+              </Text>
+            </View>
+
+            {/* Judul Utama */}
+            <Text style={[styles.mainTitle, { color: theme.colors.primary }]}>
+              Aman, Nyaman, & Positif
+            </Text>
+
+            {/* Deskripsi */}
+            <Text
+              style={[
+                styles.description,
+                { color: theme.colors.textSecondary },
+              ]}
+            >
+              Komunitas terverifikasi untuk pengalaman berteman yang aman dan
+              bermakna.
+            </Text>
+          </View>
+
+          {/* Kolom Kanan: Gambar Maskot / Perisai Besar */}
+          <View style={[styles.rightColumn, {backgroundColor: `${theme.colors.secondaryBackground}60`}]}>
+            <Verification1Icon width={30} height={30} />
+          </View>
+        </View>
       </View>
     </MainLayout>
   );
