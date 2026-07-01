@@ -13,6 +13,7 @@ import TimeInputBox from "@/views/components/TimeInputBox/TimeInputBox";
 import WheelColumn from "@/views/components/WheelColumn/WheelColumn";
 
 interface TimeSelectionProps {
+  value?: string; // Format: "HH:MM-HH:MM"
   onTimeChange?: (data: {
     mode: string;
     startTime: string;
@@ -20,12 +21,37 @@ interface TimeSelectionProps {
   }) => void;
 }
 
-export default function TimeSelection({ onTimeChange }: TimeSelectionProps) {
+export default function TimeSelection({ value, onTimeChange }: TimeSelectionProps) {
   const { theme } = useTheme();
 
   const [selectedMode, setSelectedMode] = useState<"standard" | "fullday">("standard");
   const [start, setStart] = useState({ h: 12, m: 0 });
   const [end, setEnd] = useState({ h: 14, m: 0 });
+
+  useEffect(() => {
+    if (value) {
+      if (value === "00:00-23:59") {
+        if (selectedMode !== "fullday") {
+          setSelectedMode("fullday");
+        }
+      } else {
+        const parts = value.split("-");
+        if (parts.length === 2) {
+          const [sh, sm] = parts[0].split(":").map(Number);
+          const [eh, em] = parts[1].split(":").map(Number);
+          if (!isNaN(sh) && !isNaN(sm) && (start.h !== sh || start.m !== sm)) {
+            setStart({ h: sh, m: sm });
+          }
+          if (!isNaN(eh) && !isNaN(em) && (end.h !== eh || end.m !== em)) {
+            setEnd({ h: eh, m: em });
+          }
+          if (selectedMode !== "standard") {
+            setSelectedMode("standard");
+          }
+        }
+      }
+    }
+  }, [value]);
   const [activeField, setActiveField] = useState<"start" | "end" | null>(null);
 
   const toTotalMinutes = (h: number, m: number) => h * 60 + m;

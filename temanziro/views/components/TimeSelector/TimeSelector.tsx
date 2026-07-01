@@ -9,15 +9,19 @@ import IconCheck from "@/assets/icon/check.svg";
 
 import styles from "./TimeSelector.style";
 
-export default function TimeSelector() {
+export interface TimeSelectorProps {
+  value?: string[];
+  onValueChange?: (days: string[]) => void;
+}
+
+export default function TimeSelector({
+  value = [],
+  onValueChange,
+}: TimeSelectorProps) {
   const { theme } = useTheme();
 
   const [selectedCategory, setSelectedCategory] =
     useState<string>("Pilih Hari");
-  const [selectedDays, setSelectedDays] = useState<string[]>([
-    "Senin",
-    "Selasa",
-  ]);
 
   const timeOptions = [
     "Pagi Weekdays",
@@ -39,11 +43,26 @@ export default function TimeSelector() {
   const toggleDay = (day: string) => {
     if (selectedCategory !== "Pilih Hari") setSelectedCategory("Pilih Hari");
 
-    if (selectedDays.includes(day)) {
-      setSelectedDays(selectedDays.filter((d) => d !== day));
+    const newDays = value.includes(day)
+      ? value.filter((d) => d !== day)
+      : [...value, day];
+
+    if (onValueChange) onValueChange(newDays);
+  };
+
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    let newDays: string[] = [];
+    if (category === "Pagi Weekdays" || category === "Malam Weekday") {
+      newDays = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
+    } else if (category === "Akhir Pekan") {
+      newDays = ["Sabtu", "Minggu"];
+    } else if (category === "Setiap hari") {
+      newDays = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
     } else {
-      setSelectedDays([...selectedDays, day]);
+      newDays = value;
     }
+    if (onValueChange) onValueChange(newDays);
   };
 
   return (
@@ -65,7 +84,7 @@ export default function TimeSelector() {
             <TouchableOpacity
               key={option}
               activeOpacity={0.7}
-              onPress={() => setSelectedCategory(option)}
+              onPress={() => handleCategorySelect(option)}
               style={[
                 styles.timeOption,
                 {
@@ -142,7 +161,7 @@ export default function TimeSelector() {
         <View style={styles.daysGrid}>
           {daysOfWeek.map((day) => {
             const isActive =
-              selectedCategory === "Pilih Hari" && selectedDays.includes(day);
+              selectedCategory === "Pilih Hari" && value.includes(day);
 
             return (
               <TouchableOpacity

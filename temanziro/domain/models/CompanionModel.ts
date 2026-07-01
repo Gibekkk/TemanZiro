@@ -14,6 +14,20 @@ export interface CompanionProfile {
     philosophy_companion: string | null;
     preference_activity_companion: string[];
     preference_companion: string[];
+    companion_rating: {
+        count_rating: {
+            "1": number;
+            "2": number;
+            "3": number;
+            "4": number;
+            "5": number;
+        };
+        average_rating: number;
+    };
+    schedule: {
+        days: string[];
+        time: [number, number] | null;
+    },
     registered_date: FirebaseFirestoreTypes.Timestamp | null;
     created_at: FirebaseFirestoreTypes.Timestamp | null;
     updated_at: FirebaseFirestoreTypes.Timestamp | null;

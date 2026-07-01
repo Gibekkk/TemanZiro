@@ -2,6 +2,13 @@ import IconMale from "@/assets/icon/maleoff.svg";
 import IconFemale from "@/assets/icon/femaleoff.svg";
 import IconSecret from "@/assets/icon/rahasiaoff.svg";
 
+import IconMaleOn from "@/assets/icon/maleon.svg";
+import IconMaleOff from "@/assets/icon/maleoff.svg";
+import IconFemaleOn from "@/assets/icon/femaleon.svg";
+import IconFemaleOff from "@/assets/icon/femaleoff.svg";
+import IconSecretOn from "@/assets/icon/rahasiaon.svg";
+import IconSecretOff from "@/assets/icon/rahasiaoff.svg";
+
 export const GENDER = {
     PRIA: "pria",
     WANITA: "wanita",
@@ -27,18 +34,18 @@ export const GENDER_DETAILS = {
 export const GENDER_ICON = {
     [GENDER.PRIA]: {
         label: "Pria",
-        iconOn: require("@/assets/icon/maleon.svg"),
-        iconOff: require("@/assets/icon/maleoff.svg"),
+        iconOn: IconMaleOn,
+        iconOff: IconMaleOff,
     },
     [GENDER.WANITA]: {
         label: "Wanita",
-        iconOn: require("@/assets/icon/femaleon.svg"),
-        iconOff: require("@/assets/icon/femaleoff.svg"),
+        iconOn: IconFemaleOn,
+        iconOff: IconFemaleOff,
     },
     [GENDER.RAHASIA]: {
         label: "Rahasia",
-        iconOn: require("@/assets/icon/rahasiaon.svg"),
-        iconOff: require("@/assets/icon/rahasiaoff.svg"),
+        iconOn: IconSecretOn,
+        iconOff: IconSecretOff,
     }
 };
 

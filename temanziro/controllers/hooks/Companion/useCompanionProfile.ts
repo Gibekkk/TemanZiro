@@ -63,7 +63,7 @@ export function useCompanionProfile() {
 
     const handleEditProfile = () => {
         console.log("Edit Profile Pressed");
-        // router.push("/profile/edit");
+        router.push("/companion/editprofilecompanion");
     };
 
     const handleLogout = async () => {

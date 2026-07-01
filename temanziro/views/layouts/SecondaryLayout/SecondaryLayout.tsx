@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BackIcon from "@/assets/icon/back.svg"; // Pastikan sudah berupa SVG
@@ -66,15 +66,21 @@ export default function SecondaryLayout({
         )}
       </View>
 
-      <ScrollView
-        style={styles.contentScreen}
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingBottom: (insets.bottom || 20) + 20 },
-        ]}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
       >
-        {children}
-      </ScrollView>
+        <ScrollView
+          style={styles.contentScreen}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={[
+            styles.scrollContent,
+            { paddingBottom: (insets.bottom || 20) + 20 },
+          ]}
+        >
+          {children}
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 }

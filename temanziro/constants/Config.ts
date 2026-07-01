@@ -19,6 +19,14 @@ export const DUMMY_COMPANION_PROFILE: CompanionProfile = {
     philosophy_companion: "Keep coding and stay humble.",
     preference_activity_companion: ["belajar", "olahraga", "nongkrong"],
     preference_companion: ["Friendly", "Polite"],
+    companion_rating: {
+        count_rating: { "1": 0, "2": 0, "3": 1, "4": 3, "5": 11 },
+        average_rating: 4.8,
+    },
+    schedule: {
+        days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"],
+        time: [720, 1080],
+    },
     registered_date: null,
     created_at: null,
     updated_at: null,
@@ -107,4 +115,21 @@ export const DUMMY_REVIEWS = [
         rating: 4,
         text: "Orangnya sopan dan seru, recommended!",
     }
+];
+
+export const DUMMY_LOCATIONS = [
+    "Jakarta Selatan, DKI Jakarta",
+    "Jakarta Barat, DKI Jakarta",
+    "Jakarta Pusat, DKI Jakarta",
+    "Bandung City, West Java",
+    "Surabaya, East Java",
+    "Makassar, South Sulawesi",
+    "Medan, North Sumatra",
+    "Yogyakarta, DI Yogyakarta",
+    "Semarang, Central Java",
+    "Tangerang, Banten",
+    "Jl. Sunset Boulevard, Makassar",
+    "Jl. Sudirman, Jakarta",
+    "Jl. Malioboro, Yogyakarta",
+    "Coffee Shop Sejahtera, Dago, Bandung",
 ];

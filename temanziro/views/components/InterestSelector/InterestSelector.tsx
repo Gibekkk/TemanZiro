@@ -77,8 +77,11 @@ export default function InterestSelector({
   }, [value]);
 
   const toggleInterest = (interest: string) => {
-    const newSelected = selectedInterests.includes(interest)
-      ? selectedInterests.filter((item) => item !== interest)
+    const isAlreadySelected = selectedInterests.some(
+      (item) => item.toLowerCase() === interest.toLowerCase()
+    );
+    const newSelected = isAlreadySelected
+      ? selectedInterests.filter((item) => item.toLowerCase() !== interest.toLowerCase())
       : [...selectedInterests, interest];
 
     setSelectedInterests(newSelected);
@@ -96,7 +99,9 @@ export default function InterestSelector({
 
       <View style={styles.grid}>
         {interestData.map((item) => {
-          const isActive = selectedInterests.includes(item.label);
+          const isActive = selectedInterests.some(
+            (val) => val.toLowerCase() === item.label.toLowerCase() || val.toLowerCase() === item.value.toLowerCase()
+          );
 
           const IconComponent = isActive ? item.iconWhite : item.iconOrange;
 

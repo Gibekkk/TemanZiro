@@ -1,11 +1,11 @@
 import React from "react";
 import MainLayoutCompanion from "@/views/layouts/MainLayout/MainLayoutCompanion";
-import { View, Image, ActivityIndicator, Text } from "react-native";
+import { View, ActivityIndicator, Text } from "react-native";
 import VerifyBadge from "@/views/components/VerifyBadge/VerifyBadge";
 import KycCard from "@/views/components/KycCard/KycCard";
 import styles from "./ProfileCompanion.style";
 import { useCompanionProfile } from "@/controllers/hooks/Companion/useCompanionProfile";
-import ImgPlaceholder from "@/assets/image/img-placeholder.svg";
+import ProfilePicture from "@/views/components/ProfilePicture/ProfilePicture";
 import IMGMiniZiro from "@/assets/image/mini-ziro.svg";
 import ReviewCard from "@/views/components/ReviewCard/ReviewCard";
 import InterestSelector from "@/views/components/InterestSelector/InterestSelector";
@@ -42,18 +42,11 @@ export default function ProfileCompanion() {
                     <View style={styles.miniZiroWrapper}>
                         <IMGMiniZiro width={50} height={50} />
                     </View>
-                    <View style={[styles.avatarContainer, { borderColor: theme.colors.secondary }]}>
-                        {profileLoading ? (
-                            <ActivityIndicator size="small" />
-                        ) : companionProfile?.url_photoprofile_companion ? (
-                            <Image
-                                source={{ uri: companionProfile.url_photoprofile_companion }}
-                                style={styles.avatarImage}
-                            />
-                        ) : (
-                            <ImgPlaceholder width="100%" height="100%" />
-                        )}
-                    </View>
+                    <ProfilePicture
+                        uri={companionProfile?.url_photoprofile_companion}
+                        profileLoading={profileLoading}
+                        showCameraIcon={false}
+                    />
                 </View>
 
                 {/* Info Card */}
