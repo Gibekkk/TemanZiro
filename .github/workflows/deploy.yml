@@ -1,13 +1,10 @@
 name: Deploy Firebase Functions
-
 on:
   push:
     branches:
       - function
-
 permissions:
   contents: read
-
 jobs:
   deploy:
     name: Deploy Functions
@@ -18,14 +15,15 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.22.2'
-
       - name: Install Dependencies
         run: npm install
-
+      - name: Setup GCloud Auth
+        run: |
+          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" | base64 --decode > /tmp/gcp-key.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-key.json" >> $GITHUB_ENV
       - name: Deploy to Firebase
-        run: npx firebase-tools deploy --only functions --token "${{ secrets.FIREBASE_TOKEN }}"
+        run: npx firebase-tools deploy --only functions
