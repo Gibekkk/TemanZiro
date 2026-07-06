@@ -24,7 +24,7 @@ export default function DataScreenKTPPage() {
     if (role === "companion") {
       // Jika dia companion, arahkan ke form data companion
       router.push({
-        pathname: "/verification/VerificationDataCompanionScreen_Call",
+        pathname: "/verification/UploadCVPhoneNumberScreen_Call",
         params: { role },
       });
     } else {
@@ -38,7 +38,11 @@ export default function DataScreenKTPPage() {
 
   return (
     <SecondaryLayout title="Buat Akun">
-      <ProgressBar title="Siapkan KTP Anda" currentStep={3} totalSteps={4} />
+      {role === "companion" ? (
+        <ProgressBar title="Siapkan Selfie KTP Anda" currentStep={2} totalSteps={4} />
+      ) : (
+        <ProgressBar title="Siapkan Selfie KTP Anda" currentStep={2} totalSteps={3} />
+      )}
 
       <Text style={styles.title}>Ambil Foto Selfie KTP</Text>
 

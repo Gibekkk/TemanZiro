@@ -22,7 +22,9 @@ export default function CompanionDataScreenPage() {
 
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedPreferences, setSelectedPreferences] = useState<string[]>([]);
-  const [pendingNewPreferences, setPendingNewPreferences] = useState<string[]>([]);
+  const [pendingNewPreferences, setPendingNewPreferences] = useState<string[]>(
+    [],
+  );
   const [cityError, setCityError] = useState("");
 
   // Fetching logic dihilangkan sesuai permintaan (fokus UI)
@@ -50,7 +52,10 @@ export default function CompanionDataScreenPage() {
   return (
     <SecondaryLayout title="Sesuaikan Profil Anda">
       <View
-        style={[styles.container, { backgroundColor: theme.colors.primaryBackground }]}
+        style={[
+          styles.container,
+          { backgroundColor: theme.colors.primaryBackground },
+        ]}
       >
         <ProgressBar
           title="Ceritain Tentang Kamu"
@@ -67,7 +72,8 @@ export default function CompanionDataScreenPage() {
         </Text>
 
         <Text style={[styles.subtitle, { color: theme.colors.textSecondary }]}>
-          Kasih tahu vibe-mu biar TemanZiro bisa rekomendasiin aktivitas dan grup yang pas buat kamu!
+          Kasih tahu vibe-mu biar TemanZiro bisa rekomendasiin aktivitas dan
+          grup yang pas buat kamu!
         </Text>
 
         <LocationCard
@@ -77,9 +83,7 @@ export default function CompanionDataScreenPage() {
           value={selectedCity}
           onValueChange={handleCityChange}
         />
-        {!!cityError && (
-          <Text style={styles.errorText}>{cityError}</Text>
-        )}
+        {!!cityError && <Text style={styles.errorText}>{cityError}</Text>}
 
         <PersonaSelector
           preference_data={preferenceNames}

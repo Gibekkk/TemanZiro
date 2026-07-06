@@ -55,8 +55,8 @@ export default function UserDataScreenPage() {
       >
         <ProgressBar
           title="Ceritain Tentang Kamu"
-          currentStep={4}
-          totalSteps={4}
+          currentStep={3}
+          totalSteps={3}
         />
 
         <Text style={[styles.subtitle1, { color: theme.colors.secondary }]}>

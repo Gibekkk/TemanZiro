@@ -52,8 +52,6 @@ export default function DataScreenRolePage() {
 
   return (
     <SecondaryLayout title="TemanZiro" alignLeft>
-      <ProgressBar title="Pilih Peran Anda" currentStep={1} totalSteps={4} />
-
       <Text style={styles.title}>
         Bagaimana Anda ingin menggunakan TemanZiro?
       </Text>
