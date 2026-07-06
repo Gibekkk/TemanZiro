@@ -24,6 +24,7 @@ export interface Bookings {
         end_time: string;
     };
     booking_status: BookingStatus;
+    session_notes: string;
     total_price: number;
     created_at: FirebaseFirestoreTypes.Timestamp;
     updated_at: FirebaseFirestoreTypes.Timestamp;
