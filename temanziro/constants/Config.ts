@@ -88,6 +88,7 @@ export const DUMMY_SCHEDULE = {
     isOnline: true,
     avatar: "https://randomuser.me/api/portraits/men/85.jpg",
     bookingUid: "12345678901234567890",
+    badgeText: "KONFIRMASI",
 };
 
 export const DUMMY_COMPANION_RATING = {
