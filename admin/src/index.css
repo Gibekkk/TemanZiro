@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+/* ─── Dark mode pakai data-theme attribute ─────────────────────────────────── */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --color-primary-50:  #fff7ed;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #f97316;
+  --color-primary-600: #ea580c;
+  --color-primary-700: #c2410c;
+  --color-primary-800: #9a3412;
+  --color-primary-900: #7c2d12;
+
+  --color-navy-50:  #f0f4f8;
+  --color-navy-100: #d9e2ec;
+  --color-navy-200: #bcccdc;
+  --color-navy-300: #9fb3c8;
+  --color-navy-400: #829ab1;
+  --color-navy-500: #627d98;
+  --color-navy-600: #486581;
+  --color-navy-700: #334e68;
+  --color-navy-800: #243b53;
+  --color-navy-900: #102a43;
+
+  --font-sans: "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-slate-900 dark:bg-[#020617] dark:text-slate-200 transition-colors duration-200 font-sans;
+  }
+
+  /* Pastikan semua teks di light mode gelap by default */
+  p, span, td, th, label, li, a {
+    @apply text-slate-800 dark:text-slate-200;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-slate-900 dark:text-white;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white dark:bg-slate-800/50 backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none;
+  }
+
+  .sidebar-item {
+    @apply transition-all duration-150 rounded-lg mx-2;
+  }
+  .sidebar-item:hover {
+    @apply bg-primary-50 dark:bg-primary-500/10 text-primary-500;
+  }
+  .active-nav {
+    @apply bg-primary-100 dark:bg-primary-500/15 text-primary-500 font-medium;
+  }
+
+  .status-pill {
+    @apply px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider;
+  }
+}
