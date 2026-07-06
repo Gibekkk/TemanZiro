@@ -28,10 +28,10 @@ export default function CompanionDataScreenPage() {
 
   const handleSubmit = () => {
     console.log("Submit ditekan", { phoneNumber, fileName });
-    // router.push({
-    //   pathname: "/(tabs_companion)/(dashboard)/dashboard",
-    //   params: { role },
-    // });
+    router.push({
+      pathname: "/verification/VerificationDataCompanionScreen_Call",
+      params: { role },
+    });
   };
 
   const handleSkip = () => {
@@ -101,9 +101,9 @@ export default function CompanionDataScreenPage() {
           </View>
         </View>
         {/* 2. Area Upload CV / Portofolio */}
-        Update pada File JSX (CompanionDataScreenPage.tsx) Bungkus area setelah
+        {/* Update pada File JSX (CompanionDataScreenPage.tsx) Bungkus area setelah
         TouchableOpacity dengan logika pengecekan state untuk menampilkan tombol
-        hapus: TypeScript
+        hapus: TypeScript */}
         <View style={styles.formGroup}>
           <Text style={[styles.label, { color: theme.colors.primary }]}>
             Unggah CV atau Portofolio
@@ -175,7 +175,7 @@ export default function CompanionDataScreenPage() {
           style={styles.buttonSubmit}
           onClick={handleSubmit}
         >
-          Kirim & Selesai
+          Kirim
         </GeneralButton>
         <GeneralButton
           variant="ghost"
