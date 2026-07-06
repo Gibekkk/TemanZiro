@@ -22,7 +22,7 @@ export default function ChatInputBar({ onSend }: ChatInputBarProps) {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.buttonAdd} activeOpacity={0.7}>
-                <AddIcon width={20} height={20} />
+                <AddIcon width={15} height={15} />
             </TouchableOpacity>
 
             <TextInput
