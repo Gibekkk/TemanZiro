@@ -15,7 +15,7 @@ export default function App() {
   return (
     <AuthProvider>
       {/* OnlineStatusProvider dihapus — online status sudah dihandle AuthContext */}
-      <BrowserRouter>
+      <BrowserRouter basename="/TemanZiro">
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Layout />}>
