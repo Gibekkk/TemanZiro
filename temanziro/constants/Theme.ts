@@ -10,6 +10,7 @@ export const COMMON_COLORS = {
     lightText: `#ffffff`,
     online: `#10b981`,
     red: `#e11d48`,
+    error: `#FF3B30`,
 } as const;
 
 export const LIGHT_THEME = {

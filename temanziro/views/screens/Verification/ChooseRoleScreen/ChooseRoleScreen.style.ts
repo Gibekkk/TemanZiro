@@ -6,7 +6,7 @@ export default StyleSheet.create({
     color: COMMON_COLORS.textPrimary,
     fontFamily: `${FONTS.quicksand}-Bold`,
     fontSize: 20,
-    marginTop: 20,
+    fontWeight: "bold",
   },
   subtitle: {
     color: COMMON_COLORS.textSecondary,
