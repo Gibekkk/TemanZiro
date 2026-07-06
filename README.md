@@ -1,4 +1,4 @@
-# TemanZiro Requirement
+# TemanZiro Spec Driven Development (SDD)
 ### Q1: User *booking* companion untuk sebuah aktivitas
 - **S1:** User mengisi form booking
     - **F1:** User memilih tipe aktivitas
@@ -70,30 +70,63 @@
     - **F2:** User dan companion dapat melihat lokasi satu sama lain mendekati jadwal booking
 
 
-# TemanZiro Spec Driven Development (SDD)  
+# TemanZiro Foldering  
 ```text
 TemanZiro/
 ├── app/
+│   ├── (tabs)/
+│   │   ├── (dashboard)/
+│   │   │   ├── _layout.tsx
+│   │   │   └── dashboard.tsx
+│   │   ├── (listchat)/
+│   │   │   ├── _layout.tsx
+│   │   │   └── listchat.tsx
+│   │   ├── (profile)/
+│   │   │   ├── _layout.tsx
+│   │   │   └── profile.tsx
+│   │   ├── (temanjalan)/
+│   │   │   ├── _layout.tsx
+│   │   │   └── temanjalan.tsx
+│   │   └── _layout.tsx
+│   ├── (tabs_companion)/
+│   │   ├── (dashboard)/
+│   │   │   ├── _layout.tsx
+│   │   │   └── dashboard.tsx
+│   │   ├── (listchat)/
+│   │   │   ├── _layout.tsx
+│   │   │   └── listchat.tsx
+│   │   ├── (profile)/
+│   │   │   ├── _layout.tsx
+│   │   │   └── profile.tsx
+│   │   ├── (temanjalan)/
+│   │   │   ├── _layout.tsx
+│   │   │   └── temanjalan.tsx
+│   │   └── _layout.tsx
 │   ├── auth/
-│   │   └── AuthCall.tsx
-│   ├── verification/
-│   │   ├── 
-│   ├── onboarding/
-│   │   ├── 
-│   ├── user/
-│   │   ├── 
+│   │   └── AuthScreen_Call.tsx
+│   ├── common/
+│   │   └── chatscreen.tsx
 │   ├── companion/
-│   │   ├── 
+│   │   └── editprofilecompanion.tsx
+│   ├── verification/
+│   │   ├── ChooseRoleScreen_Call.tsx
+│   │   ├── UploadCVPhoneNumberScreen_Call.tsx
+│   │   ├── UploadKTPScreen_Call.tsx
+│   │   ├── UploadSelfieKTPScreen_Call.tsx
+│   │   ├── VerificationDataCompanionScreen_Call.tsx
+│   │   └── VerificationDataUserScreen_Call.tsx
 │   ├── _layout.tsx
 │   └── index.tsx
 ├── assets/
 ├── constants/
 │   ├── BookingDetails.ts
 │   ├── CompanionRating.ts
+│   ├── Config.ts
 │   ├── MoneyDetails.ts
 │   ├── Notification.ts
-│   ├── UserDetails.ts
-│   └── Theme.ts
+│   ├── Theme.ts
+│   ├── TierDetails.ts
+│   └── UserDetails.ts
 ├── controllers/
 │   ├── context/
 │   │   ├── AuthContext.tsx
@@ -102,293 +135,230 @@ TemanZiro/
 │   │   ├── ThemeContext.tsx
 │   │   └── UserProfileContext.tsx
 │   └── hooks/
+│       ├── Common/
+│       │   ├── useChat.ts
+│       │   └── useListChat.ts
+│       ├── Companion/
+│       │   ├── useCompanionDashboard.ts
+│       │   ├── useCompanionEditProfile.ts
+│       │   └── useCompanionProfile.ts
+│       ├── index.ts
 │       ├── useAuth.ts
-│       ├── useMaps.ts
+│       ├── useMap.ts
 │       ├── useMapLocation.ts
 │       ├── usePresence.ts
 │       ├── useTheme.ts
 │       └── useUserProfile.ts
 ├── data/
 │   ├── config/
-│   │   └──FirebaseConfig.ts
+│   │   └── firebase_config.ts
 │   └── repositories/
 │       ├── utils/
-│       │   └── UploadFiles.ts
+│       │   ├── DateUtils.ts
+│       │   ├── NameUtils.ts
+│       │   ├── TierUtils.ts
+│       │   └── UploadFileUtils.ts
 │       ├── BookingRepository.ts
-│       ├── ChatRepository.ts    
+│       ├── ChatRepository.ts
 │       ├── CompanionRepository.ts
 │       ├── CvRepository.ts
 │       ├── KycRepository.ts
 │       ├── LoginRepository.ts
-│       ├── MapRepository.ts
 │       ├── NotificationRepository.ts
 │       ├── PreferenceRepository.ts
-│       ├── SessionRepository.ts
-│       ├── TopUpRepository.ts
-│       ├── UserRepository.ts
-│       └── WithdrawalRepository.ts
+│       ├── PresenceRepository.ts
+│       ├── TransactionRepository.ts
+│       └── UserRepository.ts
 ├── domain/
 │   └── models/
 │       ├── BookingModel.ts
 │       ├── ChatModel.ts
 │       ├── CompanionModel.ts
 │       ├── NotificationModel.ts
+│       ├── OnlineStatusModel.ts
 │       ├── PreferenceModel.ts
 │       ├── TopUpModel.ts
-│       ├── UserModel.ts
+│       ├── UserModels.ts
 │       └── WithdrawalModel.ts
+├── store/
+│   └── useBookingStore.ts
 ├── views/
-│   ├──components/
-│   │    ├──ActivityBoooking/
-│   │    │  ├──ActivityBooking.tsx
-│   │    │  └──ActivityBooking.styles.ts
-│   │    ├──ActivityListView/
-│   │    │  ├──ActivityListView.tsx
-│   │    │  └──ActivityListView.styles.ts
-│   │    ├──ActivityTag/
-│   │    │  ├──ActivityTag.tsx
-│   │    │  └──ActivityTag.styles.ts
-│   │    ├──ActivityTagList/
-│   │    │  ├──ActivityTagList.tsx
-│   │    │  └──ActivityTagList.styles.ts
-│   │    ├──Badge/
-│   │    │  ├──Badge.tsx
-│   │    │  └──Badge.styles.ts
-│   │    ├──BalanceModal/
-│   │    │  ├──BalanceModal.tsx
-│   │    │  └──BalanceModal.styles.ts
-│   │    ├──BottomBar/
-│   │    │  ├──BottomBar.tsx
-│   │    │  └──BottomBat.styles.ts
-│   │    ├──ScanQRCamera/
-│   │    │  ├──ScanQRCamera.tsx
-│   │    │  └──ScanQRCamera.styles.ts
-│   │    ├──ChatItem/
-│   │    │  ├──ChatItem.tsx
-│   │    │  └──ChatItem.styles.ts
-│   │    ├──CheckInButton/
-│   │    │  ├──CheckInButton.tsx
-│   │    │  └──CheckInButton.styles.ts
-│   │    ├──DatePicker/
-│   │    │  ├──DatePicker.tsx
-│   │    │  └──DatePicker.styles.ts
-│   │    ├──FriendList/
-│   │    │  ├──FriendList.tsx
-│   │    │  └──FriendList.styles.ts
-│   │    ├──GenderToggle/
-│   │    │  ├──GenderToggle.tsx
-│   │    │  └──GenderToggle.styles.ts
-│   │    ├──GeneralButton/
-│   │    │  ├──GeneralButton.tsx
-│   │    │  └──GeneralButton.styles.ts
-│   │    ├──ImagePreviewCard/
-│   │    │  ├──ImagePreviewCard.tsx
-│   │    │  └──ImagePreviewCard.styles.ts
-│   │    ├──InProgressCard/
-│   │    │  ├──InProgressCard.tsx
-│   │    │  └──InProgressCard.styles.ts
-│   │    ├──InterestSelector/
-│   │    │  ├──InterestSelector.tsx
-│   │    │  └──InterestSelector.styles.ts
-│   │    ├──KYCCard/
-│   │    │  ├──KYCCard.tsx
-│   │    │  └──KYCCard.styles.ts
-│   │    ├──LoadingScreen/
-│   │    │  ├──LoadingScreen.tsx
-│   │    │  └──LoadingScreen.styles.ts
-│   │    ├──LocationCard/
-│   │    │  ├──LocationCard.tsx
-│   │    │  └──LocationCard.styles.ts
-│   │    ├──LoginContent/
-│   │    │  ├──LoginContent.tsx
-│   │    │  └──LoginContent.styles.ts
-│   │    ├──MoneyButtonNavigate/
-│   │    │  ├──MoneyButtonNavigate.tsx
-│   │    │  └──MoneyButtonNavigate.styles.ts
-│   │    ├──NotificationCard/
-│   │    │  ├──NotificationCard.tsx
-│   │    │  └──NotificationCard.styles.ts
-│   │    ├──OnBoardingScreen/
-│   │    │  ├──OnBoardingScreen.tsx
-│   │    │  └──OnBoardingScreen.styles.ts
-│   │    ├──PhilopsophyCard/
-│   │    │  ├──PhilosophyCard.tsx
-│   │    │  └──PhilosophyCard.styles.ts
-│   │    ├──ProgressBar/
-│   │    │  ├──ProgressBar.tsx
-│   │    │  └──ProgressBar.styles.ts
-│   │    ├──Profile/
-│   │    │  ├──Profile.tsx
-│   │    │  └──Profile.styles.ts
-│   │    ├──QRCodeModal/
-│   │    │  ├──QRCodeModal.tsx
-│   │    │  └──QRCodeModal.styles.ts
-│   │    ├──RangeAgeBooking/
-│   │    │  ├──RangeAgeBooking.tsx
-│   │    │  └──RangeAgeBooking.styles.ts
-│   │    ├──RatingReview/
-│   │    │  ├──RatingReview.tsx
-│   │    │  └──RatingReview.styles.ts
-│   │    ├──ReviewCard/
-│   │    │  ├──ReviewCard.tsx
-│   │    │  └──ReviewCard.styles.ts
-│   │    ├──RoleCardToggle/
-│   │    │  ├──RoleCardToggle.tsx
-│   │    │  └──RoleCardToggle.styles.ts
-│   │    ├──ScheduledCard/
-│   │    │  ├──ScheduledCard.tsx
-│   │    │  └──ScheduledCard.styles.ts
-│   │    ├──SOSButton/
-│   │    │  ├──SOSButton.tsx
-│   │    │  └──SOSButton.styles.ts
-│   │    ├──SearchBar/
-│   │    │  ├──SearchBar.tsx
-│   │    │  └──SearchBar.styles.ts
-│   │    ├──TimeSelector/
-│   │    │  ├──TimeSelector.tsx
-│   │    │  └──TimeSelector.styles.ts
-│   │    ├──TimePicker/
-│   │    │  ├──TimePicker.tsx
-│   │    │  └──TimePicker.styles.ts
-│   │    ├──UploadIMG/
-│   │    │  ├──UploadIMG.tsx
-│   │    │  └──UploadIMG.styles.ts
-│   │    ├──VerifiedBadge/
-│   │    │  ├──VerifiedBadge.tsx
-│   │    │  └──VerifiedBadge.styles.ts
-│   │    ├──WalletCard/
-│   │    │  ├──WalletCard.tsx
-│   │    │  └──WalletCard.styles.ts
-│   │    ├──TopupRequestModal/
-│   │    │  ├──TopupRequestModal.tsx
-│   │    │  └──TopupRequestModal.styles.ts
-│   │    └──UI/
-│   │       ├──IconLabel/
-│   │       │  ├──IconLabel.tsx
-│   │       │  └──IconLabel.styles.ts
-│   │       └──
-│   ├──layouts/
-│   │     ├──AuthLayout/
-│   │     │  ├──AuthLayout.tsx
-│   │     │  └──AuthLayout.styles.ts
-│   └──screens/
-│        ├──Auth/
-│        │  ├──AuthScreen.tsx
-│        │  └──AuthScreen.styles.ts
-│        ├──Verification/
-│        │  ├──ChooseRoleScreen/
-│        │  │    ├──ChooseRoleScreen.tsx
-│        │  │    └──ChooseRoleScreen.style.ts
-│        │  ├──UploadKTPScreen/
-│        │  │    ├──UploadKTPScreen.tsx
-│        │  │    └──UploadKTPScreen.style.ts
-│        │  └──UploadSelfieKTPScreen/
-│        │       ├──UploadSelfieKTPScreen.tsx
-│        │       └──UploadSelfieKTPScreen.style.ts
-│        ├──Onboarding/
-│        │  ├──OnBoarding1Screen.tsx
-│        │  ├──OnBoarding2Screen.tsx
-│        │  ├──OnBoarding3Screen.tsx
-│        │  └──OnBoarding.styles.ts
-│        ├──Common/
-│        │  ├──ChatMassageScreen/
-│        │  │    ├──ChatMassageScreen.tsx
-│        │  │    └──ChatMassageScreen.style.ts
-│        │  ├──ListTemanJalanScreen/
-│        │  │    ├──ListTemanJalanScreen.tsx
-│        │  │    └──ListTemanJalanScreen.style.ts
-│        │  ├──TemanJalanScreen/
-│        │  │    ├──TemanJalanScreen.tsx
-│        │  │    └──TemanJalanScreen.style.ts
-│        │  └──MoneyScreen/
-│        │       ├──MoneyScreen.tsx
-│        │       └──MoneyScreen.style.ts
-│        ├──User/
-│        │  ├──VerificationDataUserScreen/
-│        │  │    ├──VerificationDataUserScreen.tsx
-│        │  │    └──VerificationDataUserScreen.style.ts
-│        │  ├──DashboardUserScreen/
-│        │  │    ├──DashboardUserScreen.tsx
-│        │  │    └──DashboardUserScreen.style.ts
-│        │  ├──BookingTemanJalanScreen/
-│        │  │    ├──BookingTemanJalanScreen.tsx
-│        │  │    └──BookingTemanJalanScreen.style.ts
-│        │  ├──ViewProfileTemanJalanScreen/
-│        │  │    ├──ViewProfileTemanJalanScreenn.tsx
-│        │  │    └──ViewProfileTemanJalanScreen.style.ts
-│        │  ├──PendingSessionScreen/
-│        │  │    ├──PendingSessionScreen.tsx
-│        │  │    └──PendingSessionScreen.style.ts
-│        │  ├──FindSessionScreen/
-│        │  │    ├──FindSessionScreen.tsx
-│        │  │    └──FindSessionScreen.style.ts
-│        │  ├──ConfirmationSessionScreen/
-│        │  │    ├──ConfirmationSessionScreen.tsx
-│        │  │    └──ConfirmationSessionScreen.style.ts
-│        │  ├──OngoingSessionScreen/
-│        │  │    ├──OngoingSessionScreen.tsx
-│        │  │    └──OngoingSessionScreen.style.ts
-│        │  ├──CompletedSessionScreen/
-│        │  │    ├──CompletedSessionScreen.tsx
-│        │  │    └──CompletedSessionScreen.style.ts
-│        │  ├──ReflectionSession/
-│        │  │    ├──ReflectionSession.tsx
-│        │  │    └──ReflectionSession.style.ts
-│        │  ├──CanceledSessionScreen/
-│        │  │    ├──CanceledSessionScreen.tsx
-│        │  │    └──CanceledSessionScreen.style.ts
-│        │  ├──EditProfileUserScreen/
-│        │  │    ├──EditProfileUserScreen.tsx
-│        │  │    └──EditProfileUserScreen.style.ts
-│        │  ├──FormTopUpMoneyUserScreen/
-│        │  │    ├──FormTopUpMoneyUserScreen.tsx
-│        │  │    └──FormTopUpMoneyUserScreen.style.ts
-│        │  ├──MatchRequestScreen/
-│        │  │    ├──MatchRequestScreen.tsx
-│        │  │    └──MatchRequestScreen.style.ts
-│        │  ├──MatchFoundScreen/
-│        │  │    ├──MatchFoundScreen.tsx
-│        │  │    └──MatchFoundScreen.style.ts
-│        │  ├──ProfileUserScreen/
-│        │  │    ├──ProfileUserScreen.tsx
-│        │  │    └──ProfileUserScreen.style.ts
-│        │  ├──TemanJalanSuccesFoundScreen/
-│        │  │    ├──TemanJalanSuccesFoundScreen.tsx
-│        │  │    └──TemanJalanSuccesFoundScreen.style.ts
-│        │  ├──MoneyTopupScreen/
-│        │  │    ├──MoneyTopupScreen.tsx
-│        │  │    └──MoneyTopupScreen.style.ts
-│        │  └──TopupHistoryScreen/
-│        │       ├──TopupHistoryScreen.tsx
-│        │       └──TopupHistoryScreen.style.ts
-│        └──Companion/
-│           ├──VerificationDataCompanionScreen/
-│           │    ├──VerificationDataCompanionScreen.tsx
-│           │    └──VerificationDataCompanionScreen.style.ts
-│           ├──DashboardCompanionScreen/
-│           │    ├──DashboardCompanionScreen.tsx
-│           │    └──DashboardCompanionScreen.style.ts
-│           ├──PendingSessionScreen/
-│           │    ├──PendingSessionScreen.tsx
-│           │    └──PendingSessionScreen.style.ts
-│           ├──EditProfileCompanionScreen/
-│           │    ├──EditProfileCompanionScreen.tsx
-│           │    └──EditProfileCompanionScreen.style.ts
-│           ├──FormWithdrawalScreen/
-│           │    ├──FormWithdrawalScreen.tsx
-│           │    └──FormWithdrawalScreen.style.ts
-│           ├──NotificationScreen/
-│           │    ├──NotificationScreen.tsx
-│           │    └──NotificationScreen.style.ts
-│           ├──WithdrawalHistoryScreen/
-│           │    ├──WithdrawalHistoryScreen.tsx
-│           │    └──WithdrawalHistoryScreen.style.ts
-│           └──ProfileCompanionScreen/
-│                ├──ProfileCompanionScreen.tsx
-│                └──ProfileCompanionScreen.style.ts
-│
+│   ├── components/
+│   │   ├── ActivityBooking/
+│   │   │   ├── ActivityBooking.style.ts
+│   │   │   └── ActivityBooking.tsx
+│   │   ├── AddressInput/
+│   │   │   ├── AddressInput.style.tsx
+│   │   │   └── AddressInput.tsx
+│   │   ├── Badge/
+│   │   │   ├── Badge.style.ts
+│   │   │   └── Badge.tsx
+│   │   ├── ChatBubble/
+│   │   │   ├── ChatBubble.style.ts
+│   │   │   └── ChatBubble.tsx
+│   │   ├── ChatInputBar/
+│   │   │   ├── ChatInputBar.style.ts
+│   │   │   └── ChatInputBar.tsx
+│   │   ├── CheckInButton/
+│   │   │   ├── CheckInButton.style.tsx
+│   │   │   └── CheckInButton.tsx
+│   │   ├── FriendList/
+│   │   │   ├── FriendList.style.ts
+│   │   │   └── FriendList.tsx
+│   │   ├── GenderSelector/
+│   │   │   ├── GenderSelector.style.ts
+│   │   │   └── GenderSelector.tsx
+│   │   ├── GeneralButton/
+│   │   │   ├── GeneralButton.style.ts
+│   │   │   └── GeneralButton.tsx
+│   │   ├── InterestSelector/
+│   │   │   ├── InterestSelector.style.ts
+│   │   │   └── InterestSelector.tsx
+│   │   ├── KycCard/
+│   │   │   ├── KycCard.style.ts
+│   │   │   └── KycCard.tsx
+│   │   ├── LocationCard/
+│   │   │   ├── LocationCard.style.ts
+│   │   │   └── LocationCard.tsx
+│   │   ├── NotificationBell/
+│   │   │   ├── NotificationBell.style.ts
+│   │   │   └── NotificationBell.tsx
+│   │   ├── PersonaSelector/
+│   │   │   ├── PersonaSelector.style.ts
+│   │   │   └── PersonaSelector.tsx
+│   │   ├── ProfilePicture/
+│   │   │   ├── ProfilePicture.style.ts
+│   │   │   └── ProfilePicture.tsx
+│   │   ├── ProgressBar/
+│   │   │   ├── ProgressBar.style.ts
+│   │   │   └── ProgressBar.tsx
+│   │   ├── ReviewCard/
+│   │   │   ├── ReviewCard.style.ts
+│   │   │   └── ReviewCard.tsx
+│   │   ├── RoleCardToggle/
+│   │   │   ├── RoleCardToggle.style.ts
+│   │   │   └── RoleCardToggle.tsx
+│   │   ├── ScheduleCard/
+│   │   │   ├── ScheduleCard.style.ts
+│   │   │   └── ScheduleCard.tsx
+│   │   ├── SearchBar/
+│   │   │   ├── SearchBar.style.ts
+│   │   │   └── SearchBar.tsx
+│   │   ├── TimeInputBox/
+│   │   │   ├── TimeInputBox.style.ts
+│   │   │   └── TimeInputBox.tsx
+│   │   ├── TimePicker/
+│   │   │   ├── TimePicker.style.ts
+│   │   │   └── TimePicker.tsx
+│   │   ├── TimeSelector/
+│   │   │   ├── TimeSelector.style.ts
+│   │   │   └── TimeSelector.tsx
+│   │   ├── UI/
+│   │   │   ├── BookingStatusInChat/
+│   │   │   │   ├── BookingStatusInChat.style.ts
+│   │   │   │   └── BookingStatusInChat.tsx
+│   │   │   ├── IconLabel/
+│   │   │   │   ├── IconLabel.style.ts
+│   │   │   │   ├── IconLabel.tsx
+│   │   │   │   ├── MiniCard.style.ts
+│   │   │   │   ├── MiniCard.tsx
+│   │   │   │   ├── StatCard.style.ts
+│   │   │   │   └── StatCard.tsx
+│   │   │   ├── MoneyButton/
+│   │   │   │   ├── MoneyButton.style.ts
+│   │   │   │   └── MoneyButton.tsx
+│   │   │   ├── StatusToggle/
+│   │   │   │   ├── StatusToggle.style.ts
+│   │   │   │   └── StatusToggle.tsx
+│   │   │   ├── TabIcon/
+│   │   │   │   └── TabIcon.tsx
+│   │   │   └── UserProfile/
+│   │   │       ├── UserProfile.style.ts
+│   │   │       └── UserProfile.tsx
+│   │   ├── UploadIMG/
+│   │   │   ├── UploadIMG.style.ts
+│   │   │   └── UploadIMG.tsx
+│   │   ├── VerifyBadge/
+│   │   │   ├── VerifyBadge.style.ts
+│   │   │   └── VerifyBadge.tsx
+│   │   └── WheelColumn/
+│   │       ├── WheelColumn.style.ts
+│   │       └── WheelColumn.tsx
+│   ├── layouts/
+│   │   ├── AuthLayout/
+│   │   │   ├── AuthLayout.style.ts
+│   │   │   └── AuthLayout.tsx
+│   │   ├── ChatLayout/
+│   │   │   ├── ChatLayout.style.ts
+│   │   │   └── ChatLayout.tsx
+│   │   ├── MainLayout/
+│   │   │   ├── MainLayout.style.ts
+│   │   │   ├── MainLayout.tsx
+│   │   │   └── MainLayoutCompanion.tsx
+│   │   └── SecondaryLayout/
+│   │       ├── SecondaryLayout.style.ts
+│   │       └── SecondaryLayout.tsx
+│   └── screens/
+│       ├── Auth/
+│       │   ├── AuthScreen.style.ts
+│       │   └── AuthScreen.tsx
+│       ├── Common/
+│       │   ├── ChatScreen/
+│       │   │   ├── ChatScreen.style.ts
+│       │   │   └── ChatScreen.tsx
+│       │   ├── ListChatScreen/
+│       │   │   ├── ListChatScreen.style.ts
+│       │   │   └── ListChatScreen.tsx
+│       │   └── TemanJalan/
+│       │       ├── TemanJalanScreen.style.ts
+│       │       └── TemanJalanScreen.tsx
+│       ├── Companion/
+│       │   ├── DashboardCompanion/
+│       │   │   ├── DashboardCompanion.style.ts
+│       │   │   └── DashboardCompanion.tsx
+│       │   ├── EditProfileCompanion/
+│       │   │   ├── EditProfileCompanion.style.ts
+│       │   │   └── EditProfileCompanion.tsx
+│       │   ├── ProfileCompanion/
+│       │   │   ├── ProfileCompanion.style.ts
+│       │   │   └── ProfileCompanion.tsx
+│       │   ├── UploadCVPhoneNumberScreen/
+│       │   │   ├── UploadCVPhoneNumberScreen.style.ts
+│       │   │   └── UploadCVPhoneNumberScreen.tsx
+│       │   └── VerificationDataCompanionScreen/
+│       │       ├── VerificationDataCompanionScreen.style.ts
+│       │       └── VerificationDataCompanionScreen.tsx
+│       ├── User/
+│       │   ├── DashboardUserScreen/
+│       │   │   ├── DashboardUserScreen.style.ts
+│       │   │   └── DashboardUserScreen.tsx
+│       │   ├── ProfileUserScreen/
+│       │   │   ├── ProfileUserScreen.style.ts
+│       │   │   └── ProfileUserScreen.tsx
+│       │   └── VerificationDataUserScreen/
+│       │       ├── VerificationDataUserScreen.style.ts
+│       │       └── VerificationDataUserScreen.tsx
+│       └── Verification/
+│           ├── ChooseRoleScreen/
+│           │   ├── ChooseRoleScreen.style.ts
+│           │   └── ChooseRoleScreen.tsx
+│           ├── UploadKTPScreen/
+│           │   ├── UploadKTPScreen.style.ts
+│           │   └── UploadKTPScreen.tsx
+│           └── UploadSelfieKTPScreen/
+│               ├── UploadSelfieKTPScreen.style.ts
+│               └── UploadSelfieKTPScreen.tsx
+├── .env.example
+├── .gitignore
+├── AGENTS.md
+├── CLAUDE.md
+├── README.md
+├── app.d.ts
 ├── app.json
+├── declarations.d.ts
+├── eslint.config.js
+├── metro.config.js
+├── package-lock.json
 ├── package.json
-├── tsconfig.json
-└── README.md
+└── tsconfig.json
 ```
