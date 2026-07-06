@@ -21,6 +21,7 @@ interface ScheduleData {
   isOnline: boolean;
   avatar?: string;
   bookingUid: string;
+  badgeText: string;
 }
 const formatName = (fullName: string): string => {
   if (!fullName) return "";
@@ -38,44 +39,55 @@ export default function ScheduleCard({ schedule, onPress }: { schedule: Schedule
 
   const { theme, isDark } = useTheme();
 
-  const cardBg = isDark ? "#1a1613" : "#f8efea";
-  const cardBorder = isDark ? "#382920" : "#f0dfd7";
+  const badgeColor =
+    schedule.badgeText?.toLowerCase() === "dibatalkan" || schedule.badgeText?.toLowerCase() === "batal"
+      ? theme.colors.red
+      : schedule.badgeText?.toLowerCase() === "mencari"
+      ? theme.colors.primary
+      : theme.colors.secondary;
 
   return (
     <TouchableOpacity
-      style={[styles.scheduleCard, { backgroundColor: cardBg, borderColor: cardBorder }]}
+      style={[styles.scheduleCard, { backgroundColor: theme.colors.primaryBackground, borderColor: theme.colors.border }]}
       onPress={onPress}
       activeOpacity={onPress ? 0.7 : 1}
     >
+      {schedule.badgeText && (
+        <View style={[styles.badgeContainer, { backgroundColor: badgeColor }]}>
+          <Text style={styles.badgeText}>{schedule.badgeText.toUpperCase()}</Text>
+        </View>
+      )}
       <View style={styles.avatarSmall}>
         {schedule.avatar ? (
           <Image
             source={{ uri: schedule.avatar }}
-            style={styles.avatarSmallImage}
+            style={[styles.avatarSmallImage, { borderColor: theme.colors.primary }]}
           />
         ) : (
-          <View style={[styles.avatarSmallImage, { overflow: "hidden", alignItems: "center", justifyContent: "center" }]}>
+          <View style={[styles.avatarSmallImage, { overflow: "hidden", alignItems: "center", justifyContent: "center", borderColor: theme.colors.primary }]}>
             <IMGMiniZiro width={48} height={48} />
           </View>
         )}
-        {schedule.isOnline && <View style={styles.onlineIndicator} />}
+        {schedule.isOnline && <View style={[styles.onlineIndicator, { backgroundColor: theme.colors.online }]} />}
       </View>
       <View style={styles.scheduleInfo}>
-        <Text style={styles.scheduleName}>
+        <Text style={[styles.scheduleName, { color: theme.colors.primary }]}>
           {formatName(schedule.name)}, {schedule.age}
         </Text>
         <View style={styles.infoContainer}>
             <IconLocation width={12} height={12} />
-            <Text style={styles.infoText}>{locationDisplay}</Text>
+            <Text style={[styles.infoText, { color: theme.colors.textSecondary }]}>{locationDisplay}</Text>
         </View>
        <View style={styles.dateTimeRow}>
           <View style={styles.infoContainer}>
             <IconDate width={12} height={12} />
-            <Text style={styles.infoText}>{schedule.date}</Text>
+            <Text style={[styles.infoText, { color: theme.colors.textSecondary }]}>{schedule.date}</Text>
           </View>
           <View style={[styles.infoContainer, { marginLeft: 12 }]}>
             <IconTime width={12} height={12} />
-            <Text style={styles.infoText}>{schedule.time}</Text>
+            <Text style={[styles.infoText, { color: theme.colors.textSecondary }]}>
+              {schedule.time}
+            </Text>
           </View>
         </View>
       </View>
