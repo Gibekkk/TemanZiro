@@ -12,6 +12,7 @@ interface MainLayoutProps {
   useScrollView?: boolean;
   showHeader?: boolean; // Props baru untuk toggle header
   isDashboard?: boolean;
+  backgroundColor?: string;
 }
 
 export default function MainLayout({
@@ -19,9 +20,11 @@ export default function MainLayout({
   useScrollView = true,
   showHeader = false,
   isDashboard = true,
+  backgroundColor,
 }: MainLayoutProps) {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
+  const activeBgColor = backgroundColor || theme.colors.tertiaryBackground;
 
   const contentStyle = [
     styles.screen,
@@ -37,15 +40,15 @@ export default function MainLayout({
       style={[
         styles.headerWrapper,
         {
-          backgroundColor: isDashboard ? theme.colors.tertiaryBackground : "transparent",
+          backgroundColor: isDashboard ? activeBgColor : "transparent",
           paddingTop: insets.top > 0 ? insets.top + 12 : 12,
           paddingBottom: 8,
         }
       ]}
     >
       <View style={styles.headerTop}>
-        <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.colors.secondary }}>
-          Teman Ziro
+        <Text style={{ fontSize: 24, fontWeight: "bold", color: theme.colors.textPrimary }}>
+          Teman <Text style={{ color: theme.colors.secondary }}>Ziro</Text>
         </Text>
         <View style={styles.userProfileWrapper}>
           <MoneyButton />
@@ -58,11 +61,11 @@ export default function MainLayout({
 
   if (useScrollView) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.colors.tertiaryBackground }]}>
+      <View style={[styles.container, { backgroundColor: activeBgColor }]}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={contentStyle}
-          style={{ backgroundColor: theme.colors.tertiaryBackground }}
+          style={{ backgroundColor: activeBgColor }}
         >
           {showHeader && HeaderComponent}
           {children}
@@ -72,7 +75,7 @@ export default function MainLayout({
   }
 
   return (
-    <View style={[styles.container, contentStyle, { backgroundColor: theme.colors.tertiaryBackground }]}>
+    <View style={[styles.container, contentStyle, { backgroundColor: activeBgColor }]}>
       {showHeader && HeaderComponent}
       {children}
     </View>
