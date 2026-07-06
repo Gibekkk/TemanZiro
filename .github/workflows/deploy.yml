@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - function
-    paths:
-      - 'functions/**'
 
 permissions:
   contents: read
