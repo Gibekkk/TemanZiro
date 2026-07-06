@@ -4,74 +4,95 @@ import { ChatMessage, ChatRoomMeta } from '@/domain/models/ChatModel';
 export const ChatRepository = {
     subscribeMessagesAsUser: (userUid: string, companionUid: string, onUpdate: (messages: ChatMessage[]) => void, onError?: (error: Error) => void) => {
         return firestore()
-        .collection('chat')
-        .doc(userUid)
-        .collection('companion_id')
-        .doc(companionUid)
-        .collection('chats')
-        .orderBy('created_at', 'asc')
-        .onSnapshot(
-            (snapshot) => {
-            const messages = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            })) as ChatMessage[];
-            onUpdate(messages);
-            },
-            (error) => {
-            console.error("ChatRepository Error subscribeMessagesAsUser:", error);
-            if (onError) onError(error);
-            }
-        );
+            .collection('chat')
+            .doc(userUid)
+            .collection('companion_id')
+            .doc(companionUid)
+            .collection('chats')
+            .orderBy('created_at', 'asc')
+            .onSnapshot(
+                (snapshot) => {
+                    const messages = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    })) as ChatMessage[];
+                    onUpdate(messages);
+                },
+                (error) => {
+                    console.error("ChatRepository Error subscribeMessagesAsUser:", error);
+                    if (onError) onError(error);
+                }
+            );
     },
 
     subscribeUserInbox: (userUid: string, onUpdate: (roomMeta: ChatRoomMeta | null) => void) => {
         return firestore()
-        .collection('chat')
-        .doc(userUid)
-        .onSnapshot((docSnapshot) => {
-            if (docSnapshot.exists()) {
-            onUpdate({
-                id: docSnapshot.id,
-                ...docSnapshot.data(),
-            } as ChatRoomMeta);
-            } else {
-            onUpdate(null);
-            }
-        });
+            .collection('chat')
+            .doc(userUid)
+            .onSnapshot((docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    onUpdate({
+                        id: docSnapshot.id,
+                        ...docSnapshot.data(),
+                    } as ChatRoomMeta);
+                } else {
+                    onUpdate(null);
+                }
+            });
+    },
+
+    subscribeUserInboxRooms: (userUid: string, onUpdate: (rooms: any[]) => void) => {
+        return firestore()
+            .collection('chat')
+            .doc(userUid)
+            .collection('companion_id')
+            .orderBy('lastchat_datetime', 'desc')
+            .onSnapshot((snapshot) => {
+                const rooms = snapshot.docs.map((doc) => ({
+                    companionUid: doc.id,
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                onUpdate(rooms);
+            }, (error) => {
+                console.error("ChatRepository Error subscribeUserInboxRooms:", error);
+            });
     },
 
     subscribeMessagesAsCompanion: (userUid: string, companionUid: string, onUpdate: (messages: ChatMessage[]) => void) => {
         return ChatRepository.subscribeMessagesAsUser(userUid, companionUid, onUpdate);
     },
 
-    subscribeCompanionInbox: (companionUid: string, onUpdate: (rooms: (ChatRoomMeta & { userUid: string })[]) => void) => {
+    subscribeCompanionInbox: (companionUid: string, onUpdate: (rooms: any[]) => void) => {
         return firestore()
-        .collection('chat_companion')
-        .doc(companionUid)
-        .collection('id_user')
-        .orderBy('lastchat_datetime', 'desc')
-        .onSnapshot((snapshot) => {
-            const rooms = snapshot.docs.map((doc) => ({
-            userUid: doc.id,
-            id: doc.id,
-            last_chat: doc.data().last_chat,
-            lastchat_datetime: doc.data().lastchat_datetime,
-            })) as (ChatRoomMeta & { userUid: string })[];
-            onUpdate(rooms);
-        });
+            .collection('chat_companion')
+            .doc(companionUid)
+            .collection('id_user')
+            .orderBy('lastchat_datetime', 'desc')
+            .onSnapshot((snapshot) => {
+                const rooms = snapshot.docs.map((doc) => ({
+                    userUid: doc.id,
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                onUpdate(rooms);
+            }, (error) => {
+                console.error("ChatRepository Error subscribeCompanionInbox:", error);
+            });
     },
 
-    sendMessage: async (userUid: string, companionUid: string, bookingId: string, text: string, senderIsUser: boolean): Promise<void> => {
+    sendMessage: async (userUid: string, companionUid: string, bookingId: string | null | undefined, text: string, senderIsUser: boolean): Promise<void> => {
         try {
             const batch = firestore().batch();
             const serverTimestamp = firestore.FieldValue.serverTimestamp();
 
-            const bookingRef = firestore()
-                .collection('bookings')
-                .doc(userUid)
-                .collection('booking')
-                .doc(bookingId);
+            const bookingRef = bookingId
+                ? firestore()
+                    .collection('bookings')
+                    .doc(userUid)
+                    .collection('booking')
+                    .doc(bookingId)
+                : null;
 
             const messageRef = firestore()
                 .collection('chat')
@@ -121,7 +142,7 @@ export const ChatRepository = {
             if (snapshot.exists()) {
                 return snapshot.data();
             }
-        return null;
+            return null;
         } catch (error) {
             console.error("ChatRepository Error resolveBookingData :", error);
             return null;
