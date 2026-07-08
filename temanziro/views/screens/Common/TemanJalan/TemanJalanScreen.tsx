@@ -104,7 +104,12 @@ export default function TemanJalanScreen() {
         return (
             <MainLayoutCompanion showHeader={true} useScrollView={false} backgroundColor="#ffffff" isDashboard={false} paddingBottom={0}>
                 {renderContent()}
-                <ScheduleTabs role="companion" />
+                <ScheduleTabs
+                    role="companion"
+                    schedules={featuredDataList}
+                    loading={loading}
+                    handleScheduleClick={handleChatPress}
+                />
             </MainLayoutCompanion>
         );
     }
@@ -112,7 +117,12 @@ export default function TemanJalanScreen() {
     return (
         <MainLayout showHeader={true} useScrollView={false} isDashboard={false} paddingBottom={0}>
             {renderContent()}
-            <ScheduleTabs role="booker" />
+            <ScheduleTabs
+                role="booker"
+                schedules={featuredDataList}
+                loading={loading}
+                handleScheduleClick={handleChatPress}
+            />
         </MainLayout>
     );
 }

@@ -8,11 +8,11 @@ import { useRouter } from 'expo-router';
 
 interface ScheduleTabsProps {
     role: 'companion' | 'booker' | string;
+    schedules?: any[];
     tabs?: string[];
     activeTab?: string;
     setActiveTab?: (tab: string) => void;
     loading?: boolean;
-    filteredSchedules?: any[];
     handleScheduleClick?: (schedule: any) => void;
     onViewAllPress?: (activeTab: string) => void;
 }
@@ -22,11 +22,11 @@ const USER_TABS = ["Menunggu Pembayaran", "Mencari", "Konfirmasi", "Berlangsung"
 
 export default function ScheduleTabs({
     role,
+    schedules = [],
     tabs,
     activeTab,
     setActiveTab,
     loading = false,
-    filteredSchedules = [],
     handleScheduleClick,
     onViewAllPress,
 }: ScheduleTabsProps) {
@@ -39,6 +39,36 @@ export default function ScheduleTabs({
     const [internalActiveTab, setInternalActiveTab] = useState<string | null>(null);
     const currentActiveTab = activeTab !== undefined ? activeTab : (internalActiveTab || currentTabs[0] || 'Konfirmasi');
     const currentSetActiveTab = setActiveTab !== undefined ? setActiveTab : setInternalActiveTab;
+
+    // Filter and map schedules internally based on tab status
+    const rawFiltered = schedules.filter((item) => {
+        const itemStatus = (item.status || item.badgeText || '').toLowerCase();
+        const activeTabLower = currentActiveTab.toLowerCase();
+        const normalizedTab = activeTabLower.replace(/\s+/g, '_');
+
+        if (normalizedTab === 'terkonfirmasi' || normalizedTab === 'konfirmasi') {
+            return itemStatus === 'konfirmasi' || itemStatus === 'terkonfirmasi';
+        }
+        return itemStatus === normalizedTab;
+    });
+
+    const filteredSchedules = rawFiltered.map((booking) => {
+        if (booking.badgeText !== undefined && booking.isOnline !== undefined) {
+            return booking;
+        }
+        return {
+            id: booking.id,
+            name: booking.name,
+            age: booking.age || 0,
+            location: booking.location,
+            date: booking.date,
+            time: booking.time,
+            isOnline: false,
+            avatar: booking.avatar,
+            bookingUid: booking.id,
+            badgeText: booking.status,
+        };
+    });
 
     const handleViewAll = () => {
         // if (onViewAllPress) {
