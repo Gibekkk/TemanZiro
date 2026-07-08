@@ -102,6 +102,43 @@ export const DUMMY_COMPANION_RATING = {
     }
 };
 
+export const DUMMY_BOOKINGS = [
+    {
+        id: "booking_dummy_1",
+        companionId: "156131498",
+        userId: "user_dummy_1",
+        name_user: "Budi Santoso",
+        name_companion: "Inno",
+        age_user: 25,
+        age_companion: 23,
+        url_photoprofile_user: "https://randomuser.me/api/portraits/men/32.jpg",
+        url_photoprofile_companion: "https://randomuser.me/api/portraits/women/20.jpg",
+        status: "berlangsung",
+        bookingRefPath: "bookings/booking_dummy_1",
+        activityName: "Nongkrong",
+        date: "Senin, 29 Juni 2026",
+        time: "14:00 - 16:00 WIB",
+        location: "Coffee Shop Sejahtera, Dago, Bandung",
+    },
+    {
+        id: "booking_dummy_2",
+        companionId: "156131498",
+        userId: "user_dummy_2",
+        name_user: "Siti Rahma",
+        name_companion: "Inno",
+        age_user: 24,
+        age_companion: 23,
+        url_photoprofile_user: "https://randomuser.me/api/portraits/women/44.jpg",
+        url_photoprofile_companion: "https://randomuser.me/api/portraits/women/20.jpg",
+        status: "konfirmasi",
+        bookingRefPath: "bookings/booking_dummy_2",
+        activityName: "Olahraga",
+        date: "Rabu, 1 Juli 2026",
+        time: "15:00 - 17:00 WIB",
+        location: "Gelanggang Olahraga Saparua, Bandung",
+    }
+];
+
 export const DUMMY_REVIEWS = [
     {
         id: "REV-1",
