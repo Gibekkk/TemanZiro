@@ -13,6 +13,7 @@ interface MainLayoutProps {
   showHeader?: boolean; // Props baru untuk toggle header
   isDashboard?: boolean;
   backgroundColor?: string;
+  paddingBottom?: number;
 }
 
 export default function MainLayout({
@@ -21,6 +22,7 @@ export default function MainLayout({
   showHeader = false,
   isDashboard = true,
   backgroundColor,
+  paddingBottom,
 }: MainLayoutProps) {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
@@ -30,7 +32,7 @@ export default function MainLayout({
     styles.screen,
     {
       paddingTop: insets.top > 0 ? (showHeader ? 0 : insets.top + 10) : 20,
-      paddingBottom: insets.bottom || 20,
+      paddingBottom: paddingBottom !== undefined ? paddingBottom : (insets.bottom || 20),
     },
   ];
 
