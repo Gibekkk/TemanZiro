@@ -11,6 +11,7 @@ interface MainLayoutProps {
   useScrollView?: boolean;
   showHeader?: boolean; // Props baru untuk toggle header
   isDashboard?: boolean;
+  paddingBottom?: number;
 }
 
 export default function MainLayout({
@@ -18,6 +19,7 @@ export default function MainLayout({
   useScrollView = true,
   showHeader = false,
   isDashboard = true,
+  paddingBottom,
 }: MainLayoutProps) {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
@@ -26,7 +28,7 @@ export default function MainLayout({
     styles.screen,
     {
       paddingTop: insets.top > 0 ? (showHeader ? 0 : insets.top + 10) : 20,
-      paddingBottom: insets.bottom || 20,
+      paddingBottom: paddingBottom !== undefined ? paddingBottom : (insets.bottom || 20),
     },
   ];
 

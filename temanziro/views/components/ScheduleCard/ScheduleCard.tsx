@@ -37,7 +37,7 @@ export default function ScheduleCard({ schedule, onPress }: { schedule: Schedule
     ? schedule.location
     : (schedule.location as LocationData)?.address || "Belum ditentukan";
 
-  const { theme, isDark } = useTheme();
+  const { theme } = useTheme();
 
   const badgeColor =
     schedule.badgeText?.toLowerCase() === "dibatalkan" || schedule.badgeText?.toLowerCase() === "batal"
