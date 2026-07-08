@@ -91,16 +91,16 @@ export default function ListChatScreen() {
                     return (
                         <TouchableOpacity
                             key={tab}
-                            onPress={() => setActiveTab(tab)} 
+                            onPress={() => setActiveTab(tab)}
                             activeOpacity={0.8}
                             style={[
                                 styles.tabItem,
-                                isActive && { 
-                                    borderBottomColor: theme.colors.primary, 
-                                    borderBottomWidth: 2 
+                                isActive && {
+                                    borderBottomColor: theme.colors.primary,
+                                    borderBottomWidth: 2
                                 }
                             ]}>
-                            <Text 
+                            <Text
                                 style={[
                                     styles.tabText,
                                     { color: isActive ? theme.colors.textPrimary : theme.colors.textSecondary }
@@ -152,14 +152,14 @@ export default function ListChatScreen() {
 
     if (isCompanion) {
         return (
-            <MainLayoutCompanion showHeader={true} useScrollView={false} backgroundColor="#ffffff" isDashboard={false}>
+            <MainLayoutCompanion showHeader={true} useScrollView={true} backgroundColor="#ffffff" isDashboard={false} paddingBottom={0}>
                 {renderContent()}
             </MainLayoutCompanion>
         );
     }
 
     return (
-        <MainLayout showHeader={true} useScrollView={false} isDashboard={false}>
+        <MainLayout showHeader={true} useScrollView={true} isDashboard={false} paddingBottom={0}>
             {renderContent()}
         </MainLayout>
     );
