@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRouter, useSegments } from "expo-router";
+import { useRouter, useSegments, useLocalSearchParams } from "expo-router";
 import { useAuth } from "@/controllers/hooks/useAuth";
 import { useUserProfile } from "@/controllers/hooks/useUserProfile";
 import { useTheme } from "@/controllers/hooks/useTheme";
@@ -26,6 +26,7 @@ export interface BookingData {
 export function useTemanJalan() {
     const router = useRouter();
     const segments = useSegments() as string[];
+    const { role: paramRole } = useLocalSearchParams() as { role?: string };
     const { currentUser } = useAuth();
     const { role: contextRole } = useUserProfile();
     const { theme } = useTheme();
@@ -33,7 +34,7 @@ export function useTemanJalan() {
     const [featuredDataList, setFeaturedDataList] = useState<BookingData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const isCompanion = segments.includes("(tabs_companion)") || contextRole === "companion";
+    const isCompanion = segments.includes("(tabs_companion)") || contextRole === "companion" || paramRole === "companion";
     const resolvedRole = isCompanion ? "companion" : "booker";
 
     useEffect(() => {
