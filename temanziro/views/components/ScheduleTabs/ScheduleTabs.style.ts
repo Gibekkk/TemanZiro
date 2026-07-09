@@ -12,15 +12,22 @@ export default StyleSheet.create({
         borderBottomWidth: 0,
         marginTop: 10,
     },
+    fullContainer: {
+        flex: 1,
+        paddingHorizontal: 0,
+        marginTop: 0,
+    },
     tabBar: {
         flexDirection: 'row',
         marginBottom: 20,
+        height: 48,
     },
     tabBarScroll: {
         flexDirection: 'row',
     },
     tabItem: {
         paddingHorizontal: 12,
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
     },
