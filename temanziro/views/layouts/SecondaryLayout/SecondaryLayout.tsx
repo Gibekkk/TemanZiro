@@ -13,6 +13,7 @@ interface SecondaryLayoutProps {
   rightProfile?: string; // URL gambar profil
   tabsComponent?: ReactNode;
   showBackButton?: boolean;
+  noPadding?: boolean;
 }
 
 export default function SecondaryLayout({
@@ -22,7 +23,8 @@ export default function SecondaryLayout({
   alignLeft = false,
   rightProfile,
   tabsComponent,
-  showBackButton = true
+  showBackButton = true,
+  noPadding = false
 }: SecondaryLayoutProps) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
@@ -75,6 +77,7 @@ export default function SecondaryLayout({
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={[
             styles.scrollContent,
+            noPadding && { paddingHorizontal: 0, paddingTop: 0 },
             { paddingBottom: (insets.bottom || 20) + 20 },
           ]}
         >
