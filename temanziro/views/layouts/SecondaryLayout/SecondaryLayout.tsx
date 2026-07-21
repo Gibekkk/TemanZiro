@@ -1,5 +1,16 @@
 import React, { ReactNode } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  ViewStyle,
+  TextStyle,
+  StyleProp,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BackIcon from "@/assets/icon/back.svg"; // Pastikan sudah berupa SVG
@@ -14,6 +25,7 @@ interface SecondaryLayoutProps {
   tabsComponent?: ReactNode;
   showBackButton?: boolean;
   noPadding?: boolean;
+  titleStyle?: StyleProp<TextStyle>;
 }
 
 export default function SecondaryLayout({
@@ -24,7 +36,8 @@ export default function SecondaryLayout({
   rightProfile,
   tabsComponent,
   showBackButton = true,
-  noPadding = false
+  noPadding = false,
+  titleStyle,
 }: SecondaryLayoutProps) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
@@ -39,20 +52,31 @@ export default function SecondaryLayout({
 
   return (
     <View style={styles.screen}>
-      <View style={[
-        styles.header,
-        noShadow ? styles.noShadow : styles.shadow,
-        { paddingTop: insets.top > 0 ? insets.top : 20 }
-      ]}>
-        <View style={[styles.secondHeader, alignLeft && styles.secondHeaderLeft]}>
+      <View
+        style={[
+          styles.header,
+          noShadow ? styles.noShadow : styles.shadow,
+          { paddingTop: insets.top > 0 ? 45 : 45 },
+        ]}
+      >
+        <View
+          style={[styles.secondHeader, alignLeft && styles.secondHeaderLeft]}
+        >
           {showBackButton && (
             <TouchableOpacity onPress={handleBack} style={styles.backButton}>
               <BackIcon width={16} height={16} />
             </TouchableOpacity>
           )}
 
-          <View style={[styles.contentHeader, alignLeft && styles.contentHeaderLeft]}>
-            <Text style={[styles.title, alignLeft && styles.titleLeft]}>{title}</Text>
+          <View
+            style={[
+              styles.contentHeader,
+              alignLeft && styles.contentHeaderLeft,
+            ]}
+          >
+            <Text style={[styles.title, titleStyle, alignLeft && styles.titleLeft]}>
+              {title}
+            </Text>
 
             {rightProfile && (
               <Image
