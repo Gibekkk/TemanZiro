@@ -1,29 +1,29 @@
 import { StyleSheet } from "react-native";
+import { COMMON_COLORS, FONTS } from "@/constants/Theme";
 
 export default StyleSheet.create({
   headerBody: {
     flexDirection: "row",
     alignItems: "flex-end",
     paddingHorizontal: 20,
-    paddingTop: 8,
+    paddingTop: 30,
     paddingBottom: 16,
     gap: 15,
     borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20
-    // marginTop: 20,
+    borderBottomRightRadius: 20,
   },
   // mascotImage: { height: 140 },
   textHeaderWrapper: { flex: 1, padding: 15, borderRadius: 10 },
-  textHeader: { fontSize: 18, fontWeight: "bold" },
+  textHeader: { fontSize: 15, fontWeight: "bold" },
   location: { flexDirection: "row", alignItems: "center", marginTop: 5 },
   textSubheader: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "700",
     marginLeft: 5,
     maxWidth: 185,
   },
   boxHeader: { marginTop: 10, paddingVertical: 4, borderRadius: 8 },
-  textHeaderLabel: { fontSize: 14, fontWeight: "700" },
+  textHeaderLabel: { fontSize: 12, fontWeight: "700" },
   bodyWrapper: { margin: 20 },
   textBody: { fontSize: 20, fontWeight: "bold", marginBottom: 3 },
   textBody1: { fontSize: 13, fontWeight: "500", marginBottom: 15 },
@@ -66,6 +66,6 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 12,
-    borderRadius: 30
+    borderRadius: 30,
   },
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ImageBackground, StyleSheet } from "react-native";
 import { useTheme } from "@/controllers/hooks/useTheme";
-import { useNavigation } from "@react-navigation/native";
+import { useRouter } from "expo-router";
 
 // 1. Import semua icon yang dibutuhkan (sesuaikan path dan nama file kamu)
 import IconNongkrong from "@/assets/icon/nongkrongorange.svg";
@@ -25,20 +25,27 @@ const activities = [
 
 export default function ActivityGrid() {
   const { theme } = useTheme();
-  const navigation = useNavigation();
+  const router = useRouter();
 
   return (
     <View style={styles.grid}>
       {activities.map((act) => {
-        // Simpan referensi komponen ke variabel dengan huruf kapital
-        // agar bisa di-render sebagai JSX tag
         const ActivityIcon = act.Icon;
 
         return (
           <TouchableOpacity 
             key={act.id} 
             style={styles.card} 
-            // onPress={() => navigation.navigate("")}
+            onPress={() => {
+              router.push({
+                pathname: "/booker/bookingtemanjalan",
+                params: {
+                  activityId: act.id,
+                  activityName: act.title,
+                }
+              }
+            );
+            }}
           >
             <ImageBackground source={act.image} style={styles.image} imageStyle={{ borderRadius: 16 }}>
               <View style={[styles.overlay, { backgroundColor: `${theme.colors.primary}66` }]} />

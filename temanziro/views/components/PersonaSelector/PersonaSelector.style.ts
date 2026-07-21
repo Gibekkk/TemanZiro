@@ -3,13 +3,13 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   minatComponent: {
     width: "100%",
-    marginBottom: 20,
+    marginBottom: 30,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-    marginBottom: 15,
+    marginBottom: 20,
   },
   icon: {
     width: 24,

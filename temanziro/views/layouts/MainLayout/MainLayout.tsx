@@ -35,13 +35,13 @@ export default function MainLayout({
   // Komponen Header Tetap
   const HeaderComponent = (
     <View
-      style={[
-        styles.headerWrapper,
+      style={
+        // styles.headerWrapper,
         {
           backgroundColor: isDashboard ? theme.colors.primary : "transparent",
           paddingTop: insets.top > 0 ? insets.top + 20 : 20,
         }
-      ]}
+      }
     >
       <View style={styles.headerTop}>
         <Text style={styles.brandTitle}>

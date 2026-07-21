@@ -23,11 +23,11 @@ export default function DashboardUser() {
       <View
         style={[styles.headerBody, { backgroundColor: theme.colors.primary }]}
       >
-        <View style={{ position: "relative", width: 120, height: 120 }}>
+        <View style={{ position: "relative", width: 120, height: 120, marginRight: 15 }}>
           <MascotImg
             style={{
               position: "absolute",
-              bottom: -20,
+              bottom: -17,
               alignSelf: "center",
             }}
             width={170}
