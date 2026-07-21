@@ -65,7 +65,7 @@ export default function MatchRequestScreen() {
   // };
 
   const handleBackToHome = () => {
-    router.replace("/dashboard");
+    router.replace("/booker/matchfound");
   };
 
   return (
