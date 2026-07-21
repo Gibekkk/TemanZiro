@@ -101,7 +101,7 @@ export default function SecondaryLayout({
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={[
             styles.scrollContent,
-            noPadding && { paddingHorizontal: 0, paddingTop: 0 },
+            noPadding && { paddingHorizontal: 0, paddingTop: 0, paddingBottom: 0 },
             { paddingBottom: (insets.bottom || 20) + 20 },
           ]}
         >
