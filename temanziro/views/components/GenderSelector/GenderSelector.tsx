@@ -48,7 +48,7 @@ export default function GenderSelector({
               paddingVertical: 10,
               paddingHorizontal: 12,
               borderRadius: 25,
-              backgroundColor: isSelected ? theme.colors.primary : "transparent", // Dark blue background for active
+              backgroundColor: isSelected ? theme.colors.primary : "transparent",
             }}
           >
             <GenderIcon width={18} height={18} />

@@ -29,3 +29,8 @@ declare module "*.gif" {
 //   const value: any;
 //   export default value;
 // }
+
+declare module "@ptomasroos/react-native-multi-slider" {
+  import { Component } from "react";
+  export default class MultiSlider extends Component<any> {}
+}

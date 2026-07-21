@@ -30,7 +30,7 @@ export default function Index() {
   useEffect(() => {
     if (isFirstLaunch !== null) {
       if (isFirstLaunch) {
-        router.replace("/auth/AuthScreen_Call");
+        router.replace("/auth/auth");
       } else {
         router.replace("/(tabs)/(dashboard)/dashboard");
       }

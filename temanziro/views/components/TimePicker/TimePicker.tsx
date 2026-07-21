@@ -1,10 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Keyboard,
-} from "react-native";
+import { View, Text, TouchableOpacity, ViewStyle, Keyboard } from "react-native";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import ClockIcon from "@/assets/icon/time.svg";
 
@@ -13,6 +8,7 @@ import TimeInputBox from "@/views/components/TimeInputBox/TimeInputBox";
 import WheelColumn from "@/views/components/WheelColumn/WheelColumn";
 
 interface TimeSelectionProps {
+  style?: ViewStyle;
   value?: string; // Format: "HH:MM-HH:MM"
   onTimeChange?: (data: {
     mode: string;
@@ -21,10 +17,16 @@ interface TimeSelectionProps {
   }) => void;
 }
 
-export default function TimeSelection({ value, onTimeChange }: TimeSelectionProps) {
+export default function TimeSelection({
+  value,
+  style,
+  onTimeChange,
+}: TimeSelectionProps) {
   const { theme } = useTheme();
 
-  const [selectedMode, setSelectedMode] = useState<"standard" | "fullday">("standard");
+  const [selectedMode, setSelectedMode] = useState<"standard" | "fullday">(
+    "standard",
+  );
   const [start, setStart] = useState({ h: 12, m: 0 });
   const [end, setEnd] = useState({ h: 14, m: 0 });
 
@@ -96,18 +98,25 @@ export default function TimeSelection({ value, onTimeChange }: TimeSelectionProp
     <View
       style={[
         styles.radioOuter,
-        { borderColor: isActive ? theme.colors.secondary : theme.colors.border },
+        {
+          borderColor: isActive ? theme.colors.secondary : theme.colors.border,
+        },
         isActive && { backgroundColor: theme.colors.secondary },
       ]}
     >
       {isActive && (
-        <View style={[styles.radioInner, { backgroundColor: theme.colors.lightText }]} />
+        <View
+          style={[
+            styles.radioInner,
+            { backgroundColor: theme.colors.lightText },
+          ]}
+        />
       )}
     </View>
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <View style={styles.mainHeader}>
         <ClockIcon width={18} height={18} style={styles.headerIcon} />
         <Text style={[styles.mainTitle, { color: theme.colors.textPrimary }]}>
@@ -125,7 +134,9 @@ export default function TimeSelection({ value, onTimeChange }: TimeSelectionProp
                 ? `${theme.colors.secondaryBackground}40`
                 : theme.colors.primaryBackground,
             borderColor:
-              selectedMode === "standard" ? theme.colors.secondary : theme.colors.border,
+              selectedMode === "standard"
+                ? theme.colors.secondary
+                : theme.colors.border,
           },
         ]}
       >
@@ -145,21 +156,33 @@ export default function TimeSelection({ value, onTimeChange }: TimeSelectionProp
 
         {selectedMode === "standard" && (
           <View style={styles.expandedContent}>
-
             {/* WAKTU MULAI */}
             <View
               style={[
                 styles.timeDisplayRow,
                 activeField === "start"
-                  ? { backgroundColor: theme.colors.lightText, borderColor: theme.colors.border }
+                  ? {
+                      backgroundColor: theme.colors.lightText,
+                      borderColor: theme.colors.border,
+                    }
                   : { borderColor: "transparent" },
               ]}
             >
               <View>
-                <Text style={[styles.timeLabel, { color: theme.colors.textPrimary }]}>
+                <Text
+                  style={[
+                    styles.timeLabel,
+                    { color: theme.colors.textPrimary },
+                  ]}
+                >
                   Waktu Mulai
                 </Text>
-                <Text style={[styles.timeSubLabel, { color: theme.colors.textSecondary }]}>
+                <Text
+                  style={[
+                    styles.timeSubLabel,
+                    { color: theme.colors.textSecondary },
+                  ]}
+                >
                   Waktu Dimulai
                 </Text>
               </View>
@@ -206,7 +229,10 @@ export default function TimeSelection({ value, onTimeChange }: TimeSelectionProp
               <View
                 style={[
                   styles.pickerWrapper,
-                  { backgroundColor: theme.colors.lightText, borderColor: theme.colors.border },
+                  {
+                    backgroundColor: theme.colors.lightText,
+                    borderColor: theme.colors.border,
+                  },
                 ]}
               >
                 <View
@@ -227,7 +253,12 @@ export default function TimeSelection({ value, onTimeChange }: TimeSelectionProp
                   activeColor={theme.colors.secondary}
                   textColor={theme.colors.textSecondary}
                 />
-                <Text style={[styles.pickerSeparatorText, { color: theme.colors.secondary }]}>
+                <Text
+                  style={[
+                    styles.pickerSeparatorText,
+                    { color: theme.colors.secondary },
+                  ]}
+                >
                   :
                 </Text>
                 <WheelColumn
@@ -245,15 +276,28 @@ export default function TimeSelection({ value, onTimeChange }: TimeSelectionProp
               style={[
                 styles.timeDisplayRow,
                 activeField === "end"
-                  ? { backgroundColor: theme.colors.lightText, borderColor: theme.colors.border }
+                  ? {
+                      backgroundColor: theme.colors.lightText,
+                      borderColor: theme.colors.border,
+                    }
                   : { borderColor: "transparent" },
               ]}
             >
               <View>
-                <Text style={[styles.timeLabel, { color: theme.colors.textPrimary }]}>
+                <Text
+                  style={[
+                    styles.timeLabel,
+                    { color: theme.colors.textPrimary },
+                  ]}
+                >
                   Waktu Berakhir
                 </Text>
-                <Text style={[styles.timeSubLabel, { color: theme.colors.textSecondary }]}>
+                <Text
+                  style={[
+                    styles.timeSubLabel,
+                    { color: theme.colors.textSecondary },
+                  ]}
+                >
                   Batas Waktu
                 </Text>
               </View>
@@ -300,7 +344,10 @@ export default function TimeSelection({ value, onTimeChange }: TimeSelectionProp
               <View
                 style={[
                   styles.pickerWrapper,
-                  { backgroundColor: theme.colors.lightText, borderColor: theme.colors.border },
+                  {
+                    backgroundColor: theme.colors.lightText,
+                    borderColor: theme.colors.border,
+                  },
                 ]}
               >
                 <View
@@ -321,7 +368,12 @@ export default function TimeSelection({ value, onTimeChange }: TimeSelectionProp
                   activeColor={theme.colors.secondary}
                   textColor={theme.colors.textSecondary}
                 />
-                <Text style={[styles.pickerSeparatorText, { color: theme.colors.secondary }]}>
+                <Text
+                  style={[
+                    styles.pickerSeparatorText,
+                    { color: theme.colors.secondary },
+                  ]}
+                >
                   :
                 </Text>
                 <WheelColumn
@@ -333,7 +385,6 @@ export default function TimeSelection({ value, onTimeChange }: TimeSelectionProp
                 />
               </View>
             )}
-
           </View>
         )}
       </View>
@@ -349,7 +400,9 @@ export default function TimeSelection({ value, onTimeChange }: TimeSelectionProp
                 ? `${theme.colors.secondaryBackground}40`
                 : theme.colors.primaryBackground,
             borderColor:
-              selectedMode === "fullday" ? theme.colors.secondary : theme.colors.border,
+              selectedMode === "fullday"
+                ? theme.colors.secondary
+                : theme.colors.border,
           },
         ]}
         onPress={() => {

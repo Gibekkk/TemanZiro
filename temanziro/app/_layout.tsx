@@ -20,7 +20,6 @@ import { PresenceProvider } from "@/controllers/context/PresenceContext";
 
 SplashScreen.preventAutoHideAsync();
 
-// 1. Komponen Pembungkus Utama
 export default function RootLayout() {
   return (
     <SafeAreaProvider>

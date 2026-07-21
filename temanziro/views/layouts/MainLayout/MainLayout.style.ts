@@ -3,10 +3,10 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: { flex: 1 },
   screen: { flexGrow: 1 },
-  headerWrapper: {
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-  },
+  // headerWrapper: {
+  //   borderBottomLeftRadius: 24,
+  //   borderBottomRightRadius: 24,
+  // },
   headerTop: {
     flexDirection: "row",
     justifyContent: "space-between",
