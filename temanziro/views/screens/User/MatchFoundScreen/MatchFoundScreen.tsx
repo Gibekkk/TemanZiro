@@ -33,7 +33,7 @@ export default function MatchFoundScreen() {
 
   const handleViewProfile = () => {
     router.push({
-      pathname: "/companion-profile",
+      pathname: "/booker/viewprofiletemanjalan",
       params: { companionId: companionData.id },
     });
   };
