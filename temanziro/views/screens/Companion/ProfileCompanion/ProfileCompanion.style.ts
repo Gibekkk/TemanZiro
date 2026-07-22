@@ -1,116 +1,67 @@
-import { StyleSheet } from 'react-native'
-import { COMMON_COLORS, FONTS } from '@/constants/Theme'
+import { StyleSheet } from "react-native";
+import { FONTS } from "@/constants/Theme";
 
 export default StyleSheet.create({
     profileSection: {
         alignItems: "center",
-        marginVertical: 10,
+        paddingTop: 15,
+        paddingBottom: 5,
         paddingHorizontal: 20,
     },
     avatarWrapper: {
         position: "relative",
-        zIndex: 2,
-        width: 160,
-        height: 160,
         alignItems: "center",
         justifyContent: "center",
-    },
-    avatarContainer: {
-        width: 150,
-        height: 150,
-        borderRadius: 75,
-        borderWidth: 6,
-        overflow: "hidden",
-        backgroundColor: "#fdeede",
-        alignItems: "center",
-        justifyContent: "center",
-        shadowColor: COMMON_COLORS.secondary,
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.3,
-        shadowRadius: 15,
-        elevation: 10,
-    },
-    avatarImage: {
-        width: "100%",
-        height: "100%",
-        borderRadius: 75,
-    },
-    miniZiroWrapper: {
-        position: "absolute",
-        bottom: 35,
-        right: -10,
-        width: 50,
-        height: 50,
-        elevation: 11,
-        zIndex: 11,
-    },
-    infoCard: {
-        marginTop: -35,
-        paddingTop: 15,
-        paddingBottom: 15,
-        paddingHorizontal: 20,
-        backgroundColor: COMMON_COLORS.tertiaryBackground,
-        opacity: 0.85,
-        borderRadius: 20,
-        width: "100%",
-        borderWidth: 1,
-        borderColor: "rgba(234, 234, 234, 0.6)",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.05,
-        shadowRadius: 10,
-        elevation: 3,
-        zIndex: 1,
-    },
-    nameRow: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
         marginBottom: 16,
     },
+    editBadge: {
+        position: "absolute",
+        bottom: 0,
+        right: 4,
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 2,
+        borderColor: "#FFF",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 20,
+    },
     userName: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: "bold",
         fontFamily: `${FONTS.quicksand}-Bold`,
-        flexShrink: 1,
-        color: COMMON_COLORS.textPrimary,
+        textAlign: "center",
+        marginBottom: 8,
     },
-    statsGrid: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginBottom: 12,
+    userDetails: {
+        fontSize: 15,
+        fontFamily: FONTS.quicksand,
+        textAlign: "center",
+        marginBottom: 8,
     },
-    statGroup: {
-        flex: 1,
-    },
-    statLabel: {
-        fontSize: 13,
-        fontWeight: "bold",
-        fontFamily: `${FONTS.quicksand}-Bold`,
-        marginBottom: 6,
-    },
-    statValue: {
+    locationContainer: {
         flexDirection: "row",
         alignItems: "center",
-        gap: 6,
-    },
-    statText: {
-        fontSize: 15,
-        fontFamily: FONTS.quicksand,
-    },
-    locationGroup: {
-        marginTop: 5,
+        justifyContent: "center",
     },
     locationText: {
-        fontSize: 15,
-        lineHeight: 22,
+        fontSize: 14,
         fontFamily: FONTS.quicksand,
     },
+
+    menuContainer: {
+        marginTop: 10,
+        paddingBottom: 40,
+    },
+
     sectionContainer: {
         paddingHorizontal: 20,
         marginVertical: 12,
-        backgroundColor: COMMON_COLORS.tertiaryBackground,
-        opacity: 0.85,
     },
     card: {
         padding: 20,
@@ -122,29 +73,7 @@ export default StyleSheet.create({
         shadowOpacity: 0.02,
         shadowRadius: 5,
         elevation: 2,
-        backgroundColor: COMMON_COLORS.tertiaryBackground,
-        opacity: 0.85,
     },
-    sectionTitle: {
-        fontSize: 16,
-        fontWeight: "bold",
-        fontFamily: `${FONTS.quicksand}-Bold`,
-        marginBottom: 10,
-    },
-    sectionTitleHeader: {
-        fontSize: 16,
-        fontWeight: "bold",
-        fontFamily: `${FONTS.quicksand}-Bold`,
-        marginBottom: 12,
-        textAlign: "left",
-    },
-    philosophyText: {
-        fontSize: 14,
-        lineHeight: 22,
-        fontStyle: "italic",
-        fontFamily: FONTS.quicksand,
-    },
-
     noDataText: {
         fontSize: 14,
         fontStyle: "italic",
@@ -212,22 +141,4 @@ export default StyleSheet.create({
         marginTop: 16,
         gap: 12,
     },
-
-    kycSection: {
-        paddingHorizontal: 20,
-        marginVertical: 12,
-    },
-    actionMenu: {
-        paddingHorizontal: 20,
-        marginTop: 12,
-        marginBottom: 80,
-        gap: 12,
-    },
-    seeAllText: {
-        fontSize: 14,
-        fontWeight: "600",
-        fontFamily: FONTS.quicksand,
-        color: COMMON_COLORS.primary,
-        textAlign: "center",
-    }
-})
+});
