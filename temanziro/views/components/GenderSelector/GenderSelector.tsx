@@ -4,36 +4,49 @@ import { GENDER_ICON, Gender } from "@/constants/UserDetails";
 import { useTheme } from "@/controllers/hooks/useTheme";
 
 export interface GenderSelectorProps {
-  value?: Gender;
-  onChange?: (gender: Gender) => void;
+  value?: string;
+  onChange?: (gender: any) => void;
   disabled?: boolean;
+  options?: string[];
+  showIcon?: boolean;
+  activeBgColor?: string;
 }
 
 export default function GenderSelector({
-  value = "rahasia",
+  value,
   onChange,
   disabled = false,
+  options = ["pria", "wanita", "rahasia"],
+  showIcon = true,
+  activeBgColor,
 }: GenderSelectorProps) {
   const { theme } = useTheme();
-  const genderOptions = Object.keys(GENDER_ICON) as Gender[];
 
   return (
     <View
       style={{
         flexDirection: "row",
-        backgroundColor: theme.colors.tertiaryBackground, // Light peach/orange background
-        borderRadius: 30,
+        backgroundColor: "rgba(242, 236, 228, 0.4)", // soft neutral background
+        borderRadius: 10,
         padding: 4,
         alignItems: "center",
         justifyContent: "space-between",
         width: "100%",
       }}
     >
-      {genderOptions.map((genderKey) => {
+      {options.map((genderKey) => {
         const isSelected = value === genderKey;
-        const details = GENDER_ICON[genderKey];
 
-        const GenderIcon = isSelected ? details.iconOn : details.iconOff;
+        // Label mapping
+        let label = genderKey.charAt(0).toUpperCase() + genderKey.slice(1);
+        if (genderKey === "rahasia") label = "Rahasia";
+        if (genderKey === "semua") label = "Semua";
+
+        // Icon mapping (only if showIcon is true and it exists in GENDER_ICON)
+        const details = GENDER_ICON[genderKey as Gender];
+        const GenderIcon = showIcon && details ? (isSelected ? details.iconOn : details.iconOff) : null;
+
+        const activeColor = activeBgColor || theme.colors.primary;
 
         return (
           <TouchableOpacity
@@ -47,20 +60,20 @@ export default function GenderSelector({
               flex: 1,
               paddingVertical: 10,
               paddingHorizontal: 12,
-              borderRadius: 25,
-              backgroundColor: isSelected ? theme.colors.primary : "transparent",
+              borderRadius: 8,
+              backgroundColor: isSelected ? activeColor : "transparent",
             }}
           >
-            <GenderIcon width={18} height={18} />
+            {GenderIcon && <GenderIcon width={18} height={18} />}
             <Text
               style={{
-                marginLeft: 8,
+                marginLeft: GenderIcon ? 8 : 0,
                 fontSize: 14,
-                fontWeight: isSelected ? "bold" : "500",
+                fontWeight: isSelected ? "bold" : "600",
                 color: isSelected ? "#ffffff" : theme.colors.textSecondary,
               }}
             >
-              {details.label}
+              {label}
             </Text>
           </TouchableOpacity>
         );
