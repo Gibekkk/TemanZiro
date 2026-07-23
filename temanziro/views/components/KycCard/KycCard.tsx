@@ -1,13 +1,10 @@
 import React from "react";
-import { View, Text } from "react-native";
-import styles from "./KycCard.style";
-import IconKTP from "@/assets/icon/icon-verified-non.svg";
-import IconPendKTP from "@/assets/icon/icon-verification-pend.svg";
-import Button from "@/views/components/GeneralButton/GeneralButton";
-import { useUserProfile } from "@/controllers/hooks/useUserProfile";
+import { View, Text, TouchableOpacity } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import { VERIFIED_STATUS, VerifiedStatus } from "@/constants/UserDetails";
-import { COMMON_COLORS } from "@/constants/Theme";
+import IconAngleRight from "@/assets/icon/angle-right-non.svg";
+import styles from "./KycCard.style";
 
 interface KycCardProps {
   status: VerifiedStatus;
@@ -15,62 +12,58 @@ interface KycCardProps {
 }
 
 export default function KycCard({ status, onComplete }: KycCardProps) {
-  const { isComplete, isVerified } = useUserProfile();
-  const { theme, isDark } = useTheme();
+  const { theme } = useTheme();
 
-  if (isComplete && isVerified) {
-    return null;
+  let statusText = "";
+  let badgeBgColor = "";
+  let badgeTextColor = "";
+  let showArrow = false;
+
+  if (status === VERIFIED_STATUS.VERIFIED) {
+    statusText = "Terverifikasi";
+    badgeBgColor = "rgba(16, 185, 129, 0.1)";
+    badgeTextColor = "#10b981"; 
+    showArrow = false;
+  } else if (status === VERIFIED_STATUS.PENDING) {
+    statusText = "Sedang Diproses";
+    badgeBgColor = "rgba(233, 97, 0, 0.1)"; 
+    badgeTextColor = "#e96100";
+    showArrow = false;
+  } else {
+    statusText = "Belum Verifikasi";
+    badgeBgColor = "rgba(225, 29, 72, 0.1)";
+    badgeTextColor = "#e11d48";
+    showArrow = true;
   }
 
-  const isPending = status === VERIFIED_STATUS.PENDING;
-  const Icon = isPending ? IconPendKTP : IconKTP;
-
-  const cardBg = isDark ? "#1e1b18" : COMMON_COLORS.tertiaryBackground;
-  const cardBorder = isDark ? "#3c2c22" : COMMON_COLORS.border;
+  const isClickable = status === VERIFIED_STATUS.UNVERIFIED;
 
   return (
-    <View style={[styles.container, { backgroundColor: cardBg, borderColor: cardBorder }]}>
-      <View style={styles.content}>
-        <View style={styles.iconContainer}>
-          <Icon width={24} height={24} />
+    <TouchableOpacity
+      style={styles.container}
+      onPress={isClickable ? onComplete : undefined}
+      activeOpacity={isClickable ? 0.7 : 1}
+      disabled={!isClickable}
+    >
+      <View style={styles.leftSection}>
+        <View style={styles.iconWrapper}>
+          <Feather name="shield" size={18} color="#0088CC" />
         </View>
-
-        <View style={styles.textContainer}>
-          {isPending ? (
-            <>
-              <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
-                Data kamu sedang diproses
-              </Text>
-              <Text style={[styles.subtitle, { color: theme.colors.textSecondary }]}>
-                Mohon tunggu, admin sedang memverifikasi datamu.
-              </Text>
-            </>
-          ) : (
-            <>
-              <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
-                Jangan lupa verifikasi datamu
-              </Text>
-              <Text style={[styles.subtitle, { color: theme.colors.textSecondary }]}>
-                Agar bisa cari teman jalan kamu.
-              </Text>
-            </>
-          )}
-        </View>
+        <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
+          Verifikasi KYC
+        </Text>
       </View>
 
-      {status === VERIFIED_STATUS.UNVERIFIED && !isComplete && (
-        <View style={styles.action}>
-          <Button
-            variant="primary"
-            shadow="none"
-            style={styles.button}
-            textStyle={styles.buttonText}
-            onClick={onComplete}
-          >
-            Lengkapi
-          </Button>
+      <View style={styles.rightSection}>
+        <View style={[styles.badge, { backgroundColor: badgeBgColor }]}>
+          <Text style={[styles.badgeText, { color: badgeTextColor }]}>
+            {statusText}
+          </Text>
         </View>
-      )}
-    </View>
+        {showArrow && (
+          <IconAngleRight width={20} height={20} style={styles.arrowIcon} />
+        )}
+      </View>
+    </TouchableOpacity>
   );
 }
