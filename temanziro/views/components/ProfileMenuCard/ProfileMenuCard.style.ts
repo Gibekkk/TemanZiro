@@ -17,7 +17,7 @@ export default StyleSheet.create({
     },
     divider: {
         height: 1,
-        backgroundColor: "rgba(243, 244, 246, 0.8)",
+        backgroundColor: "rgba(243, 244, 246, 0.9)",
         marginHorizontal: 16,
     },
 });
