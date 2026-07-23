@@ -21,7 +21,7 @@ export const DUMMY_COMPANION_PROFILE: CompanionProfile = {
     preference_activity_companion: ["belajar", "olahraga", "nongkrong"],
     preference_companion: ["Friendly", "Polite"],
     companion_rating: {
-        count_rating: { "1": 0, "2": 0, "3": 1, "4": 3, "5": 11 },
+        count_rating: { "1": 2, "2": 4, "3": 6, "4": 26, "5": 90 },
         average_rating: 4.8,
     },
     schedule: {
@@ -94,11 +94,11 @@ export const DUMMY_SCHEDULE = {
 export const DUMMY_COMPANION_RATING = {
     overall_rating: 4.8,
     count_rating: {
-        "5": 12,
-        "4": 3,
-        "3": 1,
-        "2": 0,
-        "1": 0
+        "5": 90,
+        "4": 26,
+        "3": 6,
+        "2": 4,
+        "1": 2
     }
 };
 
@@ -145,14 +145,28 @@ export const DUMMY_REVIEWS = [
         name: "Siti Rahma",
         avatar: "https://randomuser.me/api/portraits/women/44.jpg",
         rating: 5,
-        text: "Sangat ramah dan menyenangkan diajak ngobrol!",
+        text: "Pelayanannya sangat ramah dan tempatnya bersih sekali. Saya sangat puas dengan hasilnya, pasti akan kembali lagi ke sini bersama keluarga!",
+        date: "2 jam lalu",
+        photos: [
+            "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=300",
+            "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=300"
+        ]
     },
     {
         id: "REV-2",
         name: "Andi Wijaya",
         avatar: "https://randomuser.me/api/portraits/men/62.jpg",
         rating: 4,
-        text: "Orangnya sopan dan seru, recommended!",
+        text: "Sangat informatif dan membantu. Responnya juga cepat. Hanya sedikit antre tapi sepadan dengan kualitas yang didapat.",
+        date: "Kemarin"
+    },
+    {
+        id: "REV-3",
+        name: "Budi Santoso",
+        avatar: "", // Empty to trigger initials BS fallback
+        rating: 5,
+        text: "Luar biasa! Tidak ada keluhan sama sekali. Aplikasi ini mempermudah segalanya.",
+        date: "3 hari lalu"
     }
 ];
 
@@ -288,3 +302,15 @@ export const DUMMY_MESSAGES_MAP: Record<string, ChatMessage[]> = {
 };
 
 
+export const DEFAULT_TRAITS = [
+    "Friendly",
+    "Polite",
+    "Patient",
+    "Creative",
+    "Energetic",
+    "Calm",
+    "Honest",
+    "Brave",
+    "Smart",
+    "Funny",
+];
