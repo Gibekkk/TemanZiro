@@ -28,6 +28,6 @@ export default StyleSheet.create({
         fontFamily: FONTS.quicksand,
     },
     arrowIcon: {
-        opacity: 0.3,
+        opacity: 0.7,
     },
 });
