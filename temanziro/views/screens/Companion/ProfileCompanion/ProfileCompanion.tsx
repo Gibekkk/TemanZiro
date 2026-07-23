@@ -6,6 +6,7 @@ import MainLayoutCompanion from "@/views/layouts/MainLayout/MainLayoutCompanion"
 import ProfilePicture from "@/views/components/ProfilePicture/ProfilePicture";
 import ProfileMenuCard from "@/views/components/ProfileMenuCard/ProfileMenuCard";
 import ProfileMenuItem from "@/views/components/ProfileMenuItem/ProfileMenuItem";
+import KycCard from "@/views/components/KycCard/KycCard";
 import { useCompanionProfile } from "@/controllers/hooks/Companion/useCompanionProfile";
 import styles from "./ProfileCompanion.style";
 
@@ -18,6 +19,9 @@ export default function ProfileCompanion() {
         getGenderLabel,
         handleEditProfile,
         handleLogout,
+        isComplete,
+        isVerified,
+        handleKycRedirect,
     } = useCompanionProfile();
 
     const handleActivities = () => {
@@ -112,6 +116,21 @@ export default function ProfileCompanion() {
                 </ProfileMenuCard>
 
                 {/* Second Card Group */}
+                {/* Ini untuk data tambahan kek verifikasi data, add on, dll, yang berhubungan dengan admins */}
+                <ProfileMenuCard>
+                    <KycCard
+                        status={
+                            isVerified
+                                ? "verified"
+                                : isComplete
+                                ? "pending"
+                                : "unverified"
+                        }
+                        onComplete={handleKycRedirect}
+                    />
+                </ProfileMenuCard>
+
+                {/* Third Card Group */}
                 <ProfileMenuCard>
                     <ProfileMenuItem
                         title="Edit Profil"
