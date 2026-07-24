@@ -1,4 +1,5 @@
 import { Gender } from "@/constants/UserDetails";
+import { AddOnStatus } from "@/constants/AddOnConstant";
 import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 
 export interface CompanionProfile {
@@ -28,6 +29,7 @@ export interface CompanionProfile {
         days: string[];
         time: [number, number] | null;
     },
+    addon_status?: AddOnStatus | null;
     registered_date: FirebaseFirestoreTypes.Timestamp | null;
     created_at: FirebaseFirestoreTypes.Timestamp | null;
     updated_at: FirebaseFirestoreTypes.Timestamp | null;
