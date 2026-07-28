@@ -7,13 +7,12 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  ViewStyle,
   TextStyle,
   StyleProp,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import BackIcon from "@/assets/icon/back.svg"; // Pastikan sudah berupa SVG
+import BackIcon from "@/assets/icon/back.svg";
 import styles from "./SecondaryLayout.style";
 
 interface SecondaryLayoutProps {
@@ -21,7 +20,7 @@ interface SecondaryLayoutProps {
   title: string;
   noShadow?: boolean;
   alignLeft?: boolean;
-  rightProfile?: string; // URL gambar profil
+  rightProfile?: string;
   tabsComponent?: ReactNode;
   showBackButton?: boolean;
   noPadding?: boolean;
