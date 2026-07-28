@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, FlatList } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, FlatList } from "react-native";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import LogoLocation from "@/assets/icon/location.svg";
 import LogoSearch from "@/assets/icon/search.svg";
