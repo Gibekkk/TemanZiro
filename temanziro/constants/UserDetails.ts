@@ -1,7 +1,3 @@
-import IconMale from "@/assets/icon/maleoff.svg";
-import IconFemale from "@/assets/icon/femaleoff.svg";
-import IconSecret from "@/assets/icon/rahasiaoff.svg";
-
 import IconMaleOn from "@/assets/icon/maleon.svg";
 import IconMaleOff from "@/assets/icon/maleoff.svg";
 import IconFemaleOn from "@/assets/icon/femaleon.svg";
@@ -18,15 +14,15 @@ export const GENDER = {
 export const GENDER_DETAILS = {
     [GENDER.PRIA]: {
         label: "Pria",
-        icon: IconMale,
+        icon: IconMaleOff,
     },
     [GENDER.WANITA]: {
         label: "Wanita",
-        icon: IconFemale,
+        icon: IconFemaleOff,
     },
     [GENDER.RAHASIA]: {
         label: "Rahasia",
-        icon: IconSecret,
+        icon: IconSecretOff,
     },
 } as const;
 
@@ -60,6 +56,7 @@ export const VERIFIED_STATUS = {
     UNVERIFIED: "unverified",
     PENDING: "pending",
 } as const;
+
 
 export type Gender = typeof GENDER[keyof typeof GENDER];
 export type UserRole = typeof USER_ROLE[keyof typeof USER_ROLE];
