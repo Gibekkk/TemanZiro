@@ -16,7 +16,7 @@ export default function GenderSelector({
   value,
   onChange,
   disabled = false,
-  options = ["pria", "wanita", "rahasia"],
+  options = ["pria", "wanita", "keduanya"],
   showIcon = true,
   activeBgColor,
 }: GenderSelectorProps) {
@@ -26,7 +26,7 @@ export default function GenderSelector({
     <View
       style={{
         flexDirection: "row",
-        backgroundColor: "rgba(242, 236, 228, 0.4)", // soft neutral background
+        backgroundColor: "rgba(242, 236, 228, 0.4)",
         borderRadius: 10,
         padding: 4,
         alignItems: "center",
@@ -37,12 +37,9 @@ export default function GenderSelector({
       {options.map((genderKey) => {
         const isSelected = value === genderKey;
 
-        // Label mapping
         let label = genderKey.charAt(0).toUpperCase() + genderKey.slice(1);
-        if (genderKey === "rahasia") label = "Rahasia";
-        if (genderKey === "semua") label = "Semua";
+        if (genderKey === "keduanya") label = "Keduanya";
 
-        // Icon mapping (only if showIcon is true and it exists in GENDER_ICON)
         const details = GENDER_ICON[genderKey as Gender];
         const GenderIcon = showIcon && details ? (isSelected ? details.iconOn : details.iconOff) : null;
 
