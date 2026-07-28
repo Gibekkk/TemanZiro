@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import Feather from "@react-native-vector-icons/feather/static";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import { VERIFIED_STATUS, VerifiedStatus } from "@/constants/UserDetails";
 import IconAngleRight from "@/assets/icon/angle-right-non.svg";
