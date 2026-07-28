@@ -5,48 +5,75 @@ import IconAngleRight from "@/assets/icon/angle-right-non.svg";
 import styles from "./ProfileMenuItem.style"
 
 interface ProfileMenuItemProps {
-    title: string;
+    title: React.ReactNode;
     icon: React.ReactNode;
-    // iconBgColor: string;
-    onPress: () => void;
+    iconBgColor?: string;
+    onPress?: () => void;
     isLast?: boolean;
     variant?: "default" | "danger";
+    rightElement?: React.ReactNode;
+    showArrow?: boolean;
 }
 
 export default function ProfileMenuItem({
     title,
     icon,
-    // iconBgColor,
+    iconBgColor,
     onPress,
     isLast = false,
     variant = "default",
+    rightElement,
+    showArrow = true,
 }: ProfileMenuItemProps) {
     const { theme } = useTheme();
 
-    return (
-        <TouchableOpacity
-            style={[styles.container]}
-            onPress={onPress}
-            activeOpacity={0.7}
-        >
+    const content = (
+        <>
             <View style={styles.leftSection}>
-                <View style={[styles.iconWrapper, 
-                    // { backgroundColor: iconBgColor }
-                    ]}>
+                <View style={[
+                    styles.iconWrapper, 
+                    iconBgColor ? { backgroundColor: iconBgColor } : null
+                ]}>
                     {icon}
                 </View>
-                <Text
-                    style={[
-                        styles.title,
-                        variant === "danger"
-                            ? { color: theme.colors.red || "#ef4444" }
-                            : { color: theme.colors.textPrimary || "#0f172a" },
-                    ]}
-                >
-                    {title}
-                </Text>
+                {typeof title === "string" ? (
+                    <Text
+                        style={[
+                            styles.title,
+                            variant === "danger"
+                                ? { color: theme.colors.red || "#ef4444" }
+                                : { color: theme.colors.textPrimary || "#0f172a" },
+                        ]}
+                    >
+                        {title}
+                    </Text>
+                ) : (
+                    title
+                )}
             </View>
-            <IconAngleRight width={20} height={20} style={styles.arrowIcon} />
-        </TouchableOpacity>
+            {rightElement ? (
+                rightElement
+            ) : showArrow && onPress ? (
+                <IconAngleRight width={20} height={20} style={styles.arrowIcon} />
+            ) : null}
+        </>
+    );
+
+    if (onPress) {
+        return (
+            <TouchableOpacity
+                style={[styles.container]}
+                onPress={onPress}
+                activeOpacity={0.7}
+            >
+                {content}
+            </TouchableOpacity>
+        );
+    }
+
+    return (
+        <View style={[styles.container]}>
+            {content}
+        </View>
     );
 }
