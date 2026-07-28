@@ -2,6 +2,7 @@ import { CompanionProfile } from "@/domain/models/CompanionModel";
 import { GENDER } from "./UserDetails";
 import { FriendItem } from "@/views/components/FriendList/FriendList";
 import { ChatMessage } from "@/domain/models/ChatModel";
+import { CompanionVehicleModel, DocumentationAddOnDetails } from "@/domain/models/AddOnModel";
 
 export const USE_DUMMY_DATA = true;
 
@@ -28,6 +29,7 @@ export const DUMMY_COMPANION_PROFILE: CompanionProfile = {
         days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"],
         time: [720, 1080],
     },
+    addon_status: "revision",
     registered_date: null,
     created_at: null,
     updated_at: null,
@@ -163,7 +165,7 @@ export const DUMMY_REVIEWS = [
     {
         id: "REV-3",
         name: "Budi Santoso",
-        avatar: "", // Empty to trigger initials BS fallback
+        avatar: "",
         rating: 5,
         text: "Luar biasa! Tidak ada keluhan sama sekali. Aplikasi ini mempermudah segalanya.",
         date: "3 hari lalu"
@@ -195,7 +197,7 @@ export const DUMMY_CHATS = [
         url_photoprofile_user: "https://randomuser.me/api/portraits/men/32.jpg",
         url_photoprofile_companion: "https://randomuser.me/api/portraits/women/20.jpg",
         last_chat: "Halo! Saya sudah sampai di kafe ya.",
-        lastchat_datetime: { toDate: () => new Date() }, // Mock Timestamp object
+        lastchat_datetime: { toDate: () => new Date() },
         is_online_companion: true,
         booking_status: "berlangsung",
     },
@@ -314,3 +316,62 @@ export const DEFAULT_TRAITS = [
     "Smart",
     "Funny",
 ];
+
+export const DUMMY_DOCUMENTATION_ADDON: DocumentationAddOnDetails = {
+    url_portfolio: "https://drive.google.com/drive/folders/156131498-dummy-portfolio-link",
+    is_accepted: false,
+    portfolio_rejection_message: "Link drive tidak bisa diakses. Harap ubah hak akses ke public/siapa saja yang memiliki link.",
+    created_at: { toDate: () => new Date() } as any,
+    updated_at: null,
+};
+
+export const DUMMY_ADDON_PRICES = {
+    documentation: 50000,
+    transportation_motor: 75000,
+    transportation_mobil: 150000
+};
+
+export const DUMMY_VEHICLES: CompanionVehicleModel[] = [
+    {
+        id: "1",
+        type: "motor",
+        model: "Honda Vario 150",
+        license_plate: "B 1234 ABC",
+        is_verified: true,
+        is_active: true,
+        url_sim: "https://example.com/dummy-sim.jpg",
+        sim_status: "verified",
+        sim_rejection_message: "",
+        url_stnk: "https://example.com/dummy-stnk.jpg",
+        stnk_status: "verified",
+        stnk_rejection_message: "",
+        url_vehicle_front_photo: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=300",
+        vehicle_front_photo_status: "verified",
+        vehicle_front_rejection_message: "",
+        url_vehicle_side_photo: "",
+        vehicle_side_photo_status: "verified",
+        vehicle_side_photo_rejection_message: ""
+    },
+    {
+        id: "2",
+        type: "mobil",
+        model: "Toyota Avanza",
+        license_plate: "D 5678 XYZ",
+        is_verified: false,
+        is_active: false,
+        url_sim: "https://example.com/dummy-sim-2.jpg",
+        sim_status: "revision",
+        sim_rejection_message: "Foto SIM buram. Harap unggah ulang.",
+        url_stnk: "https://example.com/dummy-stnk-2.jpg",
+        stnk_status: "revision",
+        stnk_rejection_message: "Foto STNK buram. Harap unggah ulang.",
+        url_vehicle_front_photo: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=300",
+        vehicle_front_photo_status: "revision",
+        vehicle_front_rejection_message: "Foto depan mobil terpotong.",
+        url_vehicle_side_photo: "",
+        vehicle_side_photo_status: "revision",
+        vehicle_side_photo_rejection_message: "Foto samping mobil terpotong."
+    }
+];
+
+
