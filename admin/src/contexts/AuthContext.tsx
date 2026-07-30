@@ -3,7 +3,13 @@ import React, { createContext, useContext, useEffect, useState, useRef, ReactNod
 import { auth, db } from "../lib/firebase_config";
 import { doc, onSnapshot, setDoc, serverTimestamp } from "firebase/firestore";
 
-export type UserRole = "booker" | "companion" | "admin" | null;
+export type UserRole = "booker" | "companion" | null;
+
+// 0 / no field -> bukan admin
+// 1 -> admin operasional
+// 2 -> admin verifikasi
+// 3 -> owner / super admin
+export type AdminLevel = 0 | 1 | 2 | 3;
 
 interface UserOnlineStatus {
     is_online: boolean;
@@ -14,7 +20,9 @@ interface AuthContextType {
     currentUser: User | null;
     userProfile: any | null;
     role: UserRole;
+    adminLevel: AdminLevel;
     isAdmin: boolean;
+    isOwner: boolean;
     loading: boolean;
     isOnline: boolean;
     watchUser: (userId: string) => void;
@@ -32,11 +40,17 @@ export const useAuth = () => {
     return context;
 };
 
+function toAdminLevel(val: any): AdminLevel {
+    const n = typeof val === "number" ? val : parseInt(val, 10);
+    if (n === 1 || n === 2 || n === 3) return n;
+    return 0;
+}
+
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [userProfile, setUserProfile] = useState<any | null>(null);
     const [role, setRole] = useState<UserRole>(null);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [adminLevel, setAdminLevel] = useState<AdminLevel>(0);
     const [loading, setLoading] = useState(true);
     const [isOnline, setIsOnline] = useState(navigator ? navigator.onLine : true);
     const [watchedStatuses, setWatchedStatuses] = useState<Record<string, UserOnlineStatus>>({});
@@ -64,60 +78,65 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     // ─── Auth Logic ───────────────────────────────────────────────────────────
+    // Admin sekarang adalah companion dengan field admin_level >= 1 pada
+    // document profile_companion. Tidak ada lagi document profile_admin,
+    // dan tidak ada lagi role "admin" pada user_details.
     useEffect(() => {
         let unsubscribeDetails: (() => void) | null = null;
         let unsubscribeProfile: (() => void) | null = null;
+
+        const denyAccess = async () => {
+            setRole(null);
+            setAdminLevel(0);
+            setUserProfile(null);
+            setLoading(false);
+            await auth.signOut();
+        };
 
         const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
             if (user) {
                 const userDetailsRef = doc(db, "user_details", user.uid);
                 unsubscribeDetails = onSnapshot(userDetailsRef, async (detailsSnap) => {
-                    if (detailsSnap.exists()) {
-                        const detailsData = detailsSnap.data();
-                        const selectedRole: UserRole = detailsData.role === "admin"
-                            ? "admin"
-                            : detailsData.role === "companion"
-                                ? "companion"
-                                : "booker";
+                    if (!detailsSnap.exists()) {
+                        await denyAccess();
+                        return;
+                    }
 
-                        if (selectedRole !== "admin") {
-                            setRole(null);
-                            setIsAdmin(false);
-                            setUserProfile(null);
-                            setLoading(false);
-                            await auth.signOut();
+                    const detailsData = detailsSnap.data();
+                    // Hanya akun companion yang bisa punya admin_level.
+                    if (detailsData.role !== "companion") {
+                        await denyAccess();
+                        return;
+                    }
+
+                    const profileRef = doc(db, "profile_companion", user.uid);
+                    unsubscribeProfile = onSnapshot(profileRef, async (profileSnap) => {
+                        if (!profileSnap.exists()) {
+                            await denyAccess();
                             return;
                         }
 
-                        setRole("admin");
-                        setIsAdmin(true);
+                        const profileData = profileSnap.data();
+                        const level = toAdminLevel(profileData?.admin_level);
 
-                        const profileRef = doc(db, "profile_admin", user.uid);
-                        unsubscribeProfile = onSnapshot(profileRef, async (profileSnap) => {
-                            if (profileSnap.exists() && profileSnap.data()?.name) {
-                                setUserProfile(profileSnap.data());
-                            } else {
-                                // Fallback: create profile_admin if not exists
-                                const fallbackProfile = { name: user.displayName || user.email || 'Admin' };
-                                await setDoc(profileRef, fallbackProfile);
-                                setUserProfile(fallbackProfile);
-                            }
-                            setLoading(false);
-                        });
-                    } else {
-                        setRole(null);
-                        setIsAdmin(false);
-                        setUserProfile(null);
+                        if (level === 0) {
+                            // Companion valid, tapi bukan admin -> tidak punya akses admin panel.
+                            await denyAccess();
+                            return;
+                        }
+
+                        setRole("companion");
+                        setAdminLevel(level);
+                        setUserProfile(profileData);
                         setLoading(false);
-                        await auth.signOut();
-                    }
+                    });
                 });
             } else {
                 setCurrentUser(null);
                 setUserProfile(null);
                 setRole(null);
-                setIsAdmin(false);
+                setAdminLevel(0);
                 setLoading(false);
                 if (unsubscribeDetails) unsubscribeDetails();
                 if (unsubscribeProfile) unsubscribeProfile();
@@ -139,8 +158,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     };
 
+    const isAdmin = adminLevel > 0;
+    const isOwner = adminLevel === 3;
+
     return (
-        <AuthContext.Provider value={{ currentUser, userProfile, role, isAdmin, loading, isOnline, watchUser, getUserStatus, logOut }}>
+        <AuthContext.Provider value={{ currentUser, userProfile, role, adminLevel, isAdmin, isOwner, loading, isOnline, watchUser, getUserStatus, logOut }}>
             {children}
         </AuthContext.Provider>
     );

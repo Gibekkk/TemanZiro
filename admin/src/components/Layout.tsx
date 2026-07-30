@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import miniziro from '@/assets/images/mini-ziro.svg';
 import { NavLink, Outlet, Navigate, useLocation } from 'react-router';
 import { useAuth } from '../contexts/AuthContext';
 import { useThemeStore } from '../store/themeStore';
-import { db } from '../lib/firebase_config';
-import { doc, getDoc } from 'firebase/firestore';
 import {
   LayoutDashboard,
   Users,
   UserSquare2,
   ArrowDownToLine,
   ArrowUpFromLine,
+  ShieldCheck,
   Menu,
   X,
   Sun,
@@ -21,19 +20,27 @@ import { cn } from '../lib/utils';
 import miniZiro from '../assets/images/mini-ziro.svg';
 
 const PAGE_TITLES: Record<string, string> = {
-  '/':           'Dashboard Overview',
-  '/users':      'Users',
-  '/companions': 'Companions',
-  '/topups':     'Top Ups',
-  '/withdraws':  'Withdrawals',
+  '/':                 'Dashboard Overview',
+  '/users':            'Users',
+  '/companions':       'Companions',
+  '/topups':           'Top Ups',
+  '/withdraws':        'Withdrawals',
+  '/admin-management': 'Admin Management',
+};
+
+const ADMIN_LEVEL_LABEL: Record<number, string> = {
+  1: 'Admin Operasional',
+  2: 'Admin Verifikasi',
+  3: 'Owner',
 };
 
 const navItems = [
-  { name: 'Dashboard',  path: '/',          icon: LayoutDashboard },
-  { name: 'Users',      path: '/users',      icon: Users },
-  { name: 'Companions', path: '/companions', icon: UserSquare2 },
-  { name: 'Top Ups',    path: '/topups',     icon: ArrowDownToLine },
-  { name: 'Withdraws',  path: '/withdraws',  icon: ArrowUpFromLine },
+  { name: 'Dashboard',  path: '/',          icon: LayoutDashboard, ownerOnly: false },
+  { name: 'Users',      path: '/users',      icon: Users,           ownerOnly: false },
+  { name: 'Companions', path: '/companions', icon: UserSquare2,     ownerOnly: false },
+  { name: 'Top Ups',    path: '/topups',     icon: ArrowDownToLine, ownerOnly: false },
+  { name: 'Withdraws',  path: '/withdraws',  icon: ArrowUpFromLine, ownerOnly: false },
+  { name: 'Admin Management', path: '/admin-management', icon: ShieldCheck, ownerOnly: true },
 ];
 
 function LoadingScreen() {
@@ -48,21 +55,10 @@ function LoadingScreen() {
 }
 
 export default function Layout() {
-  const { currentUser: user, isAdmin, loading, logOut } = useAuth();
+  const { currentUser: user, userProfile, isAdmin, isOwner, adminLevel, loading, logOut } = useAuth();
   const { theme, toggleTheme } = useThemeStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const location = useLocation();
-
-  useEffect(() => {
-    if (!user?.uid) return;
-    getDoc(doc(db, 'profile_admin', user.uid))
-      .then((snap) => {
-        const url = snap.exists() ? (snap.data()?.url_photoprofile_admin ?? miniziro) : miniziro;
-        setPhotoUrl(typeof url === 'string' && url.length > 0 ? url : null);
-      })
-      .catch(() => setPhotoUrl(null));
-  }, [user?.uid]);
 
   if (loading) return <LoadingScreen />;
   if (!user) return <Navigate to="/login" replace />;
@@ -87,7 +83,11 @@ export default function Layout() {
   }
 
   const pageTitle = PAGE_TITLES[location.pathname] ?? 'TemanZiro Admin';
-  const initial = user.displayName?.charAt(0) || user.email?.charAt(0) || 'A';
+  const displayName = userProfile?.name_companion || user.displayName || 'Admin';
+  const initial = displayName.charAt(0) || 'A';
+  const photoUrl: string | null = (userProfile?.url_photoprofile_companion || userProfile?.photo_url) ?? null;
+  const roleLabel = ADMIN_LEVEL_LABEL[adminLevel] ?? 'Admin';
+  const visibleNavItems = navItems.filter((item) => !item.ownerOnly || isOwner);
 
   function Avatar({ size = 'md' }: { size?: 'sm' | 'md' }) {
     const cls = size === 'sm' ? 'w-8 h-8 text-xs' : 'w-9 h-9 text-sm';
@@ -145,7 +145,7 @@ export default function Layout() {
         <nav className="flex-1 py-4 overflow-y-auto">
           <p className="px-5 mb-2 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Menu</p>
           <div className="space-y-0.5">
-            {navItems.map((item) => (
+            {visibleNavItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
@@ -172,9 +172,9 @@ export default function Layout() {
             <Avatar size="sm" />
             <div className="overflow-hidden">
               <p className="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">
-                {user.displayName || 'Admin'}
+                {displayName}
               </p>
-              <p className="text-xs text-slate-400 truncate">{user.email}</p>
+              <p className="text-xs text-slate-400 truncate">{roleLabel}</p>
             </div>
           </div>
 
@@ -210,9 +210,9 @@ export default function Layout() {
           <div className="flex items-center gap-3 pl-4">
             <div className="text-right">
               <p className="text-sm font-medium text-slate-800 dark:text-white leading-tight">
-                {user.displayName || 'Admin'}
+                {displayName}
               </p>
-              <p className="text-xs text-slate-400">Superadmin</p>
+              <p className="text-xs text-slate-400">{roleLabel}</p>
             </div>
             <Avatar />
           </div>

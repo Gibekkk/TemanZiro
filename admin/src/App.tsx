@@ -10,6 +10,7 @@ import Users from './pages/Users';
 import Companions from './pages/Companions';
 import TopUps from './pages/TopUps';
 import Withdraws from './pages/Withdraws';
+import AdminManagement from './pages/AdminManagement';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="companions" element={<Companions />} />
             <Route path="topups" element={<TopUps />} />
             <Route path="withdraws" element={<Withdraws />} />
+            <Route path="admin-management" element={<AdminManagement />} />
           </Route>
         </Routes>
       </BrowserRouter>
