@@ -1,0 +1,117 @@
+import { StyleSheet } from "react-native";
+import { COMMON_COLORS, FONTS } from "@/constants/Theme";
+
+export default StyleSheet.create({
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        justifyContent: "flex-end",
+    },
+    modalContent: {
+        backgroundColor: "#FFFFFF",
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
+        padding: 24,
+        paddingBottom: 40,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 10,
+    },
+    modalHeader: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 20,
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "#0f172a",
+        fontFamily: `${FONTS.quicksand}-Bold`,
+    },
+    modalInput: {
+        borderWidth: 1,
+        borderColor: "#cbd5e1",
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 12,
+        fontSize: 16,
+        color: "#0f172a",
+        fontFamily: FONTS.quicksand,
+        marginBottom: 20,
+    },
+    modalButtonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        gap: 12,
+    },
+    modalCancelBtn: {
+        flex: 1,
+        backgroundColor: "#f1f5f9",
+        paddingVertical: 14,
+        borderRadius: 12,
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: "#e2e8f0",
+    },
+    modalSaveBtn: {
+        flex: 1,
+        backgroundColor: COMMON_COLORS.secondary,
+        paddingVertical: 14,
+        borderRadius: 12,
+        alignItems: "center",
+    },
+    modalCancelText: {
+        fontSize: 15,
+        fontWeight: "600",
+        color: "#475569",
+        fontFamily: `${FONTS.quicksand}-Bold`,
+    },
+    modalSaveText: {
+        fontSize: 15,
+        fontWeight: "600",
+        color: "#FFFFFF",
+        fontFamily: `${FONTS.quicksand}-Bold`,
+    },
+    searchBar: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: "#cbd5e1",
+        borderRadius: 10,
+        paddingHorizontal: 12,
+        height: 50,
+    },
+    modalInputField: {
+        flex: 1,
+        height: "100%",
+        fontSize: 15,
+        fontFamily: FONTS.quicksand,
+        paddingHorizontal: 8,
+    },
+    searchIconLeft: {
+        marginRight: 4,
+    },
+    searchIconRight: {
+        marginLeft: 4,
+    },
+    suggestionsContainer: {
+        borderWidth: 1,
+        borderColor: "#e2e8f0",
+        borderRadius: 10,
+        marginTop: 8,
+        overflow: "hidden",
+    },
+    suggestionItem: {
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: "#f1f5f9",
+    },
+    suggestionText: {
+        fontSize: 14,
+        fontFamily: FONTS.quicksand,
+    },
+});
