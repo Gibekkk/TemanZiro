@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
-import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import { View, Text } from "react-native";
+import Feather from "@react-native-vector-icons/feather/static";
+import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import MainLayoutCompanion from "@/views/layouts/MainLayout/MainLayoutCompanion";
 import ProfilePicture from "@/views/components/ProfilePicture/ProfilePicture";
 import ProfileMenuCard from "@/views/components/ProfileMenuCard/ProfileMenuCard";
@@ -9,9 +9,10 @@ import ProfileMenuItem from "@/views/components/ProfileMenuItem/ProfileMenuItem"
 import KycCard from "@/views/components/KycCard/KycCard";
 import { useCompanionProfile } from "@/controllers/hooks/Companion/useCompanionProfile";
 import styles from "./ProfileCompanion.style";
+import AddOnConfirmationCard from "@/views/components/AddOnConfirmation/AddOnConfirmation";
+import { ADD_ON_STATUS } from "@/constants/AddOnConstant";
 
 export default function ProfileCompanion() {
-    const router = useRouter();
     const {
         theme,
         companionProfile,
@@ -21,33 +22,22 @@ export default function ProfileCompanion() {
         handleLogout,
         isComplete,
         isVerified,
+        addonStatus,
         handleKycRedirect,
+        handleActivities,
+        handleAddOns,
+        handlePersona,
+        handleReviews,
+        handleAddOnRedirect,
     } = useCompanionProfile();
 
-    const handleActivities = () => {
-        router.push("/(tabs_companion)/(profile)/activities");
-    };
-
-    const handlePersona = () => {
-        router.push("/(tabs_companion)/(profile)/persona");
-    };
-
-    const handleReviews = () => {
-        router.push("/(tabs_companion)/(profile)/reviews");
-    };
-
-    // Pale/light color values for icon background circles
     const iconColors = {
-        // activitiesBg: "#FFF0E6",
-        activitiesIcon: "#E96100", 
-        // personaBg: "#E6F0FA",
-        personaIcon: "#0066CC", 
-        // reviewsBg: "#FFEBEB",
-        reviewsIcon: "#FF4D4D", 
-        // editBg: "#F2ECE4", 
-        editIcon: "#8C7A6B", 
-        // logoutBg: "#FFEBEB", 
-        logoutIcon: "#EF4444", 
+        activitiesIcon: "#E96100",
+        personaIcon: "#0066CC",
+        addOnsIcon: "#ff5ae1",
+        reviewsIcon: "#FF4D4D",
+        editIcon: "#8C7A6B",
+        logoutIcon: "#EF4444",
     };
 
     return (
@@ -58,18 +48,21 @@ export default function ProfileCompanion() {
                     <ProfilePicture
                         uri={companionProfile?.url_photoprofile_companion}
                         profileLoading={profileLoading}
-                        showCameraIcon={false}
+                        showCameraIcon={true}
                         size={120}
                         borderWidth={4}
                         borderColor="#FFF"
+                        onImageSelected={(uri) => {
+                            console.log("Selected image uri:", uri);
+                        }}
                     />
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={[styles.editBadge, { backgroundColor: iconColors.activitiesIcon }]}
                         onPress={handleEditProfile}
                         activeOpacity={0.8}
                     >
                         <Feather name="edit-2" size={14} color="#FFF" />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
 
                 {/* Info Text */}
@@ -86,7 +79,7 @@ export default function ProfileCompanion() {
                 <View style={styles.locationContainer}>
                     <Feather name="map-pin" size={14} color="#94a3b8" style={{ marginRight: 6 }} />
                     <Text style={[styles.locationText, { color: theme.colors.textSecondary }]}>
-                        {profileLoading ? "Loading..." : companionProfile?.address_companion || "Alamat belum tersedia"}
+                        {profileLoading ? "Loading..." : companionProfile?.city_companion || "Alamat belum tersedia"}
                     </Text>
                 </View>
             </View>
@@ -98,50 +91,58 @@ export default function ProfileCompanion() {
                     <ProfileMenuItem
                         title="Tertarik dengan Aktivitas"
                         icon={<Feather name="compass" size={18} color={iconColors.activitiesIcon} />}
-                        // iconBgColor={iconColors.activitiesBg}
                         onPress={handleActivities}
+                    />
+                    <ProfileMenuItem
+                        title="Kelola Add-ons"
+                        icon={<Feather name="plus-circle" size={18} color={iconColors.addOnsIcon} />}
+                        onPress={handleAddOns}
                     />
                     <ProfileMenuItem
                         title="Karakter Saya"
                         icon={<MaterialCommunityIcons name="brain" size={18} color={iconColors.personaIcon} />}
-                        // iconBgColor={iconColors.personaBg}
                         onPress={handlePersona}
                     />
                     <ProfileMenuItem
                         title="Nilai & Komen"
                         icon={<Feather name="star" size={18} color={iconColors.reviewsIcon} />}
-                        // iconBgColor={iconColors.reviewsBg}
                         onPress={handleReviews}
                     />
                 </ProfileMenuCard>
 
                 {/* Second Card Group */}
                 {/* Ini untuk data tambahan kek verifikasi data, add on, dll, yang berhubungan dengan admins */}
-                <ProfileMenuCard>
-                    <KycCard
-                        status={
-                            isVerified
-                                ? "verified"
-                                : isComplete
-                                ? "pending"
-                                : "unverified"
-                        }
-                        onComplete={handleKycRedirect}
-                    />
-                </ProfileMenuCard>
+                {(!isVerified || (!!addonStatus && addonStatus !== ADD_ON_STATUS.ACCEPTED)) && (
+                    <ProfileMenuCard>
+                        {!isVerified && (
+                            <KycCard
+                                status={
+                                    isComplete
+                                        ? "pending"
+                                        : "unverified"
+                                }
+                                onComplete={handleKycRedirect}
+                            />
+                        )}
+                        {!!addonStatus && addonStatus !== ADD_ON_STATUS.ACCEPTED && (
+                            <AddOnConfirmationCard
+                                status={addonStatus}
+                                onComplete={() => handleAddOnRedirect(addonStatus)}
+                            />
+                        )}
+                    </ProfileMenuCard>
+                )}
 
                 {/* Third Card Group */}
                 <ProfileMenuCard>
                     <ProfileMenuItem
                         title="Edit Profil"
                         icon={<Feather name="user-check" size={18} color={iconColors.editIcon} />}
-                        // iconBgColor={iconColors.editBg}
                         onPress={handleEditProfile}
                     />
                     <ProfileMenuItem
                         title="Keluar Akun"
                         icon={<Feather name="log-out" size={18} color={iconColors.logoutIcon} />}
-                        // iconBgColor={iconColors.logoutBg}
                         onPress={handleLogout}
                         variant="danger"
                     />
