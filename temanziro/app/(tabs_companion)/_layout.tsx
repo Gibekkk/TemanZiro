@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import TabIcon from "@/views/components/UI/TabIcon/TabIcon";
 
@@ -87,6 +87,12 @@ export default function TabLayout() {
 
       <Tabs.Screen
         name="(profile)"
+        listeners={{ 
+          tabPress: (e) => {
+            e.preventDefault();
+            router.navigate('/(tabs_companion)/(profile)/profile');
+          }
+         }}
         options={{
           tabBarLabel: () => null,
           tabBarIcon: ({ focused }) => (

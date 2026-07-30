@@ -71,7 +71,7 @@ export default StyleSheet.create({
     bottom: 40,
     left: 20,
     right: 20,
-    zIndex: 2,
+    zIndex: 1,
   },
   nameRow: {
     flexDirection: "row",
