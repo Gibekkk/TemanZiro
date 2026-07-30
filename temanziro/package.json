@@ -13,6 +13,7 @@
   "dependencies": {
     "@expo-google-fonts/montserrat": "^0.4.2",
     "@expo-google-fonts/quicksand": "^0.4.1",
+    "@expo/vector-icons": "^15.0.2",
     "@lottiefiles/dotlottie-react": "^0.13.5",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-async-storage/async-storage": "2.2.0",
@@ -48,8 +49,9 @@
     "expo-symbols": "~55.0.9",
     "expo-system-ui": "~55.0.19",
     "expo-web-browser": "~55.0.17",
+    "ionicons": "^8.1.0",
     "lottie-react-native": "~7.3.4",
-    "lucide-react-native": "^1.26.0",
+    "lucide-react-native": "^1.27.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-native": "0.83.6",

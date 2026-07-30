@@ -1,6 +1,6 @@
 import SecondaryLayout from '@/views/layouts/SecondaryLayout/SecondaryLayout';
 import ScheduleTabs from '@/views/components/ScheduleTabs/ScheduleTabs';
-import styles from './ListBooking.style';
+import styles from './ListBookingScreen.style';
 
 import { useTemanJalan } from '@/controllers/hooks/Common/useTemanJalan';
 import React from 'react';

@@ -68,7 +68,7 @@ function RootLayoutContent() {
         style={{ flex: 1, backgroundColor: theme.colors.primaryBackground }}
       >
         <LottieView
-          source={require("@/assets/animation/TemanZiro_LoadingScreen.json")}
+          source={require("@/assets/animation/temanziro_loading.json")}
           autoPlay
           loop={false}
           onAnimationFinish={() => setLottieFinished(true)}

@@ -70,7 +70,7 @@ export function useTemanJalan() {
         const unsubscribe = firestore()
             .collection("bookings")
             .where(queryField, "==", currentUser.uid)
-            .where("booking_status", "in", ["konfirmasi", "berlangsung"])
+            .where("booking_status", "in", ["konfirmasi", "berlangsung", "menunggupembayaran"])
             .onSnapshot(async (snapshot) => {
                 if (!snapshot || snapshot.empty) {
                     setFeaturedDataList([]);
