@@ -1,40 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import SecondaryLayout from "@/views/layouts/SecondaryLayout/SecondaryLayout";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import styles from "./EditProfileCompanion.style";
 import ProfilePicture from "@/views/components/ProfilePicture/ProfilePicture";
-import GenderSelector from "@/views/components/GenderSelector/GenderSelector";
 import { useCompanionEditProfile } from "@/controllers/hooks/Companion/useCompanionEditProfile";
-import LocationCard from "@/views/components/LocationCard/LocationCard";
-import AddressInput from "@/views/components/AddressInput/AddressInput";
-import InterestSelector from "@/views/components/InterestSelector/InterestSelector";
-import PersonaSelector from "@/views/components/PersonaSelector/PersonaSelector";
-
-import IconUser from "@/assets/icon/profil.svg";
-import IconAge from "@/assets/icon/date-non.svg";
-import TimeSelector from "@/views/components/TimeSelector/TimeSelector";
-import TimeSelection from "@/views/components/TimePicker/TimePicker";
 import GeneralButton from "@/views/components/GeneralButton/GeneralButton";
+import IconAngleRight from "@/assets/icon/angle-right-non.svg";
+import EditProfilePopUp from "@/views/components/EditProfilePopUp/EditProfilePopUp";
 
 export default function EditProfileCompanion() {
     const {
         companionProfile,
         profileLoading,
         name, setName,
-        gender, setGender,
-        age, setAge,
+        gender,
+        age,
         location, setLocation,
-        selectedCity,
-        cityError,
-        philosophy, setPhilosophy,
-        interests, setInterests,
-        persona, setPersona,
-        selectedTime, setSelectedTime,
-        selectedDays, setSelectedDays,
         cities,
-        handleCityChange,
+        handleSearchCity,
         handleSave,
     } = useCompanionEditProfile();
+
+    // Modal state controls
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [tempName, setTempName] = useState("");
+
+    const [isEditingLocation, setIsEditingLocation] = useState(false);
+    const [tempLocation, setTempLocation] = useState("");
+
+    const getRegisteredDateString = () => {
+        const registeredDate = companionProfile?.registered_date;
+        if (!registeredDate) return "Jan 2024";
+        try {
+            const date = typeof registeredDate.toDate === "function"
+                ? registeredDate.toDate()
+                : new Date(registeredDate as any);
+            if (isNaN(date.getTime())) return "Jan 2024";
+
+            const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des"];
+            return `${months[date.getMonth()]} ${date.getFullYear()}`;
+        } catch (error) {
+            throw error;
+        }
+    };
 
     return (
         <SecondaryLayout title="Edit Profile">
@@ -49,125 +57,120 @@ export default function EditProfileCompanion() {
                             console.log("Selected image uri:", uri);
                         }}
                     />
+                    <View style={styles.headerTextWrapper}>
+                        <Text style={styles.headerText}>Anggota sejak {getRegisteredDateString()}</Text>
+                    </View>
                 </View>
             </View>
 
-            {/* Form Section */}
-            <View>
-                {/* Nama Lengkap Card */}
-                <View style={styles.card}>
-                    <Text style={styles.label}>Nama Lengkap</Text>
-                    <View style={styles.inputContainerRow}>
-                        <IconUser width={20} height={20} style={styles.inputIcon} />
-                        <TextInput
-                            style={styles.bottomBorderInput}
-                            value={name}
-                            onChangeText={setName}
-                            placeholder="Nama Lengkap"
-                            placeholderTextColor="#94a3b8"
-                        />
-                    </View>
-                </View>
-
-                {/* Jenis Kelamin Card */}
-                <View style={styles.card}>
-                    <Text style={styles.label}>Jenis Kelamin</Text>
-                    <GenderSelector
-                        value={gender}
-                        onChange={(newGender) => {
-                            setGender(newGender);
-                            console.log("Selected gender:", newGender);
+            {/* Custom Edit Profile Info Table */}
+            <View style={styles.menuContainer}>
+                <View style={styles.tableCard}>
+                    {/* Row 1: Nama */}
+                    <TouchableOpacity
+                        style={styles.tableRow}
+                        activeOpacity={0.7}
+                        onPress={() => {
+                            setTempName(name);
+                            setIsEditingName(true);
                         }}
-                    />
-                </View>
+                    >
+                        <View style={styles.labelContainer}>
+                            <Text style={styles.rowLabel}>Nama</Text>
+                        </View>
+                        <View style={styles.valueContainer}>
+                            <Text style={styles.rowValue}>{name || "-"}</Text>
+                        </View>
+                        <View style={styles.arrowContainer}>
+                            <IconAngleRight width={20} height={20} style={styles.arrowIcon} />
+                        </View>
+                    </TouchableOpacity>
 
-                {/* Umur Card */}
-                <View style={styles.card}>
-                    <Text style={styles.label}>Umur</Text>
-                    <View style={styles.inputContainerRow}>
-                        <IconAge width={18} height={18} style={styles.inputIcon} />
-                        <TextInput
-                            style={styles.bottomBorderInput}
-                            value={age}
-                            onChangeText={setAge}
-                            placeholder="Umur"
-                            keyboardType="numeric"
-                            placeholderTextColor="#94a3b8"
-                        />
+                    <View style={styles.tableDivider} />
+
+                    {/* Row 2: Gender */}
+                    <View style={styles.tableRow}>
+                        <View style={styles.labelContainer}>
+                            <Text style={styles.rowLabel}>Gender</Text>
+                        </View>
+                        <View style={styles.valueContainer}>
+                            <Text style={styles.rowValue}>
+                                {gender === "pria" ? "Pria" : gender === "wanita" ? "Wanita" : "Rahasia"}
+                            </Text>
+                        </View>
+                        <View style={styles.arrowContainer} />
                     </View>
-                </View>
 
-                {/* Lokasi Card */}
-                <View style={styles.card}>
-                    <Text style={styles.label}>Lokasi (Alamat)</Text>
-                    <AddressInput
-                        value={location}
-                        onChangeText={setLocation}
-                    />
-                </View>
+                    <View style={styles.tableDivider} />
 
-                {/* City */}
-                <LocationCard
-                    title="Kotamu"
-                    label="Dimana kamu tinggal?"
-                    cities={cities}
-                    value={selectedCity}
-                    onValueChange={handleCityChange}
-                />
-                {!!cityError && (
-                    <Text style={styles.errorText}>{cityError}</Text>
-                )}
-
-                {/* Philosophy */}
-                <View style={styles.card}>
-                    <Text style={styles.label}>Filosofi Hidup</Text>
-                    <View style={styles.inputContainerRow}>
-                        <TextInput
-                            style={styles.bottomBorderInput}
-                            value={philosophy}
-                            onChangeText={setPhilosophy}
-                            placeholder="Filosofi hidup kamu"
-                            placeholderTextColor="#94a3b8"
-                            multiline={true}
-                            numberOfLines={4}
-                            textAlignVertical="top"
-                        />
+                    {/* Row 3: Tanggal Lahir  */}
+                    <View style={styles.tableRow}>
+                        <View style={styles.labelContainer}>
+                            <Text style={styles.rowLabel}>Tanggal Lahir</Text>
+                        </View>
+                        <View style={styles.valueContainer}>
+                            <Text style={styles.rowValue}>{age ? `${age} Tahun` : "-"}</Text>
+                        </View>
+                        <View style={styles.arrowContainer} />
                     </View>
+
+                    <View style={styles.tableDivider} />
+
+                    {/* Row 4: Kota */}
+                    <TouchableOpacity
+                        style={styles.tableRow}
+                        activeOpacity={0.7}
+                        onPress={() => {
+                            setTempLocation(location);
+                            setIsEditingLocation(true);
+                        }}
+                    >
+                        <View style={styles.labelContainer}>
+                            <Text style={styles.rowLabel}>Kota</Text>
+                        </View>
+                        <View style={styles.valueContainer}>
+                            <Text style={styles.rowValue} numberOfLines={1} ellipsizeMode="tail">
+                                {location || "Pilih lokasi"}
+                            </Text>
+                        </View>
+                        <View style={styles.arrowContainer}>
+                            <IconAngleRight width={20} height={20} style={styles.arrowIcon} />
+                        </View>
+                    </TouchableOpacity>
                 </View>
-
-                {/* Interest Activity */}
-                <InterestSelector
-                    value={interests}
-                    onChange={setInterests}
-                    showHeader={true}
-                />
-
-                {/* Karakter Persona Card */}
-                <PersonaSelector
-                    value={persona}
-                    onMinatChange={setPersona}
-                    showHeader={true}
-                />
-
-                <TimeSelector
-                    value={selectedDays}
-                    onValueChange={setSelectedDays}
-                />
-                <TimeSelection
-                    value={selectedTime}
-                    onTimeChange={(data) => {
-                        setSelectedTime(data.mode === "fullday" ? "00:00-23:59" : `${data.startTime}-${data.endTime}`);
-                    }}
-                />
-
-                <GeneralButton
-                    variant="primary"
-                    style={styles.button}
-                    onClick={handleSave}
-                >
-                    Simpan
-                </GeneralButton>
             </View>
+
+            <GeneralButton
+                variant="primary"
+                style={styles.button}
+                onClick={handleSave}
+            >
+                Simpan
+            </GeneralButton>
+
+            {/* PopUp Edit Nama */}
+            <EditProfilePopUp
+                visible={isEditingName}
+                onClose={() => setIsEditingName(false)}
+                onSave={setName}
+                title="Ubah Nama"
+                value={tempName}
+                type="text"
+                placeholder="Masukkan nama"
+            />
+
+            {/* PopUp Edit Kota */}
+            <EditProfilePopUp
+                visible={isEditingLocation}
+                onClose={() => setIsEditingLocation(false)}
+                onSave={setLocation}
+                title="Ubah Kota"
+                value={tempLocation}
+                type="location"
+                placeholder="Cari kota/lokasi"
+                cities={cities}
+                onSearchCity={handleSearchCity}
+            />
         </SecondaryLayout>
-    )
+    );
 }
