@@ -4,13 +4,14 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { useTheme } from "@/controllers/hooks/useTheme";
 
 // Layout & Component
-import SecondaryLayout from "@/views/layouts/SecondaryLayout/SecondaryLayout"; 
-import GeneralButton from "@/views/components/GeneralButton/GeneralButton"; 
+import SecondaryLayout from "@/views/layouts/SecondaryLayout/SecondaryLayout";
+import GeneralButton from "@/views/components/GeneralButton/GeneralButton";
 
 // Styles
 import styles from "./MatchRequestScreen.style";
 import AnimatedGraphicBanner from "@/views/components/AnimatedGraphicBanner/AnimatedGraphicBanner";
 import RequestSummaryList from "@/views/components/SummaryList/SummaryList";
+import LottieView from "lottie-react-native";
 
 export interface BookingData {
   activity_name: string;
@@ -76,7 +77,14 @@ export default function MatchRequestScreen() {
       ]}
     >
       <SecondaryLayout title="Mencari Companion Kamu" alignLeft={true}>
-        <AnimatedGraphicBanner />
+        <View style={styles.lottieContainer}>
+          <LottieView
+            source={require("@/assets/animation/temanziro_loading.json")} // Sesuaikan path file JSON kamu
+            autoPlay
+            loop
+            style={styles.lottieAnimation}
+          />
+        </View>
 
         {/* Text Information */}
         <View style={styles.textInfo}>
@@ -95,14 +103,14 @@ export default function MatchRequestScreen() {
         <View
           style={[
             styles.summaryCard,
-            { backgroundColor: theme.colors.primaryBackground, borderColor: theme.colors.border  },
+            {
+              backgroundColor: theme.colors.primaryBackground,
+              borderColor: theme.colors.border,
+            },
           ]}
         >
           <Text
-            style={[
-              styles.summaryHeader,
-              { color: theme.colors.secondary },
-            ]}
+            style={[styles.summaryHeader, { color: theme.colors.secondary }]}
           >
             REQUEST SUMMARY
           </Text>

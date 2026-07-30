@@ -1,12 +1,12 @@
 import React, { ReactNode } from "react";
-import { TouchableOpacity, Text, ViewStyle, TextStyle } from "react-native";
+import { TouchableOpacity, Text, ViewStyle, TextStyle, StyleProp } from "react-native";
 import styles from "./GeneralButton.style";
 
 interface ButtonProps {
   children: ReactNode;
   onClick?: () => void;
   variant?: "primary" | "outline" | "ghost";
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   textStyle?: TextStyle;
   shadow?: "default" | "none";
   disabled?: boolean;

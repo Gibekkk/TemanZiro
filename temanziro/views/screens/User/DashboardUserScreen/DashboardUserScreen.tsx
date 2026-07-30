@@ -6,7 +6,6 @@ import MascotImg from "@/assets/image/main1-ziro.svg"; // Gunakan format .png/.j
 import MapIcon from "@/assets/icon/map-pin.svg";
 import VerificationIcon from "@/assets/icon/verified.svg";
 import Verification1Icon from "@/assets/icon/verifiedsafety.svg";
-import { useAuth } from "@/controllers/hooks/useAuth";
 
 import styles from "./DashboardUserScreen.style";
 import MainLayout from "@/views/layouts/MainLayout/MainLayout";

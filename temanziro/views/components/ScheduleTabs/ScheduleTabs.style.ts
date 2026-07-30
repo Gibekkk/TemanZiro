@@ -1,9 +1,12 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { FONTS } from "@/constants/Theme";
+
+const { height } = Dimensions.get("window");
 
 export default StyleSheet.create({
     bottomSheet: {
         flex: 1,
+        minHeight: height * 0.6,
         paddingHorizontal: 12,
         borderRadius: 24,
         borderWidth: 1,
@@ -21,6 +24,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20,
         height: 48,
+        flexGrow: 0,
     },
     tabBarScroll: {
         flexDirection: 'row',
@@ -33,7 +37,7 @@ export default StyleSheet.create({
     },
     tabText: {
         fontFamily: FONTS.quicksand,
-        fontSize: 11,
+        fontSize: 12,
         fontWeight: '700',
         textAlign: 'center',
     },

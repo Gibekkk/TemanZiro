@@ -3,18 +3,27 @@ import { COMMON_COLORS, FONTS } from "@/constants/Theme";
 
 export default StyleSheet.create({
   screen: {
-    flex: 1,
-    backgroundColor: `${COMMON_COLORS.primaryBackground}`,
+    flex: 1
   },
   header: {
     width: "100%",
-    backgroundColor: `${COMMON_COLORS.primaryBackground}`,
     paddingBottom: 15,
     zIndex: 10,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 20,
+      },
+      android: {
+        elevation: 10,
+      },
+    }),
   },
   shadow: {
-    elevation: 4, // Shadow untuk Android
-    shadowColor: "#000", // Shadow untuk iOS
+    elevation: 4,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
@@ -49,9 +58,9 @@ export default StyleSheet.create({
   },
   title: {
     fontFamily: `${FONTS.quicksand}-Bold`,
-    color: COMMON_COLORS.textPrimary,
     fontSize: 18,
     textAlign: "center",
+    fontWeight: 'bold'
   },
   titleLeft: {
     textAlign: "left",

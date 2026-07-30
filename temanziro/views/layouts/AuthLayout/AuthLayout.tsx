@@ -1,34 +1,50 @@
 import React, { ReactNode } from "react";
 import { View, Text } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import IconThreePeople from "@/assets/icon/icon-threepeople.svg";
 import styles from "./AuthLayout.style";
-import { COMMON_COLORS } from "@/constants/Theme"; 
+import { useTheme } from "@/controllers/hooks/useTheme";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface OnboardingLayoutProps {
   children: ReactNode;
 }
 
 export default function OnboardingLayout({ children }: OnboardingLayoutProps) {
-  const primaryLight = `${COMMON_COLORS.primary}D9`; 
+  const { theme } = useTheme();
+  const insets = useSafeAreaInsets();
 
   return (
-    <LinearGradient
-      colors={[primaryLight, COMMON_COLORS.primaryBackground]}
-      locations={[0.25, 0.7]}
-      style={styles.screen}
+    <View
+      style={[
+        styles.screen,
+        {
+          backgroundColor: theme.colors.primaryBackground,
+          paddingTop: insets.top > 0 ? 15 : 15,
+        },
+      ]}
     >
-      <Text style={styles.title}>
-        Teman<Text style={styles.titleHighlight}>Ziro</Text>
-      </Text>
-      
-      <View style={styles.container}>
-        <View style={styles.tag}>
-          <IconThreePeople width={16} height={16} />
-          <Text style={styles.tagText}>KOMUNITAS DIUTAMAKAN</Text>
+      {/* Tambahkan padding atas dinamis di header berdasarkan insets */}
+      <View style={[styles.header, { paddingTop: insets.top || 20 }]}>
+        <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
+          Teman<Text style={styles.titleHighlight}>Ziro</Text>
+        </Text>
+
+        <View style={[styles.tag, { backgroundColor: theme.colors.primary }]}>
+          <IconThreePeople width={18} height={18} />
+          <Text style={[styles.tagText, {color: theme.colors.lightText}]}>KOMUNITAS DIUTAMAKAN</Text>
         </View>
-        <View style={styles.content}>{children}</View>
       </View>
-    </LinearGradient>
+
+      <View
+        style={[
+          styles.container,
+          {
+            paddingBottom: (insets.bottom || 20) + 20,
+          },
+        ]}
+      >
+        {children}
+      </View>
+    </View>
   );
 }
