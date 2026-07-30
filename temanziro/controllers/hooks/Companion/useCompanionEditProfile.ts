@@ -7,9 +7,10 @@ import { Gender } from "@/constants/UserDetails";
 import {
     USE_DUMMY_DATA,
     DUMMY_COMPANION_PROFILE,
+    DUMMY_LOCATIONS,
 } from "@/constants/Config";
-import { CompanionRepository } from "@/data/repositories/CompanionRepository";
 import { Alert } from "react-native";
+import { useMapLocation } from "@/controllers/hooks/useMapLocation";
 
 export function useCompanionEditProfile() {
     const { currentUser } = useAuth();
@@ -20,7 +21,7 @@ export function useCompanionEditProfile() {
     const [localLoading, setLocalLoading] = useState<boolean>(USE_DUMMY_DATA);
 
     const [name, setName] = useState("");
-    const [gender, setGender] = useState<Gender>("rahasia");
+    const [gender, setGender] = useState<Gender>("keduanya");
     const [age, setAge] = useState("");
     const [location, setLocation] = useState("");
     const [selectedCity, setSelectedCity] = useState("");
@@ -31,7 +32,30 @@ export function useCompanionEditProfile() {
     const [selectedTime, setSelectedTime] = useState<string>("");
     const [selectedDays, setSelectedDays] = useState<string[]>([]);
 
-    const cities = ["Jakarta", "Surabaya", "Makassar", "Bandung"];
+    const { citySuggestions, searchCity } = useMapLocation();
+    const [cities, setCities] = useState<string[]>([]);
+
+    const handleSearchCity = async (query: string) => {
+        if (!query.trim()) {
+            setCities([]);
+            return;
+        }
+
+        if (USE_DUMMY_DATA) {
+            const filtered = DUMMY_LOCATIONS.filter((loc) =>
+                loc.toLowerCase().includes(query.toLowerCase())
+            );
+            setCities(filtered);
+        } else {
+            await searchCity(query);
+        }
+    };
+
+    useEffect(() => {
+        if (!USE_DUMMY_DATA) {
+            setCities(citySuggestions.map((item) => `${item.cityName}, ${item.provinceName}`));
+        }
+    }, [citySuggestions]);
 
     const handleCityChange = (val: string) => {
         setSelectedCity(val);
@@ -58,9 +82,9 @@ export function useCompanionEditProfile() {
     useEffect(() => {
         if (finalCompanionProfile) {
             setName(finalCompanionProfile.name_companion || "");
-            setGender((finalCompanionProfile.gender_companion || "rahasia") as Gender);
-            setAge(finalCompanionProfile.age_companion ? String(finalCompanionProfile.age_companion) : "");
-            setLocation(finalCompanionProfile.address_companion || "");
+            // setGender((finalCompanionProfile.gender_companion) as Gender);
+            // setAge(finalCompanionProfile.age_companion ? String(finalCompanionProfile.age_companion) : "");
+            setLocation(finalCompanionProfile.city_companion || "");
             setPhilosophy(finalCompanionProfile.philosophy_companion || "");
             setInterests(finalCompanionProfile.preference_activity_companion || []);
             setPersona(finalCompanionProfile.preference_companion || []);
@@ -102,8 +126,8 @@ export function useCompanionEditProfile() {
         //             time: timeTuple,
         //         },
         //     });
-            Alert.alert("Sukses", "Profil berhasil diperbarui!");
-            router.back();
+        Alert.alert("Sukses", "Profil berhasil diperbarui!");
+        router.back();
         // } catch (error) {
         //     console.error("Error updating profile:", error);
         //     Alert.alert("Gagal", "Gagal memperbarui profil.");
@@ -126,6 +150,7 @@ export function useCompanionEditProfile() {
         selectedDays, setSelectedDays,
         cities,
         handleCityChange,
+        handleSearchCity,
         handleSave,
     };
 }
