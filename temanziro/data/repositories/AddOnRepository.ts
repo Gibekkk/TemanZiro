@@ -1,39 +1,26 @@
 import firestore from "@react-native-firebase/firestore";
 import storage from "@react-native-firebase/storage";
-import { DocumentationAddOnsModel, TransportationAddOnsModel, CompanionTransportationDocumentModel } from "@/domain/models/AddOnModel";
+import { AddOnsModel, CompanionVehicleModel, DocumentationAddOnDetails } from "@/domain/models/AddOnModel";
 import { generateFileName, normalizeLocalUri } from "@/data/repositories/utils/UploadFileUtils";
 import { AddOnStatus } from "@/constants/AddOnConstant";
 
 export const AddOnRepository = {
-    getAddOnTypeCollection(companionUid: string, addOnType: string) {
-        return firestore()
-                .collection("add_on")
-                .doc(companionUid)
-                .collection(addOnType)
-
-    },
-
-    async getAddOnActivityStatus(companionUid: string, addOnType: string): Promise<AddOnStatus | null> {
+    async getAddOns(companionUid: string): Promise<AddOnsModel | null> {
         try {
-            const docSnap = await this.getAddOnTypeCollection(companionUid, addOnType).doc("data").get();
+            const docSnap = await firestore().collection("add_on").doc(companionUid).get();
             if (!docSnap.exists) return null;
-            const data = docSnap.data();
-            return data?.is_active || false;
+            return docSnap.data() as AddOnsModel;
         } catch (error) {
-            console.error("Error fetching add-on activity status:", error);
+            console.error("Error fetching add-ons:", error);
             throw error;
         }
     },
 
-    async updateAddOnActiveStatus(companionUid: string, addOnType: string, addOnName: string, isActive: boolean ): Promise<void> {
+    async updateAddOnActiveStatus(companionUid: string, addOnType: "documentation" | "transportation", isActive: boolean): Promise<void> {
         try {
-            await this.getAddOnTypeCollection(companionUid, addOnType).doc("data").set({
-                uid: companionUid,
-                add_on: {
-                    add_on_name: addOnName,
-                    add_on_type: addOnType,
-                },
-                is_active: isActive,
+            const field = addOnType === "documentation" ? "is_active_documentation" : "is_active_transportation";
+            await firestore().collection("add_on").doc(companionUid).set({
+                [field]: isActive,
                 updated_at: firestore.FieldValue.serverTimestamp()
             }, { merge: true });
         } catch (error) {
@@ -42,82 +29,39 @@ export const AddOnRepository = {
         }
     },
 
-    async getDocumentationDetails(companionUid: string): Promise<DocumentationAddOnsModel | null> {
+    async updateDocumentationDetails(companionUid: string, data: Partial<DocumentationAddOnDetails>): Promise<void> {
         try {
-            const docSnap = await this.getAddOnTypeCollection(companionUid, "documentation").doc("data").get();
-            if (!docSnap.exists) return null;
-            return docSnap.data() as DocumentationAddOnsModel;
-        } catch (error) {
-            console.error("Error fetching documentation details:", error);
-            throw error;
-        }
-    },
+            const updateData: any = {
+                updated_at: firestore.FieldValue.serverTimestamp()
+            };
+            if (data.url_portfolio !== undefined) updateData["documentation.url_portfolio"] = data.url_portfolio;
+            if (data.is_accepted !== undefined) updateData["documentation.is_accepted"] = data.is_accepted;
+            if (data.portfolio_rejection_message !== undefined) updateData["documentation.portfolio_rejection_message"] = data.portfolio_rejection_message;
+            if (data.created_at !== undefined) updateData["documentation.created_at"] = data.created_at;
 
-    async updateDocumentationDetails(companionUid: string, data: Partial<DocumentationAddOnsModel>): Promise<void> {
-        try {
-            await this.getAddOnTypeCollection(companionUid, "documentation").doc("data").set({
-                uid: companionUid,
-                ...data,
-                updated_at: firestore.FieldValue.serverTimestamp(),
-            }, { merge: true });
+            await firestore().collection("add_on").doc(companionUid).set(updateData, { merge: true });
         } catch (error) {
             console.error("Error updating documentation details:", error);
             throw error;
         }
     },
 
-    async getTransportationDetails(companionUid: string): Promise<TransportationAddOnsModel | null> {
+    async saveVehicles(companionUid: string, vehicles: CompanionVehicleModel[]): Promise<void> {
         try {
-            const docSnap = await this.getAddOnTypeCollection(companionUid, "transportation").doc("data").get();
-            if (!docSnap.exists) return null;
-            return docSnap.data() as TransportationAddOnsModel;
-        } catch (error) {
-            console.error("Error fetching transportation details:", error);
-            throw error;
-        }
-    },
-    async updateTransportationDetails(companionUid: string, data: Partial<TransportationAddOnsModel>): Promise<void> {
-        try {
-            await this.getAddOnTypeCollection(companionUid, "transportation").doc("data").set({
-                uid: companionUid,
-                ...data,
-                updated_at: firestore.FieldValue.serverTimestamp(),
+            await firestore().collection("add_on").doc(companionUid).set({
+                vehicles,
+                updated_at: firestore.FieldValue.serverTimestamp()
             }, { merge: true });
         } catch (error) {
-            console.error("Error updating transportation details:", error);
-            throw error;
-        }
-    },
-
-    async getTransportationDocuments(companionUid: string): Promise<CompanionTransportationDocumentModel | null> {
-        try {
-            const docSnap = await this.getAddOnTypeCollection(companionUid, "transportation").doc("documents").get();
-            if (!docSnap.exists) return null;
-            return docSnap.data() as CompanionTransportationDocumentModel;
-        } catch (error) {
-            console.error("Error fetching transportation documents:", error);
-            throw error;
-        }
-    },
-    async submitTransportationDocuments(
-        companionUid: string, 
-        data: Partial<CompanionTransportationDocumentModel>
-    ): Promise<void> {
-        try {
-            await this.getAddOnTypeCollection(companionUid, "transportation").doc("documents").set({
-                uid: companionUid,
-                ...data
-            }, { merge: true });
-        } catch (error) {
-            console.error("Error submitting transportation documents:", error);
+            console.error("Error saving vehicles list:", error);
             throw error;
         }
     },
 
     async uploadTransportationFile(
-        companionUid: string, 
-        documentType: "sim" | "stnk" | "vehicle_front" | "vehicle_side", 
-        localUri: string, 
+        companionUid: string,
+        documentType: "sim" | "stnk" | "vehicle_front" | "vehicle_side",
+        localUri: string,
         originalFileName: string
     ): Promise<string> {
         try {
