@@ -6,12 +6,7 @@ import { useTheme } from "@/controllers/hooks/useTheme";
 import { CompanionProfile } from "@/domain/models/CompanionModel";
 import { useRouter } from "expo-router";
 import { GENDER_DETAILS, Gender } from "@/constants/UserDetails";
-import {
-    USE_DUMMY_DATA,
-    DUMMY_COMPANION_PROFILE,
-    DUMMY_COMPANION_RATING,
-    DUMMY_REVIEWS
-} from "@/constants/Config";
+import { USE_DUMMY_DATA, DUMMY_COMPANION_PROFILE, DUMMY_COMPANION_RATING, DUMMY_REVIEWS } from "@/constants/Config";
 
 export function useCompanionProfile() {
     const { currentUser, logout } = useAuth();
@@ -43,20 +38,18 @@ export function useCompanionProfile() {
     const reviews = USE_DUMMY_DATA ? DUMMY_REVIEWS : [];
     const rating = USE_DUMMY_DATA ? DUMMY_COMPANION_RATING : null;
 
-    // Gender Helper Logic
     const getGenderIcon = (gender: string | undefined) => {
         const lowerGender = (gender?.toLowerCase() || "rahasia") as Gender;
-        const details = GENDER_DETAILS[lowerGender] || GENDER_DETAILS.rahasia;
+        const details = GENDER_DETAILS[lowerGender] || GENDER_DETAILS.keduanya;
         return React.createElement(details.icon, { width: 22, height: 22 });
     };
 
     const getGenderLabel = (gender: string | undefined) => {
         const lowerGender = (gender?.toLowerCase() || "rahasia") as Gender;
-        const details = GENDER_DETAILS[lowerGender] || GENDER_DETAILS.rahasia;
+        const details = GENDER_DETAILS[lowerGender] || GENDER_DETAILS.keduanya;
         return details.label;
     };
 
-    // Navigation Handlers
     const handleKycRedirect = () => {
         router.push("/verification/VerificationDataCompanionScreen_Call");
     };
@@ -64,6 +57,30 @@ export function useCompanionProfile() {
     const handleEditProfile = () => {
         console.log("Edit Profile Pressed");
         router.push("/companion/editprofilecompanion");
+    };
+
+    const handleActivities = () => {
+        router.push("/(tabs_companion)/(profile)/activities");
+    };
+
+    const handleAddOns = () => {
+        router.push("/(tabs_companion)/(profile)/addons");
+    };
+
+    const handlePersona = () => {
+        router.push("/(tabs_companion)/(profile)/persona");
+    };
+
+    const handleReviews = () => {
+        router.push("/(tabs_companion)/(profile)/reviews");
+    };
+
+    const handleAddOnRedirect = (status: string) => {
+        if (status === "revision") {
+            router.push("/(tabs_companion)/(profile)/addons-revision");
+        } else if (status === "rejected") {
+            router.push("/(tabs_companion)/(profile)/addons-rejected");
+        }
     };
 
     const handleLogout = async () => {
@@ -75,7 +92,6 @@ export function useCompanionProfile() {
         }
     };
 
-    // Rating Distribution Calculations
     const ratingDistribution = [
         { star: 5, count: rating?.count_rating["5"] || 0 },
         { star: 4, count: rating?.count_rating["4"] || 0 },
@@ -84,6 +100,8 @@ export function useCompanionProfile() {
         { star: 1, count: rating?.count_rating["1"] || 0 },
     ];
     const totalReviews = ratingDistribution.reduce((acc, curr) => acc + curr.count, 0) || 1;
+
+    const addonStatus = finalCompanionProfile?.addon_status || null;
 
     return {
         currentUser,
@@ -96,10 +114,16 @@ export function useCompanionProfile() {
         rating,
         isComplete,
         isVerified,
+        addonStatus,
         getGenderIcon,
         getGenderLabel,
         handleKycRedirect,
         handleEditProfile,
+        handleActivities,
+        handleAddOns,
+        handlePersona,
+        handleReviews,
+        handleAddOnRedirect,
         handleLogout,
         ratingDistribution,
         totalReviews,
