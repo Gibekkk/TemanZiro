@@ -72,7 +72,11 @@
       ],
       "@react-native-google-signin/google-signin",
       "expo-image",
-      "expo-web-browser"
+      "expo-web-browser",
+      "@react-native-vector-icons/feather",
+      "@react-native-vector-icons/material-design-icons",
+      "@react-native-vector-icons/material-icons",
+      "@react-native-vector-icons/ionicons"
     ],
     "experiments": {
       "typedRoutes": true,

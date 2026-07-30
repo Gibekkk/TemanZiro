@@ -8,7 +8,7 @@ import IconSecretOff from "@/assets/icon/rahasiaoff.svg";
 export const GENDER = {
     PRIA: "pria",
     WANITA: "wanita",
-    RAHASIA: "rahasia",
+    KEDUANYA: "keduanya",
 } as const;
 
 export const GENDER_DETAILS = {
@@ -20,8 +20,8 @@ export const GENDER_DETAILS = {
         label: "Wanita",
         icon: IconFemaleOff,
     },
-    [GENDER.RAHASIA]: {
-        label: "Rahasia",
+    [GENDER.KEDUANYA]: {
+        label: "Keduanya",
         icon: IconSecretOff,
     },
 } as const;
@@ -38,8 +38,8 @@ export const GENDER_ICON = {
         iconOn: IconFemaleOn,
         iconOff: IconFemaleOff,
     },
-    [GENDER.RAHASIA]: {
-        label: "Rahasia",
+    [GENDER.KEDUANYA]: {
+        label: "Keduanya",
         iconOn: IconSecretOn,
         iconOff: IconSecretOff,
     }
