@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import Feather from "@react-native-vector-icons/feather/static";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { useTheme } from "@/controllers/hooks/useTheme";
 import { VERIFIED_STATUS, VerifiedStatus } from "@/constants/UserDetails";
 import IconAngleRight from "@/assets/icon/angle-right-non.svg";
@@ -47,7 +47,9 @@ export default function KycCard({ status, onComplete }: KycCardProps) {
     >
       <View style={styles.leftSection}>
         <View style={styles.iconWrapper}>
-          <Feather name="shield" size={18} color="#0088CC" />
+          <View style={[styles.iconCircle, { backgroundColor: theme.colors.red }]}>
+              <Ionicons name="alert-outline" size={18} color={`#fff`} />
+          </View>
         </View>
         <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
           Verifikasi KYC

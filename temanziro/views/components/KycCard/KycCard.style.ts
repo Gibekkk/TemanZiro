@@ -22,6 +22,13 @@ export default StyleSheet.create({
         justifyContent: "center",
         marginRight: 16,
     },
+    iconCircle :{
+        borderRadius: 999,
+        width: 22,
+        height: 22,
+        alignItems: "center",
+        justifyContent: "center",
+    },
     title: {
         fontSize: 16,
         fontWeight: "600",

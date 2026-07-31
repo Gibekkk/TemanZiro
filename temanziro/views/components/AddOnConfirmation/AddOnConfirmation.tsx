@@ -22,11 +22,11 @@ export default function AddOnConfirmationCard({ status, onComplete }: AddOnConfi
     if (status === ADD_ON_STATUS.REVISION) {
         statusText = "Butuh Revisi";
         badgeBgColor = "rgba(34, 64, 196, 0.1)";
-        badgeTextColor = theme.colors.primary; 
+        badgeTextColor = theme.colors.primary;
         showArrow = true;
     } else if (status === ADD_ON_STATUS.PENDING) {
         statusText = "Sedang Diproses";
-        badgeBgColor = "rgba(233, 97, 0, 0.1)"; 
+        badgeBgColor = "rgba(233, 97, 0, 0.1)";
         badgeTextColor = theme.colors.secondary;
         showArrow = false;
     } else {
@@ -46,14 +46,16 @@ export default function AddOnConfirmationCard({ status, onComplete }: AddOnConfi
             disabled={!isClickable}
         >
             <View style={styles.leftSection}>
-                <View style={styles.iconWrapper}>
-                    <Ionicons name="alert-outline" size={18} color={theme.colors.red} />
+                <View style={[styles.iconWrapper]}>
+                    <View style={[styles.iconCircle, { backgroundColor: theme.colors.red }]}>
+                        <Ionicons name="alert-outline" size={18} color={`#fff`} />
+                    </View>
                 </View>
                 <Text style={[styles.title, { color: theme.colors.textPrimary }]}>
                     Konfirmasi Add-On
                 </Text>
             </View>
-            
+
             <View style={styles.rightSection}>
                 <View style={[styles.badge, { backgroundColor: badgeBgColor }]}>
                     <Text style={[styles.badgeText, { color: badgeTextColor }]}>

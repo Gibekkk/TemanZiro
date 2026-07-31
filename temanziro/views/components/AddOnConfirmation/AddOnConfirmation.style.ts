@@ -22,6 +22,13 @@ export default StyleSheet.create({
         justifyContent: "center",
         marginRight: 16,
     },
+    iconCircle :{
+        borderRadius: 999,
+        width: 22,
+        height: 22,
+        alignItems: "center",
+        justifyContent: "center",
+    },
     title: {
         fontSize: 16,
         fontWeight: "600",
@@ -34,7 +41,7 @@ export default StyleSheet.create({
     badge: {
         paddingVertical: 4,
         paddingHorizontal: 10,
-        borderRadius: 12,
+        borderRadius: 999,
     },
     badgeText: {
         fontSize: 12,
