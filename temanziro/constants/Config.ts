@@ -138,6 +138,23 @@ export const DUMMY_BOOKINGS = [
         date: "Rabu, 1 Juli 2026",
         time: "15:00 - 17:00 WIB",
         location: "Gelanggang Olahraga Saparua, Bandung",
+    },
+    {
+        id: "booking_dummy_3",
+        companionId: "156131498",
+        userId: "user_dummy_3",
+        name_user: "Kevin",
+        name_companion: "Inno",
+        age_user: 24,
+        age_companion: 23,
+        url_photoprofile_user: "https://randomuser.me/api/portraits/women/44.jpg",
+        url_photoprofile_companion: "https://randomuser.me/api/portraits/women/20.jpg",
+        status: "menunggupembayaran",
+        bookingRefPath: "bookings/booking_dummy_3",
+        activityName: "Olahraga",
+        date: "Rabu, 2 Juli 2026",
+        time: "15:00 - 17:00 WIB",
+        location: "Gelanggang Olahraga Saparua, Makassar",
     }
 ];
 

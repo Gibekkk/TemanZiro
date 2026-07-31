@@ -1,40 +1,53 @@
 import React from "react";
 import { View, Text, StyleProp, ViewStyle } from "react-native";
 import styles from "./IconLabel.style";
-import { COMMON_COLORS } from "@/constants/Theme";
+import { useTheme } from "@/controllers/hooks/useTheme";
 
-// Mengasumsikan icon yang dikirim sudah berupa komponen SVG dari react-native-svg
 interface IconLabelProps {
-  IconComponent: React.ElementType;
+  icon: React.ReactNode;
   label: string;
-  color?: string;
+  // Tambahkan property desc opsional (?)
+  desc?: string; 
   style?: StyleProp<ViewStyle>;
-  iconWidth?: number;
-  iconHeight?: number;
   iconcontainerstyle?: StyleProp<ViewStyle>;
 }
 
 export default function IconLabel({
-  IconComponent,
+  icon,
   label,
-  color,
+  desc, // Destructure desc di sini
   style,
   iconcontainerstyle,
-  iconWidth = 18,
-  iconHeight = 18,
 }: IconLabelProps) {
+  const { theme } = useTheme();
+
   return (
     <View style={[styles.logoWrapper, style]}>
       <View
         style={[
           styles.container,
-          color ? { backgroundColor: `${COMMON_COLORS.secondaryBackground}` } : {},
-          iconcontainerstyle
+          iconcontainerstyle,
+          { backgroundColor: theme.colors.primary },
         ]}
       >
-        <IconComponent width={iconWidth} height={iconHeight} />
+        {icon}
       </View>
-      {label && label !== "none" && <Text style={styles.label}>{label}</Text>}
+      
+      {/* Container untuk teks agar label dan desc tersusun rapi */}
+      <View style={styles.textContainer}>
+        {label && label !== "none" && (
+          <Text style={[styles.label, { color: theme.colors.textPrimary }]}>
+            {label}
+          </Text>
+        )}
+        
+        {/* Render desc hanya jika desc diberikan (tidak undefined/kosong) */}
+        {desc && (
+          <Text style={[styles.desc, { color: theme.colors.textSecondary }]}>
+            {desc}
+          </Text>
+        )}
+      </View>
     </View>
   );
 }

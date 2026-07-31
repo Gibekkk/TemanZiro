@@ -12,8 +12,9 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import BackIcon from "@/assets/icon/back.svg";
 import styles from "./SecondaryLayout.style";
+import { useTheme } from "@/controllers/hooks/useTheme";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface SecondaryLayoutProps {
   children: ReactNode;
@@ -40,6 +41,7 @@ export default function SecondaryLayout({
 }: SecondaryLayoutProps) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { theme } = useTheme();
 
   const handleBack = () => {
     if (router.canGoBack()) {
@@ -55,7 +57,10 @@ export default function SecondaryLayout({
         style={[
           styles.header,
           noShadow ? styles.noShadow : styles.shadow,
-          { paddingTop: insets.top > 0 ? 45 : 45 },
+          {
+            paddingTop: insets.top > 0 ? 45 : 45,
+            backgroundColor: theme.colors.primary,
+          },
         ]}
       >
         <View
@@ -63,7 +68,7 @@ export default function SecondaryLayout({
         >
           {showBackButton && (
             <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-              <BackIcon width={16} height={16} />
+              <Ionicons name="arrow-back-outline" size={24} color={theme.colors.lightText} />
             </TouchableOpacity>
           )}
 
@@ -73,7 +78,9 @@ export default function SecondaryLayout({
               alignLeft && styles.contentHeaderLeft,
             ]}
           >
-            <Text style={[styles.title, titleStyle, alignLeft && styles.titleLeft]}>
+            <Text
+              style={[styles.title, {color: theme.colors.lightText}, titleStyle, alignLeft && styles.titleLeft]}
+            >
               {title}
             </Text>
 
@@ -100,8 +107,14 @@ export default function SecondaryLayout({
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={[
             styles.scrollContent,
-            noPadding && { paddingHorizontal: 0, paddingTop: 0, paddingBottom: 0 },
-            { paddingBottom: (insets.bottom || 20) + 20 },
+            noPadding && {
+              paddingHorizontal: 0,
+              paddingTop: 0,
+              paddingBottom: 0,
+            },
+            {
+              paddingBottom: (insets.bottom || 20) + 20,
+            },
           ]}
         >
           {children}

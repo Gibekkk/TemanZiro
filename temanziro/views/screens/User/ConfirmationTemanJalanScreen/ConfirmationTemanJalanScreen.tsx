@@ -99,6 +99,10 @@ export default function MatchConfirmationScreen() {
     });
   };
 
+  const donePayment = () => {
+    router.push("/(tabs)/(dashboard)/dashboard");
+  };
+
   return (
     <View
       style={[
@@ -336,14 +340,6 @@ export default function MatchConfirmationScreen() {
             <Text style={styles.buttonActionText}>Konfirmasi Pesan & Sesi</Text>
           </View>
         </GeneralButton>
-        <GeneralButton
-          variant="ghost"
-          style={styles.buttonBack}
-          textStyle={{ color: theme.colors.textSecondary, fontWeight: "500" }}
-          onClick={() => router.back()}
-        >
-          Kembali ke Profil Companion
-        </GeneralButton>
       </View>
 
       {/* --- Bottom Sheet Modal --- */}
@@ -422,7 +418,7 @@ export default function MatchConfirmationScreen() {
             <GeneralButton
               variant="primary"
               style={styles.popupButton}
-              onClick={() => setIsPopupOpen(false)}
+              onClick={() => donePayment()}
             >
               Sudah Bayar
             </GeneralButton>

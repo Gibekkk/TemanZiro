@@ -72,4 +72,15 @@ export default StyleSheet.create({
     fontSize: 14,
     color: "#64748B",
   },
+
+  lottieContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 20, 
+  },
+  lottieAnimation: {
+    width: 350,
+    height: 350,
+  },
 });
