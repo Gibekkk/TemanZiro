@@ -5,6 +5,7 @@ import SecondaryLayout from "@/views/layouts/SecondaryLayout/SecondaryLayout";
 import Feather from "@react-native-vector-icons/feather/static";
 import MaterialCommunityIcons from "@react-native-vector-icons/material-design-icons/static";
 import { useCompanionAddOns } from "@/controllers/hooks/Companion/useCompanionAddOns";
+import AddOnNew from "@/views/components/AddOnNew/AddOnNew";
 import styles from "./AddOnsManagement.style";
 
 export default function AddOnsManagement() {
@@ -35,6 +36,24 @@ export default function AddOnsManagement() {
                 <View style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
                     <ActivityIndicator size="large" color={colors.primary} />
                 </View>
+            </SecondaryLayout>
+        );
+    }
+
+    const hasAddOns = !!portfolioLink || (vehicles && vehicles.length > 0);
+
+    if (!hasAddOns) {
+        return (
+            <SecondaryLayout title="Kelola Add-ons" alignLeft={true} noPadding={true}>
+                <AddOnNew
+                    onAddDocumentation={() => {
+                        router.push("/(tabs_companion)/(profile)/addons-documentation");
+                    }}
+                    onAddTransportation={() => {
+                        selectVehicle("new");
+                        router.push("/(tabs_companion)/(profile)/addons-transportation");
+                    }}
+                />
             </SecondaryLayout>
         );
     }
