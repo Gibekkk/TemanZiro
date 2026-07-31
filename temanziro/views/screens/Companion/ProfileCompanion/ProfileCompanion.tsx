@@ -86,7 +86,31 @@ export default function ProfileCompanion() {
 
             {/* Menu List Groups */}
             <View style={styles.menuContainer}>
+
                 {/* First Card Group */}
+                {/* Ini untuk data tambahan kek verifikasi data, add on, dll, yang berhubungan dengan admins */}
+                {(!isVerified || (!!addonStatus && addonStatus !== ADD_ON_STATUS.ACCEPTED)) && (
+                    <ProfileMenuCard>
+                        {!isVerified && (
+                            <KycCard
+                                status={
+                                    isComplete
+                                        ? "pending"
+                                        : "unverified"
+                                }
+                                onComplete={handleKycRedirect}
+                            />
+                        )}
+                        {!!addonStatus && addonStatus !== ADD_ON_STATUS.ACCEPTED && (
+                            <AddOnConfirmationCard
+                                status={addonStatus}
+                                onComplete={() => handleAddOnRedirect(addonStatus)}
+                            />
+                        )}
+                    </ProfileMenuCard>
+                )}
+
+                 {/* Second Card Group */}
                 <ProfileMenuCard>
                     <ProfileMenuItem
                         title="Tertarik dengan Aktivitas"
@@ -109,29 +133,6 @@ export default function ProfileCompanion() {
                         onPress={handleReviews}
                     />
                 </ProfileMenuCard>
-
-                {/* Second Card Group */}
-                {/* Ini untuk data tambahan kek verifikasi data, add on, dll, yang berhubungan dengan admins */}
-                {(!isVerified || (!!addonStatus && addonStatus !== ADD_ON_STATUS.ACCEPTED)) && (
-                    <ProfileMenuCard>
-                        {!isVerified && (
-                            <KycCard
-                                status={
-                                    isComplete
-                                        ? "pending"
-                                        : "unverified"
-                                }
-                                onComplete={handleKycRedirect}
-                            />
-                        )}
-                        {!!addonStatus && addonStatus !== ADD_ON_STATUS.ACCEPTED && (
-                            <AddOnConfirmationCard
-                                status={addonStatus}
-                                onComplete={() => handleAddOnRedirect(addonStatus)}
-                            />
-                        )}
-                    </ProfileMenuCard>
-                )}
 
                 {/* Third Card Group */}
                 <ProfileMenuCard>
