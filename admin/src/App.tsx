@@ -11,6 +11,8 @@ import Companions from './pages/Companions';
 import TopUps from './pages/TopUps';
 import Withdraws from './pages/Withdraws';
 import AdminManagement from './pages/AdminManagement';
+import Reports from './pages/Reports';
+import CustomerService from './pages/CustomerService';
 
 export default function App() {
   return (
@@ -25,6 +27,8 @@ export default function App() {
             <Route path="companions" element={<Companions />} />
             <Route path="topups" element={<TopUps />} />
             <Route path="withdraws" element={<Withdraws />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="customer-service" element={<CustomerService />} />
             <Route path="admin-management" element={<AdminManagement />} />
           </Route>
         </Routes>

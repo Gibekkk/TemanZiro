@@ -5,6 +5,8 @@ import {
 } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../lib/firebase_config';
 import { format } from 'date-fns';
+import DataTable, { type DataTableColumn } from '../components/DataTable';
+import { useAuthEmails } from '../hooks/useAuthEmails';
 
 function toDate(val: number | Timestamp | Date | undefined): Date {
   if (!val) return new Date();
@@ -26,6 +28,8 @@ export default function Users() {
   const [togglingId, setTogglingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const { emails, loading: emailsLoading } = useAuthEmails(users.map((u) => u.id));
 
   const fetchBookingCounts = async (userList: any[]) => {
     try {
@@ -91,99 +95,113 @@ export default function Users() {
     return () => unsub();
   }, []);
 
+  const columns: DataTableColumn<any>[] = [
+    {
+      id: 'name',
+      header: 'Name',
+      sortValue: (user) => (user.name_user ?? '').toLowerCase(),
+      searchValue: (user) => user.name_user ?? '',
+      cell: (user) => (
+        <span className="font-medium text-slate-900 dark:text-white">
+          {user.name_user}
+        </span>
+      ),
+    },
+    {
+      id: 'email',
+      header: 'Email',
+      sortValue: (user) => (emails[user.id] ?? '').toLowerCase(),
+      searchValue: (user) => emails[user.id] ?? '',
+      cell: (user) => (
+        <span className="text-slate-500 dark:text-slate-400">
+          {emails[user.id] ?? (emailsLoading ? '...' : '-')}
+        </span>
+      ),
+    },
+    {
+      id: 'balance',
+      header: 'Balance',
+      sortValue: (user) => parseBalance(user.balance_user),
+      cell: (user) => (
+        <span className="text-green-600 dark:text-green-400 font-mono">
+          Rp {parseBalance(user.balance_user).toLocaleString('id-ID')}
+        </span>
+      ),
+    },
+    {
+      id: 'bookings',
+      header: 'Total Bookings',
+      sortValue: (user) => bookingCounts[user.id] ?? -1,
+      cell: (user) =>
+        bookingCounts[user.id] !== undefined ? (
+          <span className="font-mono text-sky-600 dark:text-sky-400">
+            {bookingCounts[user.id]}
+            <span className="text-slate-400 text-xs ml-1">booking(s)</span>
+          </span>
+        ) : (
+          <span className="text-slate-400 text-xs">...</span>
+        ),
+    },
+    {
+      id: 'joined',
+      header: 'Joined',
+      sortValue: (user) => (user.createdAt ? toDate(user.createdAt).getTime() : 0),
+      cell: (user) => (
+        <span className="text-slate-500 dark:text-slate-400">
+          {user.createdAt ? format(toDate(user.createdAt), 'MMM dd, yyyy') : 'N/A'}
+        </span>
+      ),
+    },
+    {
+      id: 'active',
+      header: 'Aktif',
+      align: 'center',
+      sortValue: (user) => (activeStatus[user.id] ?? false ? 1 : 0),
+      cell: (user) => {
+        const isActive = activeStatus[user.id] ?? false;
+        const isToggling = togglingId === user.id;
+        return (
+          <button
+            onClick={() => toggleActive(user.id)}
+            disabled={isToggling}
+            title={isActive ? 'Nonaktifkan user' : 'Aktifkan user'}
+            className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed ${
+              isActive ? 'bg-primary-500' : 'bg-slate-300 dark:bg-slate-600'
+            }`}
+          >
+            <span
+              className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow transition-transform duration-200 ease-in-out ${
+                isActive ? 'translate-x-4' : 'translate-x-0'
+              }`}
+            />
+          </button>
+        );
+      },
+    },
+  ];
+
   return (
     <div className="space-y-6 z-10 relative">
       <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
         User Management
       </h2>
 
-      <div className="glass-panel rounded-2xl overflow-hidden">
-        <div className="overflow-x-auto p-4">
-          <table className="w-full text-left text-sm">
-            <thead className="border-b border-gray-200 dark:border-white/5">
-              <tr className="h-10 text-xs uppercase text-slate-500">
-                <th className="px-4 py-2 font-medium">Name</th>
-                <th className="px-4 py-2 font-medium">Email</th>
-                <th className="px-4 py-2 font-medium">Balance</th>
-                <th className="px-4 py-2 font-medium">Total Bookings</th>
-                <th className="px-4 py-2 font-medium">Joined</th>
-                <th className="px-4 py-2 font-medium text-center">Aktif</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-slate-400">
-                    Loading...
-                  </td>
-                </tr>
-              ) : error ? (
-                <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-rose-500">
-                    {error}
-                  </td>
-                </tr>
-              ) : users.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-slate-400">
-                    No users found.
-                  </td>
-                </tr>
-              ) : (
-                users.map((user) => {
-                  const isActive = activeStatus[user.id] ?? false;
-                  const isToggling = togglingId === user.id;
-                  return (
-                    <tr
-                      key={user.id}
-                      className="h-12 border-b border-gray-100 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
-                    >
-                      <td className="px-4 py-2 font-medium text-slate-900 dark:text-white">
-                        {user.name_user}
-                      </td>
-                      <td className="px-4 py-2 text-slate-500 dark:text-slate-400">
-                        {user.email || '-'}
-                      </td>
-                      <td className="px-4 py-2 text-green-600 dark:text-green-400 font-mono">
-                        Rp {parseBalance(user.balance_user).toLocaleString('id-ID')}
-                      </td>
-                      <td className="px-4 py-2">
-                        {bookingCounts[user.id] !== undefined ? (
-                          <span className="font-mono text-sky-600 dark:text-sky-400">
-                            {bookingCounts[user.id]}
-                            <span className="text-slate-400 text-xs ml-1">booking(s)</span>
-                          </span>
-                        ) : (
-                          <span className="text-slate-400 text-xs">...</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-2 text-slate-500 dark:text-slate-400">
-                        {user.createdAt ? format(toDate(user.createdAt), 'MMM dd, yyyy') : 'N/A'}
-                      </td>
-                      <td className="px-4 py-2 text-center">
-                        <button
-                          onClick={() => toggleActive(user.id)}
-                          disabled={isToggling}
-                          title={isActive ? 'Nonaktifkan user' : 'Aktifkan user'}
-                          className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed ${
-                            isActive ? 'bg-primary-500' : 'bg-slate-300 dark:bg-slate-600'
-                          }`}
-                        >
-                          <span
-                            className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow transition-transform duration-200 ease-in-out ${
-                              isActive ? 'translate-x-4' : 'translate-x-0'
-                            }`}
-                          />
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
+      {error && (
+        <div className="flex items-start gap-3 rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3">
+          <span className="text-red-500 mt-0.5">⚠</span>
+          <p className="text-red-500 text-sm flex-1">{error}</p>
+          <button onClick={() => setError(null)} className="text-red-400/60 hover:text-red-400 text-lg leading-none">×</button>
         </div>
-      </div>
+      )}
+
+      <DataTable
+        columns={columns}
+        data={users}
+        rowKey={(user) => user.id}
+        loading={loading}
+        emptyMessage="No users found."
+        searchPlaceholder="Cari nama atau email user..."
+      />
     </div>
   );
 }

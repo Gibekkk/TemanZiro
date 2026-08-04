@@ -23,6 +23,7 @@ interface AuthContextType {
     adminLevel: AdminLevel;
     isAdmin: boolean;
     isOwner: boolean;
+    isVerifikasiOrAbove: boolean;
     loading: boolean;
     isOnline: boolean;
     watchUser: (userId: string) => void;
@@ -160,9 +161,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const isAdmin = adminLevel > 0;
     const isOwner = adminLevel === 3;
+    // Level 2 (verifikasi) dan level 3 (owner) — dipakai untuk fitur
+    // Customer Service & Laporan yang tidak boleh diakses admin_level 1.
+    const isVerifikasiOrAbove = adminLevel >= 2;
 
     return (
-        <AuthContext.Provider value={{ currentUser, userProfile, role, adminLevel, isAdmin, isOwner, loading, isOnline, watchUser, getUserStatus, logOut }}>
+        <AuthContext.Provider value={{ currentUser, userProfile, role, adminLevel, isAdmin, isOwner, isVerifikasiOrAbove, loading, isOnline, watchUser, getUserStatus, logOut }}>
             {children}
         </AuthContext.Provider>
     );

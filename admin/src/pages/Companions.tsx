@@ -5,6 +5,8 @@ import {
 } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../lib/firebase_config';
 import { format } from 'date-fns';
+import DataTable, { type DataTableColumn } from '../components/DataTable';
+import { useAuthEmails } from '../hooks/useAuthEmails';
 
 function toDate(val: number | Timestamp | Date | undefined): Date {
   if (!val) return new Date();
@@ -26,6 +28,8 @@ export default function Companions() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [togglingId, setTogglingId] = useState<string | null>(null);
+
+  const { emails, loading: emailsLoading } = useAuthEmails(companions.map((c) => c.id));
 
   const fetchActiveStatuses = async (list: any[]) => {
     try {
@@ -91,6 +95,88 @@ export default function Companions() {
     return () => unsub();
   }, []);
 
+  const columns: DataTableColumn<any>[] = [
+    {
+      id: 'name',
+      header: 'Name',
+      sortValue: (comp) => (comp.name_companion ?? '').toLowerCase(),
+      searchValue: (comp) => comp.name_companion ?? '',
+      cell: (comp) => (
+        <span className="font-medium text-slate-900 dark:text-white">
+          {comp.name_companion ?? '—'}
+        </span>
+      ),
+    },
+    {
+      id: 'email',
+      header: 'Email',
+      sortValue: (comp) => (emails[comp.id] ?? '').toLowerCase(),
+      searchValue: (comp) => emails[comp.id] ?? '',
+      cell: (comp) => (
+        <span className="text-slate-500 dark:text-slate-400">
+          {emails[comp.id] ?? (emailsLoading ? '...' : '-')}
+        </span>
+      ),
+    },
+    {
+      id: 'balance',
+      header: 'Balance',
+      sortValue: (comp) => parseBalance(comp.balance),
+      cell: (comp) => (
+        <span className="text-green-600 dark:text-green-400 font-mono">
+          Rp {parseBalance(comp.balance).toLocaleString('id-ID')}
+        </span>
+      ),
+    },
+    {
+      id: 'sessions',
+      header: 'Total Sesi',
+      sortValue: (comp) => sessionCounts.get(comp.id) ?? 0,
+      cell: (comp) => (
+        <span className="font-mono text-sky-600 dark:text-sky-400">
+          {sessionCounts.get(comp.id) ?? 0}
+          <span className="text-slate-400 text-xs ml-1">sesi</span>
+        </span>
+      ),
+    },
+    {
+      id: 'joined',
+      header: 'Joined',
+      sortValue: (comp) => (comp.createdAt ? toDate(comp.createdAt).getTime() : 0),
+      cell: (comp) => (
+        <span className="text-slate-500 dark:text-slate-400">
+          {comp.createdAt ? format(toDate(comp.createdAt), 'MMM dd, yyyy') : 'N/A'}
+        </span>
+      ),
+    },
+    {
+      id: 'active',
+      header: 'Aktif',
+      align: 'center',
+      sortValue: (comp) => (activeStatus[comp.id] ?? false ? 1 : 0),
+      cell: (comp) => {
+        const isActive = activeStatus[comp.id] ?? false;
+        const isToggling = togglingId === comp.id;
+        return (
+          <button
+            onClick={() => toggleActive(comp.id)}
+            disabled={isToggling}
+            title={isActive ? 'Nonaktifkan companion' : 'Aktifkan companion'}
+            className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed ${
+              isActive ? 'bg-primary-500' : 'bg-slate-300 dark:bg-slate-600'
+            }`}
+          >
+            <span
+              className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow transition-transform duration-200 ease-in-out ${
+                isActive ? 'translate-x-4' : 'translate-x-0'
+              }`}
+            />
+          </button>
+        );
+      },
+    },
+  ];
+
   return (
     <div className="space-y-6 z-10 relative">
       <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
@@ -105,89 +191,14 @@ export default function Companions() {
         </div>
       )}
 
-      <div className="glass-panel rounded-2xl overflow-hidden">
-        <div className="overflow-x-auto p-4">
-          <table className="w-full text-left text-sm">
-            <thead className="border-b border-gray-200 dark:border-white/5">
-              <tr className="h-10 text-xs uppercase text-slate-500">
-                <th className="px-4 py-2 font-medium">Name</th>
-                <th className="px-4 py-2 font-medium">Email</th>
-                <th className="px-4 py-2 font-medium">Balance</th>
-                <th className="px-4 py-2 font-medium">Total Sesi</th>
-                <th className="px-4 py-2 font-medium">Joined</th>
-                <th className="px-4 py-2 font-medium text-center">Aktif</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr>
-                  <td colSpan={6} className="px-4 py-10 text-center">
-                    <div className="flex flex-col items-center gap-2 text-slate-400">
-                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                      </svg>
-                      <span className="text-xs">Memuat data...</span>
-                    </div>
-                  </td>
-                </tr>
-              ) : companions.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-slate-400">
-                    Belum ada data companion.
-                  </td>
-                </tr>
-              ) : (
-                companions.map((comp) => {
-                  const isActive = activeStatus[comp.id] ?? false;
-                  const isToggling = togglingId === comp.id;
-                  return (
-                    <tr
-                      key={comp.id}
-                      className="h-12 border-b border-gray-100 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
-                    >
-                      <td className="px-4 py-2 font-medium text-slate-900 dark:text-white">
-                        {comp.name_companion ?? '—'}
-                      </td>
-                      <td className="px-4 py-2 text-slate-500 dark:text-slate-400">
-                        {comp.email ?? '-'}
-                      </td>
-                      <td className="px-4 py-2 text-green-600 dark:text-green-400 font-mono">
-                        Rp {parseBalance(comp.balance).toLocaleString('id-ID')}
-                      </td>
-                      <td className="px-4 py-2">
-                        <span className="font-mono text-sky-600 dark:text-sky-400">
-                          {sessionCounts.get(comp.id) ?? 0}
-                          <span className="text-slate-400 text-xs ml-1">sesi</span>
-                        </span>
-                      </td>
-                      <td className="px-4 py-2 text-slate-500 dark:text-slate-400">
-                        {comp.createdAt ? format(toDate(comp.createdAt), 'MMM dd, yyyy') : 'N/A'}
-                      </td>
-                      <td className="px-4 py-2 text-center">
-                        <button
-                          onClick={() => toggleActive(comp.id)}
-                          disabled={isToggling}
-                          title={isActive ? 'Nonaktifkan companion' : 'Aktifkan companion'}
-                          className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed ${
-                            isActive ? 'bg-primary-500' : 'bg-slate-300 dark:bg-slate-600'
-                          }`}
-                        >
-                          <span
-                            className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow transition-transform duration-200 ease-in-out ${
-                              isActive ? 'translate-x-4' : 'translate-x-0'
-                            }`}
-                          />
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable
+        columns={columns}
+        data={companions}
+        rowKey={(comp) => comp.id}
+        loading={loading}
+        emptyMessage="Belum ada data companion."
+        searchPlaceholder="Cari nama atau email companion..."
+      />
     </div>
   );
 }

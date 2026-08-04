@@ -10,6 +10,8 @@ import {
   ArrowDownToLine,
   ArrowUpFromLine,
   ShieldCheck,
+  MessageCircle,
+  FileWarning,
   Menu,
   X,
   Sun,
@@ -25,6 +27,8 @@ const PAGE_TITLES: Record<string, string> = {
   '/companions':       'Companions',
   '/topups':           'Top Ups',
   '/withdraws':        'Withdrawals',
+  '/reports':          'Laporan',
+  '/customer-service': 'Customer Service',
   '/admin-management': 'Admin Management',
 };
 
@@ -34,13 +38,17 @@ const ADMIN_LEVEL_LABEL: Record<number, string> = {
   3: 'Owner',
 };
 
+// minLevel: admin_level minimum yang boleh melihat menu ini.
+// 1 = semua admin, 2 = verifikasi & owner, 3 = owner saja.
 const navItems = [
-  { name: 'Dashboard',  path: '/',          icon: LayoutDashboard, ownerOnly: false },
-  { name: 'Users',      path: '/users',      icon: Users,           ownerOnly: false },
-  { name: 'Companions', path: '/companions', icon: UserSquare2,     ownerOnly: false },
-  { name: 'Top Ups',    path: '/topups',     icon: ArrowDownToLine, ownerOnly: false },
-  { name: 'Withdraws',  path: '/withdraws',  icon: ArrowUpFromLine, ownerOnly: false },
-  { name: 'Admin Management', path: '/admin-management', icon: ShieldCheck, ownerOnly: true },
+  { name: 'Dashboard',  path: '/',          icon: LayoutDashboard, minLevel: 1 },
+  { name: 'Users',      path: '/users',      icon: Users,           minLevel: 1 },
+  { name: 'Companions', path: '/companions', icon: UserSquare2,     minLevel: 1 },
+  { name: 'Top Ups',    path: '/topups',     icon: ArrowDownToLine, minLevel: 1 },
+  { name: 'Withdraws',  path: '/withdraws',  icon: ArrowUpFromLine, minLevel: 1 },
+  { name: 'Customer Service', path: '/customer-service', icon: MessageCircle, minLevel: 2 },
+  { name: 'Laporan',    path: '/reports',    icon: FileWarning,     minLevel: 2 },
+  { name: 'Admin Management', path: '/admin-management', icon: ShieldCheck, minLevel: 3 },
 ];
 
 function LoadingScreen() {
@@ -55,7 +63,7 @@ function LoadingScreen() {
 }
 
 export default function Layout() {
-  const { currentUser: user, userProfile, isAdmin, isOwner, adminLevel, loading, logOut } = useAuth();
+  const { currentUser: user, userProfile, isAdmin, adminLevel, loading, logOut } = useAuth();
   const { theme, toggleTheme } = useThemeStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -87,7 +95,7 @@ export default function Layout() {
   const initial = displayName.charAt(0) || 'A';
   const photoUrl: string | null = (userProfile?.url_photoprofile_companion || userProfile?.photo_url) ?? null;
   const roleLabel = ADMIN_LEVEL_LABEL[adminLevel] ?? 'Admin';
-  const visibleNavItems = navItems.filter((item) => !item.ownerOnly || isOwner);
+  const visibleNavItems = navItems.filter((item) => adminLevel >= item.minLevel);
 
   function Avatar({ size = 'md' }: { size?: 'sm' | 'md' }) {
     const cls = size === 'sm' ? 'w-8 h-8 text-xs' : 'w-9 h-9 text-sm';

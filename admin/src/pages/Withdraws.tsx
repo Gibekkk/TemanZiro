@@ -13,6 +13,8 @@ import {
 import { db, handleFirestoreError, OperationType } from '../lib/firebase_config';
 import { format } from 'date-fns';
 import { Timestamp } from 'firebase/firestore';
+import DataTable, { type DataTableColumn } from '../components/DataTable';
+import { useAuthEmails } from '../hooks/useAuthEmails';
 
 // ─── Helper ──────────────────────────────────────────────────────────────────
 // BUG-08: createdAt bisa berupa number (Date.now()) atau Firestore Timestamp
@@ -87,6 +89,8 @@ export default function Withdraws() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [processingId, setProcessingId] = useState<string | null>(null);
+
+  const { emails, loading: emailsLoading } = useAuthEmails(withdraws.map((w) => w.companionId));
 
   // Confirmation state
   const [confirm, setConfirm] = useState<{
@@ -194,6 +198,115 @@ export default function Withdraws() {
     setConfirm({ id, action, companionId, amount });
   };
 
+  const columns: DataTableColumn<WithdrawDoc>[] = [
+    {
+      id: 'withdrawId',
+      header: 'Withdraw ID',
+      sortValue: (tx) => tx.id,
+      cell: (tx) => (
+        <span className="text-slate-400 font-mono text-xs select-all">{tx.id}</span>
+      ),
+    },
+    {
+      id: 'companion',
+      header: 'Companion',
+      sortValue: (tx) => (companionNames.get(tx.companionId) ?? emails[tx.companionId] ?? tx.companionId).toLowerCase(),
+      searchValue: (tx) => `${companionNames.get(tx.companionId) ?? ''} ${emails[tx.companionId] ?? ''} ${tx.companionId}`,
+      cell: (tx) => (
+        <>
+          <div className="font-medium text-white">
+            {companionNames.get(tx.companionId) ?? (
+              <span className="text-slate-500 font-mono text-xs">{tx.companionId}</span>
+            )}
+          </div>
+          <div className="text-slate-600 font-mono text-[10px]">
+            {emails[tx.companionId] ?? (emailsLoading ? '...' : tx.companionId)}
+          </div>
+        </>
+      ),
+    },
+    {
+      id: 'amount',
+      header: 'Amount',
+      sortValue: (tx) => tx.amount,
+      cell: (tx) => (
+        <span className="text-rose-400 font-mono">-${tx.amount.toFixed(2)}</span>
+      ),
+    },
+    {
+      id: 'status',
+      header: 'Status',
+      sortValue: (tx) => tx.status,
+      cell: (tx) => (
+        <span
+          className={`status-pill ${
+            tx.status === 'approved'
+              ? 'bg-green-500/20 text-green-500'
+              : tx.status === 'rejected'
+              ? 'bg-red-500/20 text-red-500'
+              : 'bg-yellow-500/20 text-yellow-500'
+          }`}
+        >
+          {tx.status}
+        </span>
+      ),
+    },
+    {
+      id: 'date',
+      header: 'Date',
+      sortValue: (tx) => {
+        const d = toDate(tx.createdAt);
+        return d ? d.getTime() : 0;
+      },
+      cell: (tx) => {
+        const date = toDate(tx.createdAt); // BUG-08: safe conversion
+        return (
+          <span className="text-slate-400">
+            {date ? format(date, 'MMM dd, yyyy HH:mm') : 'N/A'}
+          </span>
+        );
+      },
+    },
+    {
+      id: 'actions',
+      header: 'Actions',
+      align: 'right',
+      cell: (tx) => {
+        const isProcessing = processingId === tx.id;
+        if (isProcessing) {
+          return (
+            <span className="text-slate-500 text-[10px] uppercase font-semibold">
+              Processing…
+            </span>
+          );
+        }
+        if (tx.status !== 'pending') {
+          return (
+            <span className="text-slate-600 text-[10px] uppercase font-semibold">
+              Done
+            </span>
+          );
+        }
+        return (
+          <div className="space-x-3">
+            <button
+              onClick={() => handleAction(tx.id, 'approved', tx.companionId, tx.amount)}
+              className="text-emerald-500 hover:text-emerald-400 font-semibold transition-colors text-[10px] uppercase tracking-wider"
+            >
+              Approve
+            </button>
+            <button
+              onClick={() => handleAction(tx.id, 'rejected', tx.companionId, tx.amount)}
+              className="text-red-500 hover:text-red-400 font-semibold transition-colors text-[10px] uppercase tracking-wider"
+            >
+              Reject
+            </button>
+          </div>
+        );
+      },
+    },
+  ];
+
   return (
     <div className="space-y-6 z-10 relative">
       {/* Confirmation Modal */}
@@ -227,119 +340,14 @@ export default function Withdraws() {
         </div>
       )}
 
-      <div className="glass-panel rounded-2xl overflow-hidden mt-6">
-        <div className="overflow-x-auto p-4">
-          <table className="w-full text-left text-sm">
-            <thead className="text-slate-500 border-b border-white/5">
-              <tr className="h-10 text-xs uppercase">
-                <th className="px-4 py-2 font-medium">Withdraw ID</th>
-                <th className="px-4 py-2 font-medium">Companion</th>
-                <th className="px-4 py-2 font-medium">Amount</th>
-                <th className="px-4 py-2 font-medium">Status</th>
-                <th className="px-4 py-2 font-medium">Date</th>
-                <th className="px-4 py-2 font-medium text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="text-slate-300">
-              {loading ? (
-                <tr>
-                  <td colSpan={6} className="px-4 py-10 text-center">
-                    <div className="flex flex-col items-center gap-2 text-slate-500">
-                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                      </svg>
-                      <span className="text-xs">Memuat data...</span>
-                    </div>
-                  </td>
-                </tr>
-              ) : withdraws.length === 0 && !error ? (
-                <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-slate-500">
-                    Belum ada withdraw request.
-                  </td>
-                </tr>
-              ) : (
-                withdraws.map((tx) => {
-                  const date = toDate(tx.createdAt); // BUG-08: safe conversion
-                  const isProcessing = processingId === tx.id;
-
-                  return (
-                    <tr
-                      key={tx.id}
-                      className={`h-12 border-b border-white/5 transition-colors ${
-                        isProcessing ? 'opacity-50' : 'hover:bg-white/5'
-                      }`}
-                    >
-                      <td className="px-4 py-2 text-slate-400 font-mono text-xs select-all">
-                        {tx.id}
-                      </td>
-                      <td className="px-4 py-2">
-                        <div className="font-medium text-white">
-                          {companionNames.get(tx.companionId) ?? (
-                            <span className="text-slate-500 font-mono text-xs">{tx.companionId}</span>
-                          )}
-                        </div>
-                        <div className="text-slate-600 font-mono text-[10px]">{tx.companionId}</div>
-                      </td>
-                      <td className="px-4 py-2 text-rose-400 font-mono">
-                        -${tx.amount.toFixed(2)}
-                      </td>
-                      <td className="px-4 py-2">
-                        <span
-                          className={`status-pill ${
-                            tx.status === 'approved'
-                              ? 'bg-green-500/20 text-green-500'
-                              : tx.status === 'rejected'
-                              ? 'bg-red-500/20 text-red-500'
-                              : 'bg-yellow-500/20 text-yellow-500'
-                          }`}
-                        >
-                          {tx.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-2 text-slate-400">
-                        {/* BUG-08: pakai toDate() sebelum format() */}
-                        {date ? format(date, 'MMM dd, yyyy HH:mm') : 'N/A'}
-                      </td>
-                      <td className="px-4 py-2 text-right space-x-3">
-                        {isProcessing ? (
-                          <span className="text-slate-500 text-[10px] uppercase font-semibold">
-                            Processing…
-                          </span>
-                        ) : tx.status === 'pending' ? (
-                          <>
-                            <button
-                              onClick={() =>
-                                handleAction(tx.id, 'approved', tx.companionId, tx.amount)
-                              }
-                              className="text-emerald-500 hover:text-emerald-400 font-semibold transition-colors text-[10px] uppercase tracking-wider"
-                            >
-                              Approve
-                            </button>
-                            <button
-                              onClick={() =>
-                                handleAction(tx.id, 'rejected', tx.companionId, tx.amount)
-                              }
-                              className="text-red-500 hover:text-red-400 font-semibold transition-colors text-[10px] uppercase tracking-wider"
-                            >
-                              Reject
-                            </button>
-                          </>
-                        ) : (
-                          <span className="text-slate-600 text-[10px] uppercase font-semibold">
-                            Done
-                          </span>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DataTable
+        columns={columns}
+        data={withdraws}
+        rowKey={(tx) => tx.id}
+        loading={loading}
+        emptyMessage="Belum ada withdraw request."
+        searchPlaceholder="Cari nama, email, atau ID companion..."
+      />
     </div>
   );
 }
